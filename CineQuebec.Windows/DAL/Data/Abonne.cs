@@ -7,10 +7,54 @@ using MongoDB.Bson;
 
 namespace CineQuebec.Windows.DAL.Data
 {
-    public class Abonne
+    public class Abonne : Entity
     {
-        public ObjectId Id { get; set; }
-        public string Username { get; set; }
-        public DateTime DateAdhesion { get; set; }
+        #region CONSTANTES
+
+        #endregion
+
+        #region ATTRIBUTS
+        private string? _username;
+        private DateTime _dateAdhesion;
+        #endregion
+
+        #region PROPRIÉTÉS ET INDEXEURS
+        public string? Username
+        {
+            get { return _username; }
+            set { _username = value; }
+        }
+        public DateTime DateAdhesion
+        {
+            get { return _dateAdhesion; }
+            set { _dateAdhesion = value; }
+        }
+        #endregion
+
+        #region CONSTRUCTEURS
+        public Abonne(string? username)
+        {
+            Username = username;
+        }
+
+        public Abonne(string username, DateTime dateAdhesion)
+        {
+            Username = username;
+            DateAdhesion = dateAdhesion;
+        }
+        #endregion
+
+        #region MÉTHODES
+        public override string ToString()
+        {
+            return $"{Username}";
+        }
+
+        #endregion
+
+        #region ÉVÉNEMENTS
+
+        #endregion
+
     }
 }

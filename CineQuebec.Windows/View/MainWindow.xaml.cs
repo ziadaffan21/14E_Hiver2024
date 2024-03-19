@@ -28,5 +28,13 @@ namespace CineQuebec.Windows
         {
             mainContentControl.Content = new AdminHomeControl();
         }
+        public void ConsultationUtilisateursControl()
+        {
+            mainContentControl.Content = new ConsultationAbonnesControl();
+        }
+        public void ConsultationFilmsControls()
+        {
+            mainContentControl.Content = new ConsultationFilmsControl();
+        }
     }
 }

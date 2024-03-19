@@ -18,6 +18,7 @@ namespace CineQuebec.Windows.DAL
             mongoDBClient = client ?? OuvrirConnexion();
             database = ConnectDatabase();
         }
+
         private IMongoClient OuvrirConnexion()
         {
             MongoClient dbClient = null;
@@ -27,7 +28,7 @@ namespace CineQuebec.Windows.DAL
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Impossible de se connecter à la base de données " + ex.Message, "Erreur");
+                throw new Exception($"Une erreur s'est produite : ${ex}");
             }
             return dbClient;
         }
@@ -41,10 +42,11 @@ namespace CineQuebec.Windows.DAL
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Impossible de se connecter à la base de données " + ex.Message, "Erreur");
+                throw new Exception($"Une erreur s'est produite : ${ex}");
             }
             return db;
         }
+
         public List<Abonne> ReadAbonnes()
         {
             var abonnes = new List<Abonne>();
@@ -56,9 +58,25 @@ namespace CineQuebec.Windows.DAL
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Impossible d'obtenir la collection " + ex.Message, "Erreur");
+                throw new Exception($"Une erreur s'est produite : ${ex}");
             }
             return abonnes;
+        }
+
+        public List<Film> ReadFilms()
+        {
+            var films = new List<Film>();
+            try
+            {
+                var collection = database.GetCollection<Film>("Films");
+                films = collection.Aggregate().ToList();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Une erreur s'est produite : ${ex}");
+
+            }
+            return films;
         }
     }
 }

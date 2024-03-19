@@ -18,23 +18,16 @@ using System.Windows.Shapes;
 namespace CineQuebec.Windows.View
 {
     /// <summary>
-    /// Logique d'interaction pour AdminHomeControl.xaml
+    /// Logique d'interaction pour ConsultationFilmsControl.xaml
     /// </summary>
-    public partial class AdminHomeControl : UserControl
+    public partial class ConsultationFilmsControl : UserControl
     {
-        public AdminHomeControl()
+        private readonly DatabasePeleMele databasePeleMele = new DatabasePeleMele();
+        private List<Film> films = new List<Film>();
+        public ConsultationFilmsControl()
         {
             InitializeComponent();
-        }
-
-        private void Button_Click_Utilisateurs(object sender, RoutedEventArgs e)
-        {
-            ((MainWindow)Application.Current.MainWindow).ConsultationUtilisateursControl();
-        }
-
-        private void Button_Click_Films(object sender, RoutedEventArgs e)
-        {
-            ((MainWindow)Application.Current.MainWindow).ConsultationFilmsControls();
+            lstFilms.ItemsSource = databasePeleMele.ReadFilms();
         }
     }
 }

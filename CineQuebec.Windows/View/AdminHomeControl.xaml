@@ -12,8 +12,8 @@
             <ColumnDefinition Width="1*"/>
         </Grid.ColumnDefinitions>
 
-        <Button Style="{StaticResource defautButton}" 
-                Grid.Column="0">
+        <Button Style="{StaticResource defautButton}" x:Name="utilisateurs"
+                Grid.Column="0" Click="Button_Click_Utilisateurs">
             <StackPanel >
                 <Image Height="100" 
                        Source="/Ressources/Images/users.png" />
@@ -23,8 +23,8 @@
             </StackPanel>
         </Button>
 
-        <Button Style="{StaticResource defautButton}" 
-        Grid.Column="1">
+        <Button Style="{StaticResource defautButton}" x:Name="films"
+        Grid.Column="1" Click="Button_Click_Films">
             <StackPanel>
                 <Image Height="100"
                        Source="/Ressources/Images/projections.png" />
