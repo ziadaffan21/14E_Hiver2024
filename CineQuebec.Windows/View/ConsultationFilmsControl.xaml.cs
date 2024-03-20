@@ -1,5 +1,7 @@
 ﻿using CineQuebec.Windows.DAL;
 using CineQuebec.Windows.DAL.Data;
+using CineQuebec.Windows.Exceptions;
+using CineQuebec.Windows.Ressources.i18n;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,8 +28,18 @@ namespace CineQuebec.Windows.View
         private List<Film> films = new List<Film>();
         public ConsultationFilmsControl()
         {
-            InitializeComponent();
-            lstFilms.ItemsSource = databasePeleMele.ReadFilms();
+            try
+            {
+                InitializeComponent();
+                lstFilms.ItemsSource = databasePeleMele.ReadFilms();
+            }
+            catch(MongoDataConnectionException err) {
+                MessageBox.Show(err.Message, Resource.erreur, MessageBoxButton.OK,MessageBoxImage.Error);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show(Resource.erreurGenerique, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }

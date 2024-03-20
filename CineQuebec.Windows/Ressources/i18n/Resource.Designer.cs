@@ -61,6 +61,15 @@ namespace CineQuebec.Windows.Ressources.i18n {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Abonnes.
+        /// </summary>
+        public static string admin_abonnes {
+            get {
+                return ResourceManager.GetString("admin.abonnes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Films.
         /// </summary>
         public static string admin_films {
@@ -111,6 +120,24 @@ namespace CineQuebec.Windows.Ressources.i18n {
         public static string connexion_username {
             get {
                 return ResourceManager.GetString("connexion.username", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Erreur.
+        /// </summary>
+        public static string erreur {
+            get {
+                return ResourceManager.GetString("erreur", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Une erreur s'est produite.
+        /// </summary>
+        public static string erreurGenerique {
+            get {
+                return ResourceManager.GetString("erreurGenerique", resourceCulture);
             }
         }
     }

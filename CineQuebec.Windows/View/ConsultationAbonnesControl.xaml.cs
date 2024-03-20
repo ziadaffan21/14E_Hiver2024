@@ -1,5 +1,7 @@
 ﻿using CineQuebec.Windows.DAL;
 using CineQuebec.Windows.DAL.Data;
+using CineQuebec.Windows.Exceptions;
+using CineQuebec.Windows.Ressources.i18n;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace CineQuebec.Windows.View
 {
@@ -23,12 +26,25 @@ namespace CineQuebec.Windows.View
     /// </summary>
     public partial class ConsultationAbonnesControl : UserControl
     {
+        private const string ERREUR = "Erreur";
         public List<Abonne> Abonnes { get; set; }
         private readonly DatabasePeleMele database = new DatabasePeleMele();
         public ConsultationAbonnesControl()
         {
-            InitializeComponent();
-            lstUtilisisateurs.ItemsSource = database.ReadAbonnes();
+            try
+            {
+                InitializeComponent();
+                lstUtilisisateurs.ItemsSource = database.ReadAbonnes();
+            }
+            catch (MongoDataConnectionException err)
+            {
+                MessageBox.Show(err.Message, ERREUR, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (Exception)
+            {
+                MessageBox.Show(Resource.erreurGenerique, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+
         }
     }
 }
