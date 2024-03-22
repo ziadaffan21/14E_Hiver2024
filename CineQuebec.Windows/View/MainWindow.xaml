@@ -9,7 +9,7 @@
         Title="{x:Static rs:Resource.app_name}" 
         ResizeMode="NoResize"
         Height="700" Width="1200"
-         Icon="/Ressources/images/logoCinemaWithoutText.png">
+         Icon="/Ressources/images/logoCinemaWithoutText.png" >
    
     <Grid >
         <Grid.RowDefinitions>

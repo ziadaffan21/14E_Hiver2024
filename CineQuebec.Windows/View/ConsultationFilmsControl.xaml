@@ -24,7 +24,7 @@
     <Grid>
         <GroupBox Header="Les films" Style="{StaticResource CustomGroupBoxStyle}" Width="450" HorizontalAlignment="Left" Height="250" VerticalAlignment="Top">
             <ListBox x:Name="lstFilms" HorizontalAlignment="Left" VerticalAlignment="Top"
-                 ItemContainerStyle="{StaticResource CustomListBoxItemStyle}" Width="428" Height="207"/>
+                 ItemContainerStyle="{StaticResource CustomListBoxItemStyle}" Width="428" Height="207" MouseDoubleClick="lstFilm_DoubleClick" />
         </GroupBox>
     </Grid>
 </UserControl>

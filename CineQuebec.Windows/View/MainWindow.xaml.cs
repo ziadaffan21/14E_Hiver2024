@@ -36,5 +36,7 @@ namespace CineQuebec.Windows
         {
             mainContentControl.Content = new ConsultationFilmsControl();
         }
+
+
     }
 }

@@ -41,5 +41,33 @@ namespace CineQuebec.Windows.View
                 MessageBox.Show(Resource.erreurGenerique, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+
+     
+
+        /// <summary>
+        /// Événement lancé lors de lu double click d'un élément dans la liste des films
+        /// </summary>
+        /// <param name="sender">ListBox contenant les films</param>
+        /// <param name="e"></param>
+        private void lstFilm_DoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            AfficherDetailsFilm();
+        }
+
+        private void AfficherDetailsFilm()
+        {
+            if (lstFilms.SelectedItem != null)
+            {
+                Film film =lstFilms.SelectedItem as Film;
+                DetailFilm detailFilm = new DetailFilm(film);
+                if ((bool)detailFilm.ShowDialog())
+                {
+                    lstFilms.ItemsSource = databasePeleMele.ReadFilms();
+                }
+            }
+        }
+
+
     }
 }

@@ -26,7 +26,6 @@ namespace CineQuebec.Windows.View
     /// </summary>
     public partial class ConsultationAbonnesControl : UserControl
     {
-        private const string ERREUR = "Erreur";
         public List<Abonne> Abonnes { get; set; }
         private readonly DatabasePeleMele database = new DatabasePeleMele();
         public ConsultationAbonnesControl()
@@ -38,7 +37,7 @@ namespace CineQuebec.Windows.View
             }
             catch (MongoDataConnectionException err)
             {
-                MessageBox.Show(err.Message, ERREUR, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(err.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Exception)
             {

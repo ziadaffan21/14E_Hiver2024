@@ -53,6 +53,7 @@ namespace CineQuebec.Windows.DAL
             {
                 throw new MongoDataConnectionException("Une erreur s'est produite lors de la connexion à la base de donnée");
             }
+            
             return db;
         }
 
@@ -86,6 +87,21 @@ namespace CineQuebec.Windows.DAL
 
             }
             return films;
+        }
+
+        public async void ModifierFilm(Film film)
+        {
+            var collection = database.GetCollection<Film>(FILMS);
+            var filter = Builders<Film>.Filter.Eq(f => f.Id, film.Id);
+            try
+            {
+                await collection.ReplaceOneAsync(filter, film);
+            }
+            catch (Exception)
+            {
+                
+                throw new MongoDataConnectionException("Une erreur s'est produite lors de la modification du film.");
+            }
         }
     }
 }
