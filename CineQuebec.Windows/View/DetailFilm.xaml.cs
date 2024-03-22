@@ -3,6 +3,7 @@ using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.Enums;
 using CineQuebec.Windows.DAL.Utils;
 using CineQuebec.Windows.Exceptions;
+using CineQuebec.Windows.Exceptions.FilmExceptions.TitreExceptions;
 using CineQuebec.Windows.Ressources.i18n;
 using System;
 using System.Collections.Generic;
@@ -49,6 +50,7 @@ namespace CineQuebec.Windows.View
             cboCategories.ItemsSource = UtilEnum.GetAllDescriptions<Categories>();
             if (Film is null)
             {
+                
                 InitialiserFormulaireAjout();
             }
             else
@@ -65,6 +67,7 @@ namespace CineQuebec.Windows.View
             cboCategories.Focus();
             cboCategories.IsEnabled = true;
             txtNom.IsEnabled = true;
+            lblTitre.Text = "Ajouter un film";
             btnModifier.Content = "Ajouter";
             btnOK.Content = "Annuler";
         }
@@ -92,6 +95,11 @@ namespace CineQuebec.Windows.View
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
+            if (Film is null)
+            {
+                DialogResult = false;
+                return;
+            }
             if(!modification)
                 DialogResult = true;
             else
@@ -103,8 +111,11 @@ namespace CineQuebec.Windows.View
 
         private bool ValiderForm()
         {
+
             if (string.IsNullOrWhiteSpace(txtNom.Text))
                 message += "Le nom du film ne peut pas être vide";
+            if (txtNom.Text.Trim().Length < Film.NB_MIN_CARACTERES_USERNAME || txtNom.Text.Trim().Length > Film.NB_MAX_CARACTERES_USERNAME)
+                message += $"\nLe titre doit etre entre {Film.NB_MIN_CARACTERES_USERNAME} et {Film.NB_MAX_CARACTERES_USERNAME} caractères.";
             if (cboCategories.SelectedIndex == -1)
                 message += "\nVous devez assigner une catégorie";
             if (string.IsNullOrWhiteSpace(message))
@@ -112,10 +123,18 @@ namespace CineQuebec.Windows.View
             else
                 return false;
         }
-        private void btnModifier_Click(object sender, RoutedEventArgs e)
+        private async void btnModifier_Click(object sender, RoutedEventArgs e)
         {
             try
             {
+                if(Film is null && ValiderForm())
+                {
+                    Film = new Film(txtNom.Text, (Categories)cboCategories.SelectedIndex);
+                    await GestionFilmAbonne.AjouterFilm(Film);
+                    InitialiserFormulaireVisualiser();
+                    MessageBox.Show(Resource.ajoutReussi, Resource.ajout, MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
                 modification = !modification;
                 if (modification)
                 {
@@ -127,8 +146,9 @@ namespace CineQuebec.Windows.View
                     {
                         Film.Titre = txtNom.Text;
                         Film.Categorie = (Categories)cboCategories.SelectedIndex;
-                        GestionFilmAbonne.ModifierFilm(Film);
+                        await GestionFilmAbonne.ModifierFilm(Film);
                         InitialiserFormulaireVisualiser();
+                        MessageBox.Show(Resource.modificationReussi, Resource.modification, MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                     else
                         MessageBox.Show(message,Resource.erreur,MessageBoxButton.OK,MessageBoxImage.Error);

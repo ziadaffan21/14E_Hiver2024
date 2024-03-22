@@ -126,6 +126,12 @@
   <data name="admin.users" xml:space="preserve">
     <value>Utilisateurs</value>
   </data>
+  <data name="ajout" xml:space="preserve">
+    <value>Ajout</value>
+  </data>
+  <data name="ajoutReussi" xml:space="preserve">
+    <value>Le film a bien été ajouté</value>
+  </data>
   <data name="app_name" xml:space="preserve">
     <value>Ciné Québec</value>
   </data>
@@ -143,5 +149,11 @@
   </data>
   <data name="erreurGenerique" xml:space="preserve">
     <value>Une erreur s'est produite</value>
+  </data>
+  <data name="modification" xml:space="preserve">
+    <value>Modification</value>
+  </data>
+  <data name="modificationReussi" xml:space="preserve">
+    <value>Le film a été bien modifié</value>
   </data>
 </root>

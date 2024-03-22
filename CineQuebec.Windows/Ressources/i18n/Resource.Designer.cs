@@ -88,6 +88,24 @@ namespace CineQuebec.Windows.Ressources.i18n {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à Ajout.
+        /// </summary>
+        public static string ajout {
+            get {
+                return ResourceManager.GetString("ajout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Le film a bien été ajouté.
+        /// </summary>
+        public static string ajoutReussi {
+            get {
+                return ResourceManager.GetString("ajoutReussi", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Ciné Québec.
         /// </summary>
         public static string app_name {
@@ -133,11 +151,29 @@ namespace CineQuebec.Windows.Ressources.i18n {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Une erreur s'est produite.
+        ///   Recherche une chaîne localisée semblable à Une erreur s&apos;est produite.
         /// </summary>
         public static string erreurGenerique {
             get {
                 return ResourceManager.GetString("erreurGenerique", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Modification.
+        /// </summary>
+        public static string modification {
+            get {
+                return ResourceManager.GetString("modification", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Le film a été bien modifié.
+        /// </summary>
+        public static string modificationReussi {
+            get {
+                return ResourceManager.GetString("modificationReussi", resourceCulture);
             }
         }
     }

@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CineQuebec.Windows.View"
       mc:Ignorable="d" 
-      d:DesignHeight="350" d:DesignWidth="800"
+      d:DesignHeight="250" d:DesignWidth="400"
       Title="DetailFilm" Loaded="Window_Loaded">
     <Grid Margin="20">
         <Grid.ColumnDefinitions>
@@ -27,8 +27,8 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
                 <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
+                <!--<RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>-->
             </Grid.RowDefinitions>
             <TextBlock Grid.Row="0" Grid.Column="0" Text="Nom" VerticalAlignment="Bottom" Margin="5"/>
             <TextBox x:Name="txtNom" Grid.Row="0" Grid.Column="1" Width="125" HorizontalAlignment="Left" Margin="5" />
@@ -39,8 +39,8 @@
             <TextBlock Grid.Row="2" Grid.Column="0" Text="Prix" VerticalAlignment="Bottom" Margin="5"/>
             <TextBox x:Name="txtPrix" Grid.Row="2" Grid.Column="1" Width="125" HorizontalAlignment="Left" Margin="5"/>-->
 
-            <TextBlock Grid.Row="3" Grid.Column="0" Text="Catégorie" VerticalAlignment="Bottom" Margin="5"/>
-            <ComboBox x:Name="cboCategories" Grid.Row="3" Grid.Column="1" Width="275" HorizontalAlignment="Left" Margin="5"  Cursor="Hand"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" Text="Catégorie" VerticalAlignment="Bottom" Margin="5"/>
+            <ComboBox x:Name="cboCategories" Grid.Row="1" Grid.Column="1" Width="275" HorizontalAlignment="Left" Margin="5"  Cursor="Hand"/>
         </Grid>
         <!--<StackPanel Grid.Row="1" Grid.Column="1">
             <Border BorderBrush="LightGray" BorderThickness="1" CornerRadius="5">

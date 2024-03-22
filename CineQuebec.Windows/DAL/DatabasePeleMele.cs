@@ -89,17 +89,31 @@ namespace CineQuebec.Windows.DAL
             return films;
         }
 
-        public async void ModifierFilm(Film film)
+        public async Task ModifierFilm(Film film)
         {
-            var collection = database.GetCollection<Film>(FILMS);
+            var tableFilm = database.GetCollection<Film>(FILMS);
             var filter = Builders<Film>.Filter.Eq(f => f.Id, film.Id);
             try
             {
-                await collection.ReplaceOneAsync(filter, film);
+                await tableFilm.ReplaceOneAsync(filter, film);
             }
             catch (Exception)
             {
                 
+                throw new MongoDataConnectionException("Une erreur s'est produite lors de la modification du film.");
+            }
+        }
+
+        public async Task AjouterFilm(Film film)
+        {
+            var tableFilm = database.GetCollection<Film>(FILMS);
+            try
+            {
+                await tableFilm.InsertOneAsync(film);
+            }
+            catch (Exception)
+            {
+
                 throw new MongoDataConnectionException("Une erreur s'est produite lors de la modification du film.");
             }
         }

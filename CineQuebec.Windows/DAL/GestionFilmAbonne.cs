@@ -11,11 +11,18 @@ namespace CineQuebec.Windows.DAL
     {
         private static DatabasePeleMele BaseDeDonne= new DatabasePeleMele();
 
-        public static void ModifierFilm(Film film)
+        public async static Task ModifierFilm(Film film)
         {
             if (film is null)
                 throw new ArgumentNullException("Le film ne peut pas être null");
-            BaseDeDonne.ModifierFilm(film);
+            await BaseDeDonne.ModifierFilm(film);
+        }
+
+        public async static Task AjouterFilm(Film film)
+        {
+            if (film is null)
+                throw new ArgumentNullException("Le film ne peut pas être null");
+            await BaseDeDonne.AjouterFilm(film);
         }
 
     }

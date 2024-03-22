@@ -1,7 +1,6 @@
 ﻿using CineQuebec.Windows.DAL.Enums;
 using CineQuebec.Windows.Exceptions.FilmExceptions.CategorieExceptions;
 using CineQuebec.Windows.Exceptions.FilmExceptions.TitreExceptions;
-using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace CineQuebec.Windows.DAL.Data
 {
-    public class Film : Entity
+    public class Projection:Entity
     {
         #region CONSTANTES
-        public const byte NB_MIN_CARACTERES_USERNAME = 2;
-        public const byte NB_MAX_CARACTERES_USERNAME = 15;
+        const byte NB_MIN_CARACTERES_USERNAME = 2;
+        const byte NB_MAX_CARACTERES_USERNAME = 15;
         #endregion
 
         #region ATTRIBUTS
@@ -29,7 +28,7 @@ namespace CineQuebec.Windows.DAL.Data
             set
             {
                 if (string.IsNullOrWhiteSpace(value)) throw new TitreNullException("Le titre ne peut pas etre vide ou null");
-                if (value.Trim().Length < NB_MIN_CARACTERES_USERNAME || value.Trim().Length > NB_MAX_CARACTERES_USERNAME) throw new TitreLengthException($"Le titre doit etre entre {NB_MIN_CARACTERES_USERNAME} et {NB_MAX_CARACTERES_USERNAME} caractères.");
+                if (value.Trim().Length < 2 || value.Trim().Length > 50) throw new TitreLengthException($"Le titre doit etre entre {NB_MIN_CARACTERES_USERNAME} et {NB_MAX_CARACTERES_USERNAME} caractères.");
                 _titre = value;
             }
         }
@@ -45,11 +44,11 @@ namespace CineQuebec.Windows.DAL.Data
         #endregion
 
         #region CONSTRUCTEURS
-        public Film(string titre, Categories categorie)
-        {
-            Titre = titre;
-            Categorie = categorie;
-        }
+        //public Film(string titre, Categories categorie)
+        //{
+        //    Titre = titre;
+        //    Categorie = categorie;
+        //}
         #endregion
 
         #region MÉTHODES

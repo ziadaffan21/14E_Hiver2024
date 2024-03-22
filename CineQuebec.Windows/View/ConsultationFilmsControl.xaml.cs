@@ -68,6 +68,13 @@ namespace CineQuebec.Windows.View
             }
         }
 
-
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            DetailFilm detailFilm = new DetailFilm();
+            if ((bool)detailFilm.ShowDialog())
+            {
+                lstFilms.ItemsSource = databasePeleMele.ReadFilms();
+            }
+        }
     }
 }
