@@ -70,7 +70,7 @@ namespace CineQuebec.Windows.View
         }
         private void InitialiserFormulaireVisualiser()
         {
-            txtNom.Text=Film.Name;
+            txtNom.Text=Film.Titre;
             cboCategories.SelectedIndex = (int)Film.Categorie;
             txtNom.IsEnabled = false;
             cboCategories.IsEnabled = false;
@@ -80,7 +80,7 @@ namespace CineQuebec.Windows.View
 
         private void InitialiserFormulaireModification()
         {
-            txtNom.Text = Film.Name;
+            txtNom.Text = Film.Titre;
             cboCategories.SelectedIndex = (int)Film.Categorie;
             txtNom.IsEnabled = true;
             cboCategories.IsEnabled = true;
@@ -125,7 +125,7 @@ namespace CineQuebec.Windows.View
                 {
                     if (ValiderForm())
                     {
-                        Film.Name = txtNom.Text;
+                        Film.Titre = txtNom.Text;
                         Film.Categorie = (Categories)cboCategories.SelectedIndex;
                         GestionFilmAbonne.ModifierFilm(Film);
                         InitialiserFormulaireVisualiser();
