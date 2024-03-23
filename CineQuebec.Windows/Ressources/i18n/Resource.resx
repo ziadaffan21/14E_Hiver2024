@@ -132,6 +132,9 @@
   <data name="ajoutReussi" xml:space="preserve">
     <value>Le film a bien été ajouté</value>
   </data>
+  <data name="ajoutReussiProjection" xml:space="preserve">
+    <value>La projection a bien été ajoutée</value>
+  </data>
   <data name="app_name" xml:space="preserve">
     <value>Ciné Québec</value>
   </data>

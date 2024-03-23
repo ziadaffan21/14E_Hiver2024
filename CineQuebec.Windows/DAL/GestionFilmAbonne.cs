@@ -4,12 +4,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 
 namespace CineQuebec.Windows.DAL
 {
     public static class GestionFilmAbonne
     {
-        private static DatabasePeleMele BaseDeDonne= new DatabasePeleMele();
+        private static readonly DatabasePeleMele BaseDeDonne= new DatabasePeleMele();
 
         public async static Task ModifierFilm(Film film)
         {
@@ -23,6 +24,23 @@ namespace CineQuebec.Windows.DAL
             if (film is null)
                 throw new ArgumentNullException("Le film ne peut pas être null");
             await BaseDeDonne.AjouterFilm(film);
+        }
+
+        public static List<Film> ReadFilms()
+        {
+            return BaseDeDonne.ReadFilms();
+        }
+
+        public static List<Abonne> ReadAbonne()
+        {
+            return BaseDeDonne.ReadAbonnes();
+        }
+
+        public async static Task AjouterProjection(Projection projection)
+        {
+            if (projection is null)
+                throw new ArgumentNullException("Lq projection ne peut pas être null");
+            await BaseDeDonne.AjouterProjection(projection);
         }
 
     }

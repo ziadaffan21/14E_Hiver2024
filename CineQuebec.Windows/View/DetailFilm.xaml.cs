@@ -32,23 +32,17 @@ namespace CineQuebec.Windows.View
         private bool modification;
         private string message;
 
-        public Film Film
-        {
-            get { return _film; }
-            private set { _film = value; }
-        }
-
         public DetailFilm(Film film=null)
         {
             InitializeComponent();
-            Film= film;
+            _film= film;
             modification = false;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             cboCategories.ItemsSource = UtilEnum.GetAllDescriptions<Categories>();
-            if (Film is null)
+            if (_film is null)
             {
                 
                 InitialiserFormulaireAjout();
@@ -73,8 +67,8 @@ namespace CineQuebec.Windows.View
         }
         private void InitialiserFormulaireVisualiser()
         {
-            txtNom.Text=Film.Titre;
-            cboCategories.SelectedIndex = (int)Film.Categorie;
+            txtNom.Text=_film.Titre;
+            cboCategories.SelectedIndex = (int)_film.Categorie;
             txtNom.IsEnabled = false;
             cboCategories.IsEnabled = false;
             btnModifier.Content = "Modifier";
@@ -83,8 +77,8 @@ namespace CineQuebec.Windows.View
 
         private void InitialiserFormulaireModification()
         {
-            txtNom.Text = Film.Titre;
-            cboCategories.SelectedIndex = (int)Film.Categorie;
+            txtNom.Text = _film.Titre;
+            cboCategories.SelectedIndex = (int)_film.Categorie;
             txtNom.IsEnabled = true;
             cboCategories.IsEnabled = true;
             txtNom.Focus();
@@ -95,7 +89,7 @@ namespace CineQuebec.Windows.View
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
-            if (Film is null)
+            if (_film is null)
             {
                 DialogResult = false;
                 return;
@@ -127,10 +121,10 @@ namespace CineQuebec.Windows.View
         {
             try
             {
-                if(Film is null && ValiderForm())
+                if(_film is null && ValiderForm())
                 {
-                    Film = new Film(txtNom.Text, (Categories)cboCategories.SelectedIndex);
-                    await GestionFilmAbonne.AjouterFilm(Film);
+                    _film = new Film(txtNom.Text, (Categories)cboCategories.SelectedIndex);
+                    await GestionFilmAbonne.AjouterFilm(_film);
                     InitialiserFormulaireVisualiser();
                     MessageBox.Show(Resource.ajoutReussi, Resource.ajout, MessageBoxButton.OK, MessageBoxImage.Information);
                     return;
@@ -144,14 +138,15 @@ namespace CineQuebec.Windows.View
                 {
                     if (ValiderForm())
                     {
-                        Film.Titre = txtNom.Text;
-                        Film.Categorie = (Categories)cboCategories.SelectedIndex;
-                        await GestionFilmAbonne.ModifierFilm(Film);
+                        _film.Titre = txtNom.Text;
+                        _film.Categorie = (Categories)cboCategories.SelectedIndex;
+                        await GestionFilmAbonne.ModifierFilm(_film);
                         InitialiserFormulaireVisualiser();
                         MessageBox.Show(Resource.modificationReussi, Resource.modification, MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                     else
                         MessageBox.Show(message,Resource.erreur,MessageBoxButton.OK,MessageBoxImage.Error);
+                    message = "";
                 }
             }
             catch(MongoDataConnectionException ex)

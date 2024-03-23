@@ -26,14 +26,12 @@ namespace CineQuebec.Windows.View
     /// </summary>
     public partial class ConsultationAbonnesControl : UserControl
     {
-        public List<Abonne> Abonnes { get; set; }
-        private readonly DatabasePeleMele database = new DatabasePeleMele();
         public ConsultationAbonnesControl()
         {
             try
             {
                 InitializeComponent();
-                lstUtilisisateurs.ItemsSource = database.ReadAbonnes();
+                lstUtilisisateurs.ItemsSource = GestionFilmAbonne.ReadAbonne();
             }
             catch (MongoDataConnectionException err)
             {

@@ -26,7 +26,11 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="3*"/>
         </Grid.RowDefinitions>
-        <Button Content="Ajouter" Grid.Row="0" Width="100" Height="50" Click="Button_Click"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="0">
+            <Button Content="Ajouter un film" Width="auto" Height="50" Click="Button_Click"/>
+            <Button Content="Ajouter une projection" Margin="110,0,0,0" Width="auto" Height="50" Click="Button_Click_1"/>
+        </StackPanel>
+
         <GroupBox Grid.Row="1" Header="Les films" Style="{StaticResource CustomGroupBoxStyle}" Width="450" HorizontalAlignment="Left" Height="250" VerticalAlignment="Top">
             <ListBox x:Name="lstFilms" HorizontalAlignment="Left" VerticalAlignment="Top"
                  ItemContainerStyle="{StaticResource CustomListBoxItemStyle}" Width="428" Height="207" MouseDoubleClick="lstFilm_DoubleClick" />

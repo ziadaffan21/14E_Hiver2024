@@ -106,6 +106,15 @@ namespace CineQuebec.Windows.Ressources.i18n {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à La projection a bien été ajoutée.
+        /// </summary>
+        public static string ajoutReussiProjection {
+            get {
+                return ResourceManager.GetString("ajoutReussiProjection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Ciné Québec.
         /// </summary>
         public static string app_name {
