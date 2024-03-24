@@ -41,9 +41,8 @@ Nous vous souhaitons un excellent développement et espérons que ce système ap
 
 Merci de contribuer à la Cinémathèque Québécoise !
 
-
 ## Membres
 
 - Ziad Affan
-- PJ
-- Champlain
+- Pierre Junior Sibafeu Wafeu
+- Roger Champlain Fankap
