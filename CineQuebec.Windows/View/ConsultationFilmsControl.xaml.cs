@@ -24,14 +24,12 @@ namespace CineQuebec.Windows.View
     /// </summary>
     public partial class ConsultationFilmsControl : UserControl
     {
-        private readonly DatabasePeleMele databasePeleMele = new DatabasePeleMele();
-        private List<Film> films = new List<Film>();
         public ConsultationFilmsControl()
         {
             try
             {
                 InitializeComponent();
-                lstFilms.ItemsSource = databasePeleMele.ReadFilms();
+                lstFilms.ItemsSource = GestionFilmAbonne.ReadFilms();
             }
             catch(MongoDataConnectionException err) {
                 MessageBox.Show(err.Message, Resource.erreur, MessageBoxButton.OK,MessageBoxImage.Error);
@@ -63,7 +61,7 @@ namespace CineQuebec.Windows.View
                 DetailFilm detailFilm = new DetailFilm(film);
                 if ((bool)detailFilm.ShowDialog())
                 {
-                    lstFilms.ItemsSource = databasePeleMele.ReadFilms();
+                    lstFilms.ItemsSource = GestionFilmAbonne.ReadFilms();
                 }
             }
         }
@@ -73,8 +71,15 @@ namespace CineQuebec.Windows.View
             DetailFilm detailFilm = new DetailFilm();
             if ((bool)detailFilm.ShowDialog())
             {
-                lstFilms.ItemsSource = databasePeleMele.ReadFilms();
+                lstFilms.ItemsSource = GestionFilmAbonne.ReadFilms();
             }
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            AjoutDetailProjection detailProjection = new AjoutDetailProjection();
+            if ((bool)detailProjection.ShowDialog())
+                MessageBox.Show("POIRRRR");
         }
     }
 }

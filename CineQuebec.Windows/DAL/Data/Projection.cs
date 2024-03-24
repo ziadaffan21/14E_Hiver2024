@@ -1,60 +1,80 @@
 ﻿using CineQuebec.Windows.DAL.Enums;
 using CineQuebec.Windows.Exceptions.FilmExceptions.CategorieExceptions;
 using CineQuebec.Windows.Exceptions.FilmExceptions.TitreExceptions;
+using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CineQuebec.Windows.Exceptions.EntitysExceptions;
+using CineQuebec.Windows.Exceptions.ProjectionException;
 
 namespace CineQuebec.Windows.DAL.Data
 {
     public class Projection:Entity
     {
         #region CONSTANTES
-        const byte NB_MIN_CARACTERES_USERNAME = 2;
-        const byte NB_MAX_CARACTERES_USERNAME = 15;
+        const byte NB_PLACE_MIN= 0;
         #endregion
 
         #region ATTRIBUTS
-        private string _titre;
-        private Categories _categorie;
+        private DateTime _date;
+
+        private int _placeDisponible;
+
+        private ObjectId _idFilm;
         #endregion
 
         #region PROPRIÉTÉS ET INDEXEURS
-        public string Titre
+        public DateTime Date
         {
-            get { return _titre; }
+            get { return _date; }
             set
             {
-                if (string.IsNullOrWhiteSpace(value)) throw new TitreNullException("Le titre ne peut pas etre vide ou null");
-                if (value.Trim().Length < 2 || value.Trim().Length > 50) throw new TitreLengthException($"Le titre doit etre entre {NB_MIN_CARACTERES_USERNAME} et {NB_MAX_CARACTERES_USERNAME} caractères.");
-                _titre = value;
+                if (!DateTime.TryParse(value.ToString(), out _) || value < DateTime.Today) throw new DateProjectionException($"La date de projection doit être plus grand que {DateTime.Today}");
+                _date = value;
             }
         }
-        public Categories Categorie
+        public int PlaceDisponible
         {
-            get { return _categorie; }
+            get { return _placeDisponible; }
             set
             {
-                if (!Enum.IsDefined(value)) throw new CategorieUndefinedException("La catégorie doit etre dfinie");
-                _categorie = value;
+                if (!int.TryParse(value.ToString(),out _)||value<NB_PLACE_MIN) throw new PlaceDisponibleException($"La quantité de place doit être plus grand que {NB_PLACE_MIN}");
+                _placeDisponible = value;
+            }
+        }
+
+        public ObjectId IdFilm
+        {
+            get { return _idFilm; }
+            set
+            {
+                if (!ObjectId.TryParse(value.ToString(), out _)) throw new InvalidGuidException($"L'id {IdFilm} est invalid");
+                _idFilm = value;
             }
         }
         #endregion
 
         #region CONSTRUCTEURS
-        //public Film(string titre, Categories categorie)
+        //public Projection(DateTime date, ushort placeDispo,string idFilm)
         //{
-        //    Titre = titre;
-        //    Categorie = categorie;
+        //    Date=date;
+        //    PlaceDisponible=placeDispo;
+        //    IdFilm = ObjectId.Parse(idFilm);
         //}
+        public Projection()
+        {
+            Date= DateTime.Today;
+        }
         #endregion
 
         #region MÉTHODES
         public override string ToString()
         {
-            return $"{Titre}";
+            return "TOMATE";
         }
         #endregion
     }

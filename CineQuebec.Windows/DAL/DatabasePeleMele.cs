@@ -16,6 +16,7 @@ namespace CineQuebec.Windows.DAL
         private const string DATABASE_STRING_NAME = "Database";
         private const string ABONNE = "Abonnes";
         private const string FILMS = "Films";
+        private const string PROJECTION = "Projections";
         private IMongoClient mongoDBClient;
         private IMongoDatabase database;
 
@@ -115,6 +116,20 @@ namespace CineQuebec.Windows.DAL
             {
 
                 throw new MongoDataConnectionException("Une erreur s'est produite lors de la modification du film.");
+            }
+        }
+
+        public async Task AjouterProjection(Projection projection)
+        {
+            var tableProjection = database.GetCollection<Projection>(PROJECTION);
+            try
+            {
+                await tableProjection.InsertOneAsync(projection);
+            }
+            catch (Exception)
+            {
+
+                throw new MongoDataConnectionException("Une erreur s'est produite lors de l'ajout de la projection.");
             }
         }
     }
