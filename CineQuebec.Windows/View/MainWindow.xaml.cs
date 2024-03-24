@@ -37,6 +37,9 @@ namespace CineQuebec.Windows
             mainContentControl.Content = new ConsultationFilmsControl();
         }
 
+        private void btnRetour_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
     }
 }

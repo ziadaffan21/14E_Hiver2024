@@ -20,6 +20,8 @@ namespace CineQuebec.Windows.DAL.Data
         #region ATTRIBUTS
         private string _titre;
         private Categories _categorie;
+        private DateTime _dateSortie;
+
         #endregion
 
         #region PROPRIÉTÉS ET INDEXEURS
@@ -33,6 +35,13 @@ namespace CineQuebec.Windows.DAL.Data
                 _titre = value;
             }
         }
+
+        public DateTime DateSortie
+        {
+            get { return _dateSortie; }
+            set { _dateSortie = value; }
+        }
+
         public Categories Categorie
         {
             get { return _categorie; }

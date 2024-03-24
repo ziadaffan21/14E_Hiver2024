@@ -74,7 +74,7 @@ namespace CineQuebec.Windows.DAL.Data
         #region MÉTHODES
         public override string ToString()
         {
-            return "TOMATE";
+            return $"{Utils.GetMoisNom(Date)} {Date.Hour:00}:{Date.Minute:00}";
         }
         #endregion
     }

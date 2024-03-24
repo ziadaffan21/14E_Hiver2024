@@ -21,6 +21,12 @@ namespace CineQuebec.Windows.DAL.Data
         #region ATTRIBUTS
         private string? _username;
         private DateTime _dateAdhesion;
+
+        private string _password;
+
+        
+
+
         #endregion
 
         #region PROPRIÉTÉS ET INDEXEURS
@@ -35,6 +41,13 @@ namespace CineQuebec.Windows.DAL.Data
                 _username = value.Trim();
             }
         }
+
+        public string Password
+        {
+            get { return _password; }
+            set { _password = value; }
+        }
+
         public DateTime DateAdhesion
         {
             get { return _dateAdhesion; }
