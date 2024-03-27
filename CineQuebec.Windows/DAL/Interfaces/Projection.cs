@@ -7,16 +7,18 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using CineQuebec.Windows.DAL.Utils;
 using System.Threading.Tasks;
 using CineQuebec.Windows.Exceptions.EntitysExceptions;
 using CineQuebec.Windows.Exceptions.ProjectionException;
+using CineQuebec.Windows.DAL.Data;
 
-namespace CineQuebec.Windows.DAL.Data
+namespace CineQuebec.Windows.DAL.Interfaces
 {
-    public class Projection:Entity
+    public class Projection : Entity, IProjection
     {
         #region CONSTANTES
-        const byte NB_PLACE_MIN= 0;
+        const byte NB_PLACE_MIN = 0;
         #endregion
 
         #region ATTRIBUTS
@@ -42,7 +44,7 @@ namespace CineQuebec.Windows.DAL.Data
             get { return _placeDisponible; }
             set
             {
-                if (!int.TryParse(value.ToString(),out _)||value<NB_PLACE_MIN) throw new PlaceDisponibleException($"La quantité de place doit être plus grand que {NB_PLACE_MIN}");
+                if (!int.TryParse(value.ToString(), out _) || value < NB_PLACE_MIN) throw new PlaceDisponibleException($"La quantité de place doit être plus grand que {NB_PLACE_MIN}");
                 _placeDisponible = value;
             }
         }
@@ -54,6 +56,7 @@ namespace CineQuebec.Windows.DAL.Data
             {
                 if (!ObjectId.TryParse(value.ToString(), out _)) throw new InvalidGuidException($"L'id {IdFilm} est invalid");
                 _idFilm = value;
+                
             }
         }
         #endregion
@@ -67,14 +70,15 @@ namespace CineQuebec.Windows.DAL.Data
         //}
         public Projection()
         {
-            Date= DateTime.Today;
+            Date = DateTime.Today;
         }
         #endregion
 
         #region MÉTHODES
         public override string ToString()
         {
-            return $"{Utils.GetMoisNom(Date)} {Date.Hour:00}:{Date.Minute:00}";
+            
+            return $"{Utils.Utils.GetMoisNom(Date)} {Date.Hour:00}:{Date.Minute:00}";
         }
         #endregion
     }

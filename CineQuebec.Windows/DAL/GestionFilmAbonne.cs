@@ -1,4 +1,5 @@
 ﻿using CineQuebec.Windows.DAL.Data;
+using CineQuebec.Windows.DAL.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,5 +44,9 @@ namespace CineQuebec.Windows.DAL
             await BaseDeDonne.AjouterProjection(projection);
         }
 
+        public static List<Acteur> ReadActeurs()
+        {
+            return BaseDeDonne.ReadActeurs();
+        }
     }
 }

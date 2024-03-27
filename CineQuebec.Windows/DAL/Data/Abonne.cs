@@ -4,29 +4,24 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CineQuebec.Windows.DAL.Interfaces;
 using CineQuebec.Windows.Exceptions.AbonneExceptions.DateAdhesion;
 using CineQuebec.Windows.Exceptions.AbonneExceptions.Username;
 using MongoDB.Bson;
 
 namespace CineQuebec.Windows.DAL.Data
 {
-    public class Abonne : Entity
+    public class Abonne : Entity, IAbonne
     {
         #region CONSTANTES
         const byte NB_MIN_CARACTERES_USERNAME = 2;
-        const byte NB_MAX_CARACTERES_USERNAME = 15;
-
+        const byte NB_MAX_CARACTERES_USERNAME = 50;
         #endregion
 
         #region ATTRIBUTS
         private string? _username;
         private DateTime _dateAdhesion;
-
         private string _password;
-
-        
-
-
         #endregion
 
         #region PROPRIÉTÉS ET INDEXEURS

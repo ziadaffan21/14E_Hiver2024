@@ -1,4 +1,5 @@
 ﻿using CineQuebec.Windows.DAL.Enums;
+using CineQuebec.Windows.DAL.Interfaces;
 using CineQuebec.Windows.Exceptions.FilmExceptions.CategorieExceptions;
 using CineQuebec.Windows.Exceptions.FilmExceptions.TitreExceptions;
 using MongoDB.Bson;
@@ -10,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace CineQuebec.Windows.DAL.Data
 {
-    public class Film : Entity
+    public class Film : Entity, IFilm
     {
         #region CONSTANTES
         public const byte NB_MIN_CARACTERES_USERNAME = 2;
-        public const byte NB_MAX_CARACTERES_USERNAME = 15;
+        public const byte NB_MAX_CARACTERES_USERNAME = 100;
         #endregion
 
         #region ATTRIBUTS
