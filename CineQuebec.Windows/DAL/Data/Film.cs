@@ -1,4 +1,6 @@
 ﻿using CineQuebec.Windows.DAL.Enums;
+using CineQuebec.Windows.DAL.Interfaces;
+using CineQuebec.Windows.Exceptions.AbonneExceptions.DateAdhesion;
 using CineQuebec.Windows.Exceptions.FilmExceptions.CategorieExceptions;
 using CineQuebec.Windows.Exceptions.FilmExceptions.TitreExceptions;
 using MongoDB.Bson;
@@ -10,11 +12,11 @@ using System.Threading.Tasks;
 
 namespace CineQuebec.Windows.DAL.Data
 {
-    public class Film : Entity
+    public class Film : Entity, IFilm
     {
         #region CONSTANTES
         public const byte NB_MIN_CARACTERES_USERNAME = 2;
-        public const byte NB_MAX_CARACTERES_USERNAME = 15;
+        public const byte NB_MAX_CARACTERES_USERNAME = 100;
         #endregion
 
         #region ATTRIBUTS
@@ -50,7 +52,11 @@ namespace CineQuebec.Windows.DAL.Data
         public DateTime DateSortie
         {
             get { return _dateSortie; }
-            set { _dateSortie = value; }
+            set
+            {
+                if (!DateTime.TryParse(value.ToString(), out _)) throw new InvalidDateAdhesionException($"Le date {value} n'est pas valid");
+                _dateSortie = value;
+            }
         }
 
         public Categories Categorie
@@ -65,10 +71,18 @@ namespace CineQuebec.Windows.DAL.Data
         #endregion
 
         #region CONSTRUCTEURS
+        public Film()
+        {
+            
+        }
         public Film(string titre, Categories categorie)
         {
             Titre = titre;
             Categorie = categorie;
+        }
+        public Film(string titre, DateTime dateSortie, Categories categorie) : this(titre, categorie)
+        {
+            DateSortie = dateSortie;
         }
         #endregion
 

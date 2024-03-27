@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CineQuebec.Windows.DAL.Data
+namespace CineQuebec.Windows.DAL.Utils
 {
-    internal class Utils
+    public static class Utils
     {
         public static string GetMoisNom(DateTime date)
         {

@@ -7,6 +7,7 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Documents;
 
 namespace CineQuebec.Windows.DAL
 {
@@ -17,6 +18,7 @@ namespace CineQuebec.Windows.DAL
         private const string ABONNE = "Abonnes";
         private const string FILMS = "Films";
         private const string PROJECTION = "Projections";
+        private const string ACTEURS = "Acteurs";
         private IMongoClient mongoDBClient;
         private IMongoDatabase database;
 
@@ -149,6 +151,23 @@ namespace CineQuebec.Windows.DAL
 
                 throw new MongoDataConnectionException("Une erreur s'est produite lors de l'ajout de la projection.");
             }
+        }
+        public List<Acteur> ReadActeurs()
+        {
+            var acteurs = new List<Acteur>();
+
+            try
+            {
+                var tableActeur = database.GetCollection<Acteur>(ACTEURS);
+                acteurs =  tableActeur.Aggregate().ToList();
+
+            }
+            catch (Exception)
+            {
+                throw new MongoDataConnectionException("Une erreur s'est produite lors de l'ajout de la projection.");
+            }
+
+            return acteurs;
         }
     }
 }

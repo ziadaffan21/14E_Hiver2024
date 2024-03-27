@@ -5,6 +5,8 @@ VisualStudioVersion = 17.8.34511.84
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CineQuebec.Windows", "CineQuebec.Windows\CineQuebec.Windows.csproj", "{D539ED09-DF5B-45DF-B781-247A0FB86B74}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CineQuebec.Windows.Tests", "CineQuebec.Windows.Tests\CineQuebec.Windows.Tests.csproj", "{83716A17-4C9D-4A63-8BF1-8CC8B1494E1D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{D539ED09-DF5B-45DF-B781-247A0FB86B74}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D539ED09-DF5B-45DF-B781-247A0FB86B74}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D539ED09-DF5B-45DF-B781-247A0FB86B74}.Release|Any CPU.Build.0 = Release|Any CPU
+		{83716A17-4C9D-4A63-8BF1-8CC8B1494E1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{83716A17-4C9D-4A63-8BF1-8CC8B1494E1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{83716A17-4C9D-4A63-8BF1-8CC8B1494E1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{83716A17-4C9D-4A63-8BF1-8CC8B1494E1D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

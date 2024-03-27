@@ -65,5 +65,10 @@ namespace CineQuebec.Windows.DAL
                 throw new ArgumentNullException("La projection ne peut pas être null");
             await BaseDeDonne.AjouterProjection(projection);
         }
+
+        public static List<Acteur> ReadActeurs()
+        {
+            return BaseDeDonne.ReadActeurs();
+        }
     }
 }
