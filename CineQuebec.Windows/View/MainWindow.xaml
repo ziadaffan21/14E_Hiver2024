@@ -26,7 +26,7 @@
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Center" 
                         />
-        <Button Name="btnRetour" Width="50" Height="40" Content="Retour" Margin="1104,161,46,27" Click="btnRetour_Click"/>
+        <Button Name="btnRetour" Width="50" Height="40" Content="Retour" Margin="880,114,270,74" Click="btnRetour_Click" RenderTransformOrigin="-3.856,0.156"/>
 
     </Grid>
 </Window>

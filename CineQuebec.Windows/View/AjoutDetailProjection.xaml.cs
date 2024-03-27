@@ -35,6 +35,7 @@ namespace CineQuebec.Windows.View
             InitializeComponent();
             _projection = new Projection();
             DataContext = _projection;
+            calendrier.DisplayDateStart = DateTime.Now;
             
         }
 
@@ -85,7 +86,7 @@ namespace CineQuebec.Windows.View
                 if (int.Parse(txtPlace.Text.Trim()) < 0)
                     message += "\nLe nombre de place ne peut pas être inférieur à 0";
             }
-            if (cboCategories.SelectedIndex == -1)
+            if (cboFilm.SelectedIndex == -1)
                 message += "\nVous devez assigner un film";
             if (string.IsNullOrWhiteSpace(message))
                 return true;
@@ -100,17 +101,17 @@ namespace CineQuebec.Windows.View
 
         private void InitialiserFormulaireAjout()
         {
-            cboCategories.ItemsSource = GestionFilmAbonne.ReadFilms();
-            cboCategories.Focus();
+            cboFilm.ItemsSource = GestionFilmAbonne.ReadFilms();
+            cboFilm.Focus();
             txtPlace.Focus();
                         
         }
 
-        private void cboCategories_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void cboFilm_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(cboCategories.SelectedIndex != -1)
+            if(cboFilm.SelectedIndex != -1)
             {
-                Film film = cboCategories.SelectedItem as Film;
+                Film film = cboFilm.SelectedItem as Film;
                 if (film != null)
                 {
                     _projection.IdFilm=film.Id;
