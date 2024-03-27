@@ -11,9 +11,9 @@ using CineQuebec.Windows.DAL.Utils;
 using System.Threading.Tasks;
 using CineQuebec.Windows.Exceptions.EntitysExceptions;
 using CineQuebec.Windows.Exceptions.ProjectionException;
-using CineQuebec.Windows.DAL.Data;
+using CineQuebec.Windows.DAL.Interfaces;
 
-namespace CineQuebec.Windows.DAL.Interfaces
+namespace CineQuebec.Windows.DAL.Data
 {
     public class Projection : Entity, IProjection
     {
@@ -56,7 +56,7 @@ namespace CineQuebec.Windows.DAL.Interfaces
             {
                 if (!ObjectId.TryParse(value.ToString(), out _)) throw new InvalidGuidException($"L'id {IdFilm} est invalid");
                 _idFilm = value;
-                
+
             }
         }
         #endregion
@@ -77,7 +77,7 @@ namespace CineQuebec.Windows.DAL.Interfaces
         #region MÉTHODES
         public override string ToString()
         {
-            
+
             return $"{Utils.Utils.GetMoisNom(Date)} {Date.Hour:00}:{Date.Minute:00}";
         }
         #endregion
