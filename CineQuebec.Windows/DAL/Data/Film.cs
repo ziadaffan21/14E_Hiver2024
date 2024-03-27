@@ -21,6 +21,7 @@ namespace CineQuebec.Windows.DAL.Data
         private string _titre;
         private Categories _categorie;
         private DateTime _dateSortie;
+        private int _duree;
 
         #endregion
 
@@ -35,6 +36,16 @@ namespace CineQuebec.Windows.DAL.Data
                 _titre = value;
             }
         }
+
+        /// <summary>
+        /// Durée définie en secondes
+        /// </summary>
+        public int Duree
+        {
+            get { return _duree; }
+            set { _duree = value; }
+        }
+
 
         public DateTime DateSortie
         {

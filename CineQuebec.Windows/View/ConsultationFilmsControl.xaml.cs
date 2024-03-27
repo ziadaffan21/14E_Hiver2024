@@ -30,6 +30,7 @@ namespace CineQuebec.Windows.View
             {
                 InitializeComponent();
                 lstFilms.ItemsSource = GestionFilmAbonne.ReadFilms();
+                lstProjections.ItemsSource = GestionFilmAbonne.ReadProjections();
             }
             catch(MongoDataConnectionException err) {
                 MessageBox.Show(err.Message, Resource.erreur, MessageBoxButton.OK,MessageBoxImage.Error);
@@ -80,6 +81,12 @@ namespace CineQuebec.Windows.View
             AjoutDetailProjection detailProjection = new AjoutDetailProjection();
             if ((bool)detailProjection.ShowDialog())
                 MessageBox.Show("POIRRRR");
+        }
+
+        private void lstFilms_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Film selectedFilm = lstFilms.SelectedItem as Film;
+            lstProjections.ItemsSource = GestionFilmAbonne.ReadProjectionsById(selectedFilm.Id);
         }
     }
 }

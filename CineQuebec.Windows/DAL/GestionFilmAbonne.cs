@@ -1,5 +1,6 @@
 ﻿using CineQuebec.Windows.DAL.Data;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -36,12 +37,33 @@ namespace CineQuebec.Windows.DAL
             return BaseDeDonne.ReadAbonnes();
         }
 
+        public static List<Projection> ReadProjectionsById(Object idFilm)
+        {
+            //TODO : Trouver comment fair eune requete avec id à la BD.
+            List<Projection> projections = BaseDeDonne.ReadProjections();
+            List<Projection> projectionsFiltre = new();
+
+            foreach (var projection in projections)
+            {
+                if (projection.IdFilm.Equals(idFilm))
+                {
+                    projectionsFiltre.Add(projection);
+                }
+            }
+            return projectionsFiltre;
+
+        }
+
+        public static List<Projection> ReadProjections()
+        {
+            return BaseDeDonne.ReadProjections();
+        }
+
         public async static Task AjouterProjection(Projection projection)
         {
             if (projection is null)
-                throw new ArgumentNullException("Lq projection ne peut pas être null");
+                throw new ArgumentNullException("La projection ne peut pas être null");
             await BaseDeDonne.AjouterProjection(projection);
         }
-
     }
 }

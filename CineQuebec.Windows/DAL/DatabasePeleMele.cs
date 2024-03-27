@@ -54,7 +54,7 @@ namespace CineQuebec.Windows.DAL
             {
                 throw new MongoDataConnectionException("Une erreur s'est produite lors de la connexion à la base de donnée");
             }
-            
+
             return db;
         }
 
@@ -72,6 +72,24 @@ namespace CineQuebec.Windows.DAL
                 throw new MongoDataConnectionException("Une erreur s'est produite lors de la lecture de données d'abonnés");
             }
             return abonnes;
+        }
+
+        public List<Projection> ReadProjections()
+        {
+            var projections = new List<Projection>();
+
+            try
+            {
+                var collection = database.GetCollection<Projection>(PROJECTION);
+                projections = collection.Aggregate().ToList();
+            }
+            catch (Exception)
+            {
+                throw new MongoDataConnectionException("Une erreur s'est produite lors de la lecture de données d'abonnés");
+            }
+
+
+            return projections;
         }
 
         public List<Film> ReadFilms()
@@ -100,7 +118,7 @@ namespace CineQuebec.Windows.DAL
             }
             catch (Exception)
             {
-                
+
                 throw new MongoDataConnectionException("Une erreur s'est produite lors de la modification du film.");
             }
         }
