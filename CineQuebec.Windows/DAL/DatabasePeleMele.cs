@@ -1,4 +1,5 @@
 ﻿using CineQuebec.Windows.DAL.Data;
+using CineQuebec.Windows.DAL.Data.Personne;
 using CineQuebec.Windows.Exceptions;
 using MongoDB.Driver;
 using System;

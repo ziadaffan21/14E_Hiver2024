@@ -1,4 +1,5 @@
 ﻿using CineQuebec.Windows.DAL.Data;
+using CineQuebec.Windows.DAL.Data.Personne;
 using System;
 using System.Collections.Generic;
 using System.Linq;

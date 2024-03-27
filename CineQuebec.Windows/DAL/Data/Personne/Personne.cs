@@ -1,5 +1,6 @@
 ﻿using CineQuebec.Windows.DAL.Interfaces;
 using CineQuebec.Windows.Exceptions.AbonneExceptions.DateAdhesion;
+using CineQuebec.Windows.Exceptions.ActeurExceptions.DateNaissance;
 using CineQuebec.Windows.Exceptions.ActeurExceptions.PrenomEtNom;
 using System;
 using System.Collections.Generic;
@@ -7,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CineQuebec.Windows.DAL.Data
+namespace CineQuebec.Windows.DAL.Data.Personne
 {
     public abstract class Personne : Entity, IPersonne
     {
@@ -50,7 +51,7 @@ namespace CineQuebec.Windows.DAL.Data
             get { return _naissance; }
             set
             {
-                if (!DateTime.TryParse(value.ToString(), out _)) throw new InvalidDateAdhesionException($"Le date {Naissance} est invalid");
+                if (!DateTime.TryParse(value.ToString(), out _)) throw new InvalidDateNaissanceException($"Le date {value} est invalid");
                 _naissance = value;
             }
         }

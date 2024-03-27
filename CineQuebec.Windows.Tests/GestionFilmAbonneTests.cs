@@ -6,6 +6,7 @@ using System.Linq;
 using Moq;
 using System.Text;
 using System.Threading.Tasks;
+using CineQuebec.Windows.DAL.Data.Personne;
 
 namespace CineQuebec.Windows.Tests
 {

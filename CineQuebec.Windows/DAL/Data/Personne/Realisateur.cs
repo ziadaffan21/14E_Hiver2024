@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CineQuebec.Windows.DAL.Data
+namespace CineQuebec.Windows.DAL.Data.Personne
 {
-    public class Realisateur: Personne
+    public class Realisateur : Personne
     {
         #region CONSTRUCTEURS
         public Realisateur()

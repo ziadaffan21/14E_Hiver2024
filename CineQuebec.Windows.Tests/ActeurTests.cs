@@ -3,6 +3,7 @@ using CineQuebec.Windows.Exceptions.ActeurExceptions;
 using CineQuebec.Windows.Exceptions.ActeurExceptions.PrenomEtNom;
 using CineQuebec.Windows.DAL.Interfaces;
 using Moq;
+using CineQuebec.Windows.DAL.Data.Personne;
 
 
 namespace CineQuebec.Windows.Tests

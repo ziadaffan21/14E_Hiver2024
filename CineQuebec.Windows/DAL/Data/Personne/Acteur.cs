@@ -3,11 +3,12 @@ using CineQuebec.Windows.Exceptions.AbonneExceptions.DateAdhesion;
 using CineQuebec.Windows.Exceptions.ActeurExceptions.PrenomEtNom;
 using System;
 using System.Collections.Generic;
+using CineQuebec.Windows.DAL.Data.Personne;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CineQuebec.Windows.DAL.Data
+namespace CineQuebec.Windows.DAL.Data.Personne
 {
     public class Acteur : Personne
     {
