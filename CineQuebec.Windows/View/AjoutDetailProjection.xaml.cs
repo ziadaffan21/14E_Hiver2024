@@ -1,5 +1,7 @@
 ﻿using CineQuebec.Windows.DAL;
 using CineQuebec.Windows.DAL.Data;
+using CineQuebec.Windows.DAL.Interfaces;
+using CineQuebec.Windows.DAL.ServicesInterfaces;
 using CineQuebec.Windows.Exceptions;
 using CineQuebec.Windows.Ressources.i18n;
 using System;
@@ -27,16 +29,20 @@ namespace CineQuebec.Windows.View
     {
         private Projection _projection;
         private string message;
-        private readonly DatabasePeleMele databasePeleMele = new DatabasePeleMele();
+        //private readonly DatabasePeleMele databasePeleMele = new DatabasePeleMele();
+        private readonly IProjectionService _projectionService;
+        private readonly IFilmService _filmService;
 
 
-        public AjoutDetailProjection()
+        public AjoutDetailProjection(IProjectionService projectionService,IFilmService filmService)
         {
             InitializeComponent();
             _projection = new Projection();
+            _projectionService = projectionService;
+            _filmService = filmService;
             DataContext = _projection;
             calendrier.DisplayDateStart = DateTime.Now;
-            
+
         }
 
         private async void btnCreer_Click(object sender, RoutedEventArgs e)
@@ -45,7 +51,8 @@ namespace CineQuebec.Windows.View
             {
                 if (ValiderForm(DateTime.Today))
                 {
-                    await GestionFilmAbonne.AjouterProjection(_projection);
+                    //await GestionFilmAbonne.AjouterProjection(_projection);
+                    await _projectionService.AjouterProjection(_projection);
                     MessageBox.Show(Resource.ajoutReussiProjection, Resource.ajout, MessageBoxButton.OK, MessageBoxImage.Information);
                     DialogResult = true;
                 }
@@ -73,13 +80,13 @@ namespace CineQuebec.Windows.View
 
         private bool ValiderForm(DateTime dateAudjourdhui)
         {
-            if(calendrier.SelectedDate is null ||  calendrier.SelectedDate < dateAudjourdhui)
+            if (calendrier.SelectedDate is null || calendrier.SelectedDate < dateAudjourdhui)
             {
                 message += $"\nLa date sélectionnée doit être plus grande ou égale à {dateAudjourdhui}";
             }
             if (string.IsNullOrWhiteSpace(txtPlace.Text))
                 message += "\nLe nombre de place ne peut pas être vide";
-            if (!int.TryParse(txtPlace.Text.Trim(),out _))
+            if (!int.TryParse(txtPlace.Text.Trim(), out _))
                 message += $"\nLe nombre de place doit être un nombre";
             else
             {
@@ -101,20 +108,21 @@ namespace CineQuebec.Windows.View
 
         private void InitialiserFormulaireAjout()
         {
-            cboFilm.ItemsSource = GestionFilmAbonne.ReadFilms();
+            // cboFilm.ItemsSource = GestionFilmAbonne.ReadFilms();
+            cboFilm.ItemsSource = _filmService.GetAllFilms();
             cboFilm.Focus();
             txtPlace.Focus();
-                        
+
         }
 
         private void cboFilm_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if(cboFilm.SelectedIndex != -1)
+            if (cboFilm.SelectedIndex != -1)
             {
                 Film film = cboFilm.SelectedItem as Film;
                 if (film != null)
                 {
-                    _projection.IdFilm=film.Id;
+                    _projection.IdFilm = film.Id;
                 }
             }
         }

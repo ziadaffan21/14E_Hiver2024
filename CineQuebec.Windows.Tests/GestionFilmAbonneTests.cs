@@ -15,26 +15,27 @@ namespace CineQuebec.Windows.Tests
 {
     public class GestionFilmAbonneTests
     {
-        [Fact]
-        public void Gestion_Film_Abonne_ReadActeurs_Doit_Lire_Tout_Les_Acteurs()
-        {
-            //Arrange
-            var expectedActeurs = new List<Acteur>
-            {
-                new Acteur(),
-                new Acteur(),
-                new Acteur()
-            };
+        //[Fact]
+        //public void Gestion_Film_Abonne_ReadActeurs_Doit_Lire_Tout_Les_Acteurs()
+        //{
+        //    //Arrange
+        //    var expectedActeurs = new List<Acteur>
+        //    {
+        //        new Acteur(),
+        //        new Acteur(),
+        //        new Acteur()
+        //    };
 
-            var mockRepo = new Mock<IDatabasePeleMele>();
-            mockRepo.Setup(x => x.ReadActeurs()).Returns(expectedActeurs);
+        //    var mockRepo = new Mock<IDatabasePeleMele>();
+        //    mockRepo.Setup(x => x.ReadActeurs()).Returns(expectedActeurs);
 
-            //Act
-            var resutl = mockRepo.Object.ReadActeurs();
+        //    //Act
+        //    var resutl = mockRepo.Object.ReadActeurs();
 
-            //Assert
-            Assert.Equal(expectedActeurs.Count, resutl.Count);
+        //    //Assert
+        //    Assert.Equal(expectedActeurs.Count, resutl.Count);
 
-        }
+        //}
+
     }
 }

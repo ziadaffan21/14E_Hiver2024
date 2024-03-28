@@ -1,6 +1,7 @@
 ﻿using CineQuebec.Windows.DAL;
 using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.Enums;
+using CineQuebec.Windows.DAL.ServicesInterfaces;
 using CineQuebec.Windows.DAL.Utils;
 using CineQuebec.Windows.Exceptions;
 using CineQuebec.Windows.Exceptions.FilmExceptions.TitreExceptions;
@@ -31,10 +32,12 @@ namespace CineQuebec.Windows.View
         private Film _film;
         private bool modification;
         private string message;
+        private readonly IFilmService _filmService;
 
-        public DetailFilm(Film film=null)
+        public DetailFilm(IFilmService filmService,Film film=null)
         {
             InitializeComponent();
+            _filmService = filmService;
             _film= film;
             modification = false;
         }
@@ -124,7 +127,8 @@ namespace CineQuebec.Windows.View
                 if(_film is null && ValiderForm())
                 {
                     _film = new Film(txtNom.Text, (Categories)cboCategories.SelectedIndex);
-                    await GestionFilmAbonne.AjouterFilm(_film);
+                    //await GestionFilmAbonne.AjouterFilm(_film);
+                    await _filmService.AjouterFilm(_film);
                     InitialiserFormulaireVisualiser();
                     MessageBox.Show(Resource.ajoutReussi, Resource.ajout, MessageBoxButton.OK, MessageBoxImage.Information);
                     return;
@@ -140,7 +144,8 @@ namespace CineQuebec.Windows.View
                     {
                         _film.Titre = txtNom.Text;
                         _film.Categorie = (Categories)cboCategories.SelectedIndex;
-                        await GestionFilmAbonne.ModifierFilm(_film);
+                        //  await GestionFilmAbonne.ModifierFilm(_film);
+                        await _filmService.ModifierFilm(_film);
                         InitialiserFormulaireVisualiser();
                         MessageBox.Show(Resource.modificationReussi, Resource.modification, MessageBoxButton.OK, MessageBoxImage.Information);
                     }

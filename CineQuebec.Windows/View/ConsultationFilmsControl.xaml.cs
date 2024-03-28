@@ -1,5 +1,7 @@
 ﻿using CineQuebec.Windows.DAL;
 using CineQuebec.Windows.DAL.Data;
+using CineQuebec.Windows.DAL.Interfaces;
+using CineQuebec.Windows.DAL.ServicesInterfaces;
 using CineQuebec.Windows.Exceptions;
 using CineQuebec.Windows.Ressources.i18n;
 using System;
@@ -24,23 +26,33 @@ namespace CineQuebec.Windows.View
     /// </summary>
     public partial class ConsultationFilmsControl : UserControl
     {
-        public ConsultationFilmsControl()
+        private readonly IFilmService _filmService;
+        private readonly IProjectionService _projectionService;
+
+        public ConsultationFilmsControl(IFilmService filmService, IProjectionService projectionService)
+        {
+            _filmService = filmService;
+            _projectionService = projectionService;
+            InitializeComponent();
+            ChargerFilmProjection();
+
+        }
+        private void ChargerFilmProjection()
         {
             try
             {
-                InitializeComponent();
-                lstFilms.ItemsSource = GestionFilmAbonne.ReadFilms();
-                lstProjections.ItemsSource = GestionFilmAbonne.ReadProjections();
+                lstFilms.ItemsSource = _filmService.GetAllFilms();
+                lstProjections.ItemsSource = _projectionService.GetAllProjections();
             }
-            catch(MongoDataConnectionException err) {
-                MessageBox.Show(err.Message, Resource.erreur, MessageBoxButton.OK,MessageBoxImage.Error);
+            catch (MongoDataConnectionException err)
+            {
+                MessageBox.Show(err.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Exception)
             {
                 MessageBox.Show(Resource.erreurGenerique, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
 
      
 
@@ -59,26 +71,28 @@ namespace CineQuebec.Windows.View
             if (lstFilms.SelectedItem != null)
             {
                 Film film =lstFilms.SelectedItem as Film;
-                DetailFilm detailFilm = new DetailFilm(film);
+                DetailFilm detailFilm = new DetailFilm(_filmService,film);
                 if ((bool)detailFilm.ShowDialog())
                 {
-                    lstFilms.ItemsSource = GestionFilmAbonne.ReadFilms();
+                    //lstFilms.ItemsSource = GestionFilmAbonne.ReadFilms();
+                    ChargerFilmProjection();
                 }
             }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            DetailFilm detailFilm = new DetailFilm();
+            DetailFilm detailFilm = new DetailFilm(_filmService);
             if ((bool)detailFilm.ShowDialog())
             {
-                lstFilms.ItemsSource = GestionFilmAbonne.ReadFilms();
+                //lstFilms.ItemsSource = GestionFilmAbonne.ReadFilms();
+                ChargerFilmProjection();
             }
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            AjoutDetailProjection detailProjection = new AjoutDetailProjection();
+            AjoutDetailProjection detailProjection = new AjoutDetailProjection(_projectionService,_filmService);
             if ((bool)detailProjection.ShowDialog())
                 MessageBox.Show("POIRRRR");
         }
@@ -86,7 +100,9 @@ namespace CineQuebec.Windows.View
         private void lstFilms_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Film selectedFilm = lstFilms.SelectedItem as Film;
-            lstProjections.ItemsSource = GestionFilmAbonne.ReadProjectionsById(selectedFilm.Id);
+            //lstProjections.ItemsSource = GestionFilmAbonne.ReadProjectionsById(selectedFilm.Id);
+            lstProjections.ItemsSource = _projectionService.ReadProjectionsById(selectedFilm.Id);
+
         }
     }
 }

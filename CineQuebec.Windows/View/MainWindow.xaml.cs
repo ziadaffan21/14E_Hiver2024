@@ -9,6 +9,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Unity;
 
 namespace CineQuebec.Windows
 {
@@ -27,14 +28,19 @@ namespace CineQuebec.Windows
         public void AdminHomeControl()
         {
             mainContentControl.Content = new AdminHomeControl();
+
         }
         public void ConsultationUtilisateursControl()
         {
-            mainContentControl.Content = new ConsultationAbonnesControl();
+            var container = (IUnityContainer)Application.Current.Resources["UnityContainer"];
+            var consultationAbonnesControl = container.Resolve<ConsultationAbonnesControl>();
+            mainContentControl.Content = consultationAbonnesControl;
         }
         public void ConsultationFilmsControls()
         {
-            mainContentControl.Content = new ConsultationFilmsControl();
+            var container = (IUnityContainer)Application.Current.Resources["UnityContainer"];
+            var consultationFilmsControl = container.Resolve<ConsultationFilmsControl>();
+            mainContentControl.Content = consultationFilmsControl;
         }
 
         private void btnRetour_Click(object sender, RoutedEventArgs e)

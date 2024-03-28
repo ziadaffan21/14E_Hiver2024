@@ -1,5 +1,6 @@
 ﻿using CineQuebec.Windows.DAL;
 using CineQuebec.Windows.DAL.Data;
+using CineQuebec.Windows.DAL.ServicesInterfaces;
 using CineQuebec.Windows.Exceptions;
 using CineQuebec.Windows.Ressources.i18n;
 using System;
@@ -26,12 +27,20 @@ namespace CineQuebec.Windows.View
     /// </summary>
     public partial class ConsultationAbonnesControl : UserControl
     {
-        public ConsultationAbonnesControl()
+        private readonly IAbonneService _abonneService;
+        public ConsultationAbonnesControl(IAbonneService abonneService)
+        {
+            _abonneService = abonneService;
+            InitializeComponent();
+            ChargerFilms();
+
+        }
+        private void ChargerFilms()
         {
             try
             {
-                InitializeComponent();
-                lstUtilisisateurs.ItemsSource = GestionFilmAbonne.ReadAbonne();
+                var abonne = _abonneService.GetAllAbonnes();
+                lstUtilisisateurs.ItemsSource = abonne;
             }
             catch (MongoDataConnectionException err)
             {
@@ -41,7 +50,6 @@ namespace CineQuebec.Windows.View
             {
                 MessageBox.Show(Resource.erreurGenerique, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
         }
     }
 }
