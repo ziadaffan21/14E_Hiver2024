@@ -1,5 +1,6 @@
 ﻿using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.Data.Personne;
+using CineQuebec.Windows.DAL.Interfaces;
 using CineQuebec.Windows.Exceptions;
 using MongoDB.Driver;
 using System;
@@ -12,7 +13,7 @@ using System.Windows.Documents;
 
 namespace CineQuebec.Windows.DAL
 {
-    public class DatabasePeleMele
+    public class DatabasePeleMele : IDatabasePeleMele
     {
         private const string CONNECTION_STRING_NAME = "Mongo";
         private const string DATABASE_STRING_NAME = "Database";
@@ -160,7 +161,7 @@ namespace CineQuebec.Windows.DAL
             try
             {
                 var tableActeur = database.GetCollection<Acteur>(ACTEURS);
-                acteurs =  tableActeur.Aggregate().ToList();
+                acteurs = tableActeur.Aggregate().ToList();
 
             }
             catch (Exception)
