@@ -35,7 +35,7 @@ namespace CineQuebec.Windows.DAL.Data
             get { return _date; }
             set
             {
-                if (!DateTime.TryParse(value.ToString(), out _) || value < DateTime.Today) throw new DateProjectionException($"La date de projection doit être plus grand que {DateTime.Today}");
+                if (!DateTime.TryParse(value.ToString(), out _) ) throw new DateProjectionException($"La date de projection doit être plus grand que {DateTime.Today}");
                 _date = value;
             }
         }

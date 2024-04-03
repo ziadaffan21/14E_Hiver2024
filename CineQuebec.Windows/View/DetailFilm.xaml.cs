@@ -92,18 +92,21 @@ namespace CineQuebec.Windows.View
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
+
             if (_film is null)
             {
                 DialogResult = false;
                 return;
             }
-            if(!modification)
+
+            if (!modification)
                 DialogResult = true;
             else
             {
                 modification = false;
                 InitialiserFormulaireVisualiser();
             }
+
         }
 
         private bool ValiderForm()

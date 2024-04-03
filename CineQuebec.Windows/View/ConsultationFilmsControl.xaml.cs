@@ -94,14 +94,15 @@ namespace CineQuebec.Windows.View
         {
             AjoutDetailProjection detailProjection = new AjoutDetailProjection(_projectionService,_filmService);
             if ((bool)detailProjection.ShowDialog())
-                MessageBox.Show("POIRRRR");
+                return;
         }
 
         private void lstFilms_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Film selectedFilm = lstFilms.SelectedItem as Film;
             //lstProjections.ItemsSource = GestionFilmAbonne.ReadProjectionsById(selectedFilm.Id);
-            lstProjections.ItemsSource = _projectionService.ReadProjectionsById(selectedFilm.Id);
+            if(selectedFilm is not null)
+                lstProjections.ItemsSource = _projectionService.ReadProjectionsById(selectedFilm.Id);
 
         }
     }

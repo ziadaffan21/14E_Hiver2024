@@ -18,11 +18,13 @@ namespace CineQuebec.Windows
     /// </summary>
     public partial class MainWindow : Window
     {
+        public NavigationService NavigationService { get; set; }
         public MainWindow()
         {
             
             InitializeComponent();
             mainContentControl.Content = new ConnexionControl();
+            
         }
 
         public void AdminHomeControl()
@@ -34,6 +36,7 @@ namespace CineQuebec.Windows
         {
             var container = (IUnityContainer)Application.Current.Resources["UnityContainer"];
             var consultationAbonnesControl = container.Resolve<ConsultationAbonnesControl>();
+            
             mainContentControl.Content = consultationAbonnesControl;
         }
         public void ConsultationFilmsControls()
@@ -45,7 +48,10 @@ namespace CineQuebec.Windows
 
         private void btnRetour_Click(object sender, RoutedEventArgs e)
         {
-
+            if (NavigationService.CanGoBack)
+            {
+                NavigationService.GoBack();
+            }
         }
     }
 }

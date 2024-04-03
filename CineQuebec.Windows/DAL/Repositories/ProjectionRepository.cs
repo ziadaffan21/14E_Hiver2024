@@ -32,7 +32,7 @@ namespace CineQuebec.Windows.DAL.Repositories
             }
             catch (Exception)
             {
-                throw new MongoDataConnectionException("Une erreur s'est produite lors de la lecture de données d'abonnés");
+                throw new MongoDataConnectionException("Une erreur s'est produite lors de la lecture de données des projections");
             }
 
 
