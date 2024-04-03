@@ -34,7 +34,7 @@ namespace CineQuebec.Windows.DAL.Data
             set
             {
                 if (string.IsNullOrWhiteSpace(value)) throw new UsernameNullException("Le username ne peut pas etre vide");
-                if (value.Trim().Length < 2 || value.Trim().Length > 15)
+                if (value.Trim().Length < NB_MIN_CARACTERES_USERNAME || value.Trim().Length > NB_MAX_CARACTERES_USERNAME)
                     throw new UsernameLengthException($"Le username doit etre entre {NB_MIN_CARACTERES_USERNAME} et {NB_MAX_CARACTERES_USERNAME} caractères");
                 _username = value.Trim();
             }
@@ -46,7 +46,7 @@ namespace CineQuebec.Windows.DAL.Data
             set
             {
                 if (string.IsNullOrWhiteSpace(value)) throw new PasswordNullException("Le password ne peut pas etre vide");
-                if (value.Trim().Length < 2 || value.Trim().Length > 15)
+                if (value.Trim().Length < NB_MIN_CARACTERES_PASSWORD || value.Trim().Length > NB_MAX_CARACTERES_PASSWORD)
                     throw new PasswordLengthException($"Le password doit etre entre {NB_MIN_CARACTERES_PASSWORD} et {NB_MAX_CARACTERES_PASSWORD} caractères");
                 _password = value.Trim();
             }
