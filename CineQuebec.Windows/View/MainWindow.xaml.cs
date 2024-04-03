@@ -18,7 +18,6 @@ namespace CineQuebec.Windows
     /// </summary>
     public partial class MainWindow : Window
     {
-        public NavigationService NavigationService { get; set; }
         public MainWindow()
         {
             
@@ -27,31 +26,30 @@ namespace CineQuebec.Windows
             
         }
 
-        public void AdminHomeControl()
+        public void ConnecterWindow()
         {
-            mainContentControl.Content = new AdminHomeControl();
-
+            ConnecteWindowPrincipal connecteWindowPrincipal = new ConnecteWindowPrincipal();
+            Application.Current.MainWindow=connecteWindowPrincipal;
+            connecteWindowPrincipal.Show();
+            Close();
         }
-        public void ConsultationUtilisateursControl()
-        {
-            var container = (IUnityContainer)Application.Current.Resources["UnityContainer"];
-            var consultationAbonnesControl = container.Resolve<ConsultationAbonnesControl>();
+        //public void AdminHomeControl()
+        //{
+        //    mainContentControl.Content = new AdminHomeControl();
+
+        //}
+        //public void ConsultationUtilisateursControl()
+        //{
+        //    var container = (IUnityContainer)Application.Current.Resources["UnityContainer"];
+        //    var consultationAbonnesControl = container.Resolve<ConsultationAbonnesControl>();
             
-            mainContentControl.Content = consultationAbonnesControl;
-        }
-        public void ConsultationFilmsControls()
-        {
-            var container = (IUnityContainer)Application.Current.Resources["UnityContainer"];
-            var consultationFilmsControl = container.Resolve<ConsultationFilmsControl>();
-            mainContentControl.Content = consultationFilmsControl;
-        }
-
-        private void btnRetour_Click(object sender, RoutedEventArgs e)
-        {
-            if (NavigationService.CanGoBack)
-            {
-                NavigationService.GoBack();
-            }
-        }
+        //    mainContentControl.Content = consultationAbonnesControl;
+        //}
+        //public void ConsultationFilmsControls()
+        //{
+        //    var container = (IUnityContainer)Application.Current.Resources["UnityContainer"];
+        //    var consultationFilmsControl = container.Resolve<ConsultationFilmsControl>();
+        //    mainContentControl.Content = consultationFilmsControl;
+        //}
     }
 }

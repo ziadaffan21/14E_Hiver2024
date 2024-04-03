@@ -1,4 +1,4 @@
-﻿<Window x:Class="CineQuebec.Windows.MainWindow"
+﻿<Window x:Class="CineQuebec.Windows.View.ConnecteWindowPrincipal"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -10,7 +10,7 @@
         ResizeMode="NoResize"
         Height="700" Width="1200"
          Icon="/Ressources/images/logoCinemaWithoutText.png" >
-   
+
     <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"></RowDefinition>
@@ -21,13 +21,13 @@
                Margin="10,10,10,10" 
                VerticalAlignment="Center"
                Source="/Ressources/images/logoCinema.png"/>
-        <!--<Frame x:Name="mainContentControl" Grid.Row="1" HorizontalAlignment="Center" 
-VerticalAlignment="Center"  NavigationUIVisibility="Visible"/>-->
-        <ContentControl x:Name="mainContentControl" 
+        <Frame x:Name="mainContentControl" Grid.Row="1" HorizontalAlignment="Center" 
+VerticalAlignment="Center"  NavigationUIVisibility="Visible"/>
+        <!--<ContentControl x:Name="mainContentControl" 
                         Grid.Row="1" 
                         HorizontalAlignment="Center" 
                         VerticalAlignment="Center" 
-                        />
+                        />-->
         <!--<Button Grid.Row="0" Name="btnRetour" Width="50" Height="40" Content="Retour" Margin="880,114,270,74" Click="btnRetour_Click" RenderTransformOrigin="-3.856,0.156"/>-->
 
     </Grid>

@@ -28,9 +28,9 @@ namespace CineQuebec.Windows.View
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            
 
-            ((MainWindow)Application.Current.MainWindow).AdminHomeControl();
+
+            ((MainWindow)Application.Current.MainWindow).ConnecterWindow();
         }
     }
 }

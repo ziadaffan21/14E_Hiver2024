@@ -29,12 +29,12 @@ namespace CineQuebec.Windows.View
 
         private void Button_Click_Utilisateurs(object sender, RoutedEventArgs e)
         {
-            ((MainWindow)Application.Current.MainWindow).ConsultationUtilisateursControl();
+            ((ConnecteWindowPrincipal)Application.Current.MainWindow).ConsultationUtilisateursControl();
         }
 
         private void Button_Click_Films(object sender, RoutedEventArgs e)
         {
-            ((MainWindow)Application.Current.MainWindow).ConsultationFilmsControls();
+            ((ConnecteWindowPrincipal)Application.Current.MainWindow).ConsultationFilmsControls();
         }
 
 
