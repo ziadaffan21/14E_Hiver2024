@@ -9,11 +9,11 @@ using System.Threading.Tasks;
 
 namespace CineQuebec.Windows.DAL
 {
-    public static class DataBaseUtils
+    public class DataBaseUtils : IDataBaseUtils
     {
         private const string CONNECTION_STRING_NAME = "Mongo";
         private const string DATABASE_STRING_NAME = "Database";
-        public static IMongoClient OuvrirConnexion()
+        public IMongoClient OuvrirConnexion()
         {
             MongoClient dbClient = null;
             try
@@ -29,7 +29,7 @@ namespace CineQuebec.Windows.DAL
             return dbClient;
         }
 
-        public static IMongoDatabase ConnectDatabase(IMongoClient mongoDBClient)
+        public IMongoDatabase ConnectDatabase(IMongoClient mongoDBClient)
         {
             IMongoDatabase db = null;
             try

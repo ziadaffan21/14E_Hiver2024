@@ -1,4 +1,5 @@
 ﻿using CineQuebec.Windows.DAL.Data;
+using CineQuebec.Windows.DAL.InterfacesRepositorie;
 using CineQuebec.Windows.Exceptions;
 using MongoDB.Driver;
 using System;
@@ -9,15 +10,18 @@ using System.Threading.Tasks;
 
 namespace CineQuebec.Windows.DAL.Repositories
 {
-    public class FilmRepository
+    public class FilmRepository : IFilmRepository
     {
         private const string FILMS = "Films";
         private readonly IMongoClient _mongoBDClinet;
+        private readonly IDataBaseUtils _dataBaseUtils;
+
         private readonly IMongoDatabase _mongoDataBase;
-        public FilmRepository(IMongoClient mongoClient = null)
+        public FilmRepository(IDataBaseUtils dataBaseUtils, IMongoClient mongoClient = null)
         {
-            _mongoBDClinet = mongoClient ?? DataBaseUtils.OuvrirConnexion();
-            _mongoDataBase = DataBaseUtils.ConnectDatabase(_mongoBDClinet);
+            _dataBaseUtils = dataBaseUtils;
+            _mongoBDClinet = mongoClient ?? _dataBaseUtils.OuvrirConnexion();
+            _mongoDataBase = _dataBaseUtils.ConnectDatabase(_mongoBDClinet);
         }
 
         public List<Film> ReadFilms()

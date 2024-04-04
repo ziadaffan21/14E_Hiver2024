@@ -1,5 +1,5 @@
 ﻿using CineQuebec.Windows.DAL.Data;
-using CineQuebec.Windows.DAL.Repositories;
+using CineQuebec.Windows.DAL.InterfacesRepositorie;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
 using MongoDB.Bson;
 using System;
@@ -12,9 +12,9 @@ namespace CineQuebec.Windows.DAL.Services
 {
     public class ProjectionService : IProjectionService
     {
-        private readonly ProjectionRepository _projectionRepository;
+        private readonly IProjectionRepository _projectionRepository;
 
-        public ProjectionService(ProjectionRepository projectionRepository)
+        public ProjectionService(IProjectionRepository projectionRepository)
         {
             _projectionRepository = projectionRepository;
         }

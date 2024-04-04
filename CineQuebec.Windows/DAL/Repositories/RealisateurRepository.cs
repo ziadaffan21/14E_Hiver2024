@@ -11,11 +11,14 @@ namespace CineQuebec.Windows.DAL.Repositories
     {
         private readonly IMongoClient _mongoClient;
         private readonly IMongoDatabase _mongoDatabase;
+        private readonly IDataBaseUtils _dataBaseUtils;
 
-        public RealisateurRepository(IMongoClient mongoClient = null)
+
+        public RealisateurRepository(IDataBaseUtils dataBaseUtils, IMongoClient mongoClient = null)
         {
-            _mongoClient = mongoClient ?? DataBaseUtils.OuvrirConnexion();
-            _mongoDatabase = DataBaseUtils.ConnectDatabase(_mongoClient);
+            _dataBaseUtils = dataBaseUtils;
+            _mongoClient = mongoClient ?? _dataBaseUtils.OuvrirConnexion();
+            _mongoDatabase = _dataBaseUtils.ConnectDatabase(_mongoClient);
         }
     }
 }

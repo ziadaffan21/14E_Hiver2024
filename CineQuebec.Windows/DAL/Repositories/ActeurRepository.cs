@@ -1,4 +1,5 @@
 ﻿using CineQuebec.Windows.DAL.Data.Personne;
+using CineQuebec.Windows.DAL.InterfacesRepositorie;
 using CineQuebec.Windows.Exceptions;
 using MongoDB.Driver;
 using System;
@@ -9,16 +10,19 @@ using System.Threading.Tasks;
 
 namespace CineQuebec.Windows.DAL.Repositories
 {
-    public class ActeurRepository
+    public class ActeurRepository : IActeurRepository
     {
         private const string ACTEURS = "Acteurs";
         private readonly IMongoClient _mongoClient;
+        private readonly IDataBaseUtils _dataBaseUtils;
+
         private readonly IMongoDatabase _mongoDatabase;
 
-        public ActeurRepository(IMongoClient mongoClient = null)
+        public ActeurRepository(IDataBaseUtils dataBaseUtils, IMongoClient mongoClient = null)
         {
-            _mongoClient = mongoClient ?? DataBaseUtils.OuvrirConnexion();
-            _mongoDatabase = DataBaseUtils.ConnectDatabase(_mongoClient);
+            _dataBaseUtils = dataBaseUtils;
+            _mongoClient = mongoClient ?? _dataBaseUtils.OuvrirConnexion();
+            _mongoDatabase = _dataBaseUtils.ConnectDatabase(_mongoClient);
         }
 
         public List<Acteur> ReadActeurs()
