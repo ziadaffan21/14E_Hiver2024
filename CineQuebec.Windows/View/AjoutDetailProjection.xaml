@@ -6,7 +6,8 @@
       xmlns:local="clr-namespace:CineQuebec.Windows.View"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="CineQuebec.Windows.View.AjoutDetailProjection"
       mc:Ignorable="d"
-      Title="AjoutDetailProjection" Loaded="Window_Loaded" Height="291" Width="456" >
+      Title="AjoutDetailProjection" Loaded="Window_Loaded" Height="291" Width="456"
+    >
 
     <!-- Créer un style de présentation pour l'affichage des execptions personnalisées.  -->
     <Window.Resources>
@@ -57,10 +58,10 @@
             </StackPanel>-->
             <!--<Calendar  x:Name="calendrier"  Width="175" HorizontalAlignment="Left" Margin="5" />-->
 
-            <DatePicker x:Name="calendrier"  Grid.Row="0" Grid.Column="1" Width="151" HorizontalAlignment="Left" Margin="5,5,0,20"
+            <DatePicker x:Name="calendrier" Grid.Column="1" Width="151" HorizontalAlignment="Left" Margin="3,0,0,0"
                          SelectedDate="{Binding Date, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" 
                         
-                        Style="{StaticResource CustomErrorControlOnErrorStyle}" RenderTransformOrigin="0.5,0.5" HorizontalContentAlignment="Center" >
+                        Style="{StaticResource CustomErrorControlOnErrorStyle}" RenderTransformOrigin="0.5,0.5" HorizontalContentAlignment="Center" FontSize="14" VerticalAlignment="Center" >
                 <DatePicker.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
@@ -79,12 +80,12 @@
         <TextBox x:Name="txtPrix" Grid.Row="2" Grid.Column="1" Width="125" HorizontalAlignment="Left" Margin="5"/>-->
 
             <TextBlock Grid.Row="1" Grid.Column="0" Text="Film" VerticalAlignment="Bottom" Margin="5"/>
-            <ComboBox x:Name="cboFilm" Grid.Row="1" Grid.Column="1" Width="236" HorizontalAlignment="Left" Margin="5,5,0,5"  Cursor="Hand" SelectionChanged="cboFilm_SelectionChanged"/>
+            <ComboBox x:Name="cboFilm" Grid.Row="1" Grid.Column="1" Width="148" HorizontalAlignment="Left" Margin="5,0,0,0"  Cursor="Hand" SelectionChanged="cboFilm_SelectionChanged"/>
             <TextBlock Grid.Row="2" Grid.Column="0" Text="Place dispo" VerticalAlignment="Bottom" Margin="5"/>
-            <TextBox Grid.Row="2" Grid.Column="1" Width="125" HorizontalAlignment="Left" x:Name="txtPlace" Margin="5" Text="{Binding PlaceDisponible, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" Style="{StaticResource CustomErrorControlOnErrorStyle}"/>
+            <TextBox Grid.Row="2" Grid.Column="1" Width="40" HorizontalAlignment="Left" x:Name="txtPlace" Margin="5,6,0,4" Text="{Binding PlaceDisponible, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" Style="{StaticResource CustomErrorControlOnErrorStyle}"/>
 
 
-            <materialDesign:TimePicker  Name="horloge" Grid.Column="1" HorizontalAlignment="Left" Margin="158,0,0,0" ContextMenuClosing="horloge_ContextMenuClosing" Width="128"/>
+            <materialDesign:TimePicker  Name="horloge" Grid.Column="1" HorizontalAlignment="Left" Margin="160,9,0,0" ContextMenuClosing="horloge_ContextMenuClosing" Width="72" VerticalAlignment="Top" Height="27"/>
             <TextBlock Visibility="Hidden" Text="{Binding SelectedTime, ElementName=horloge, Mode=OneWay, StringFormat=HH:mm}" Grid.Column="1" Margin="151,5,51,5" FontSize="16" VerticalAlignment="Center"/>
         </Grid>
         <!--<StackPanel Grid.Row="1" Grid.Column="1">

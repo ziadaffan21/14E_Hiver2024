@@ -10,18 +10,18 @@
 
         <StackPanel VerticalAlignment="Center" >
             <Label Content="{x:Static rs:Resource.connexion_username}" 
-                   Style="{StaticResource defautLabel}" />
-            <TextBox Width="200"  Style="{StaticResource defautInput}"
+                   Style="{StaticResource MaterialDesignLabel}" />
+            <TextBox Width="200"
                      Margin="0 0 0 10"/>
 
             <Label Content="{x:Static rs:Resource.connexion_password}" 
-                   Style="{StaticResource defautLabel}" />
+                   Style="{StaticResource MaterialDesignLabel}" />
             <TextBox Width="200" 
-                     Style="{StaticResource defautInput}"
+                     
                      Margin="0 0 0 20" />
 
             <Button Content="{x:Static rs:Resource.connexion_connect}" 
-                    Style="{StaticResource defautButton}" Width="100" Click="Button_Click" />
+                     Width="100" Click="Button_Click" />
         </StackPanel>
     </Grid>
 </UserControl>
