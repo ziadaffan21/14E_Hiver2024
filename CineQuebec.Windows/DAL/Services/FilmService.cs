@@ -1,5 +1,5 @@
 ﻿using CineQuebec.Windows.DAL.Data;
-using CineQuebec.Windows.DAL.Repositories;
+using CineQuebec.Windows.DAL.InterfacesRepositorie;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
 using System;
 using System.Collections.Generic;
@@ -11,8 +11,8 @@ namespace CineQuebec.Windows.DAL.Services
 {
     public class FilmService : IFilmService
     {
-        private readonly FilmRepository _filmRepository;
-        public FilmService(FilmRepository filmRepository)
+        private readonly IFilmRepository _filmRepository;
+        public FilmService(IFilmRepository filmRepository)
         {
             _filmRepository = filmRepository;
         }

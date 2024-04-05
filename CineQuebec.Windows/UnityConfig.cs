@@ -1,4 +1,6 @@
-﻿using CineQuebec.Windows.DAL.Interfaces;
+﻿using CineQuebec.Windows.DAL;
+using CineQuebec.Windows.DAL.Interfaces;
+using CineQuebec.Windows.DAL.InterfacesRepositorie;
 using CineQuebec.Windows.DAL.Repositories;
 using CineQuebec.Windows.DAL.Services;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
@@ -19,14 +21,15 @@ namespace CineQuebec.Windows
             var container = new UnityContainer();
 
             // Enregistrement des services
-            container.RegisterType<IActeurService, ActeurService>();
-            container.RegisterType<ActeurRepository>();
-            container.RegisterType<IFilmService, FilmService>();
-            container.RegisterType<FilmService>();
-            container.RegisterType<IProjectionService, ProjectionService>();
-            container.RegisterType<ProjectionService>();
-            container.RegisterType<IAbonneService, AbonneService>();
-            container.RegisterType<AbonneService>();
+            container.RegisterSingleton<IActeurService, ActeurService>();
+            container.RegisterSingleton<IActeurRepository, ActeurRepository>();
+            container.RegisterSingleton<IFilmService, FilmService>();
+            container.RegisterSingleton<IFilmRepository,FilmRepository­>();
+            container.RegisterSingleton<IProjectionService, ProjectionService>();
+            container.RegisterSingleton<IProjectionRepository,ProjectionRepository>();
+            container.RegisterSingleton<IAbonneService, AbonneService>();
+            container.RegisterSingleton<IAbonneRepository,AbonneRepository>();
+            container.RegisterSingleton<IDataBaseUtils, DataBaseUtils>();
 
             // Enregistrement du conteneur dans le conteneur lui-même
             container.RegisterInstance<IUnityContainer>(container);

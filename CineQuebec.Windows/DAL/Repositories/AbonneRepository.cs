@@ -1,4 +1,5 @@
 ﻿using CineQuebec.Windows.DAL.Data;
+using CineQuebec.Windows.DAL.InterfacesRepositorie;
 using CineQuebec.Windows.Exceptions;
 using MongoDB.Driver;
 using System;
@@ -9,17 +10,20 @@ using System.Threading.Tasks;
 
 namespace CineQuebec.Windows.DAL.Repositories
 {
-    public class AbonneRepository
+    public class AbonneRepository : IAbonneRepository
     {
         private readonly IMongoClient _mongoDBClient;
         private readonly IMongoDatabase _database;
+        private readonly IDataBaseUtils _dataBaseUtils;
         private const string ABONNE = "Abonnes";
 
 
-        public AbonneRepository(IMongoClient mongoDBClient = null)
+        public AbonneRepository(IDataBaseUtils dataBaseUtils,IMongoClient mongoDBClient = null)
         {
-            _mongoDBClient = mongoDBClient ?? DataBaseUtils.OuvrirConnexion();
-            _database = DataBaseUtils.ConnectDatabase(_mongoDBClient);
+            _dataBaseUtils = dataBaseUtils;
+            _mongoDBClient = mongoDBClient ?? _dataBaseUtils.OuvrirConnexion();
+            _database = _dataBaseUtils.ConnectDatabase(_mongoDBClient);
+            _dataBaseUtils = dataBaseUtils;
         }
 
         public List<Abonne> ReadAbonnes()

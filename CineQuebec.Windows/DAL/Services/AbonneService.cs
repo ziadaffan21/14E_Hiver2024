@@ -1,5 +1,5 @@
 ﻿using CineQuebec.Windows.DAL.Data;
-using CineQuebec.Windows.DAL.Repositories;
+using CineQuebec.Windows.DAL.InterfacesRepositorie;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
 using System;
 using System.Collections.Generic;
@@ -11,9 +11,9 @@ namespace CineQuebec.Windows.DAL.Services
 {
     public class AbonneService : IAbonneService
     {
-        private readonly AbonneRepository _abonneRepository;
+        private readonly IAbonneRepository _abonneRepository;
 
-        public AbonneService(AbonneRepository abonneRepository)
+        public AbonneService(IAbonneRepository abonneRepository)
         {
             _abonneRepository = abonneRepository;
         }

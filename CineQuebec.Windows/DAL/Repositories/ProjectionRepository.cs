@@ -1,5 +1,6 @@
 ﻿using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.Interfaces;
+using CineQuebec.Windows.DAL.InterfacesRepositorie;
 using CineQuebec.Windows.Exceptions;
 using MongoDB.Driver;
 using System;
@@ -10,16 +11,19 @@ using System.Threading.Tasks;
 
 namespace CineQuebec.Windows.DAL.Repositories
 {
-    public class ProjectionRepository
+    public class ProjectionRepository : IProjectionRepository
     {
         private readonly IMongoClient _mongoClient;
         private readonly IMongoDatabase _mongoDatabase;
+        private readonly IDataBaseUtils _dataBaseUtils;
+
         private const string PROJECTION = "Projections";
 
-        public ProjectionRepository(IMongoClient mongoClient = null)
+        public ProjectionRepository(IDataBaseUtils dataBaseUtils, IMongoClient mongoClient = null)
         {
-            _mongoClient = mongoClient ?? DataBaseUtils.OuvrirConnexion();
-            _mongoDatabase = DataBaseUtils.ConnectDatabase(_mongoClient);
+            _dataBaseUtils = dataBaseUtils;
+            _mongoClient = mongoClient ?? _dataBaseUtils.OuvrirConnexion();
+            _mongoDatabase = _dataBaseUtils.ConnectDatabase(_mongoClient);
         }
         public List<Projection> ReadProjections()
         {

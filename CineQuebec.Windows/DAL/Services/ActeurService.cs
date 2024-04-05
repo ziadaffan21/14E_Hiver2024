@@ -1,5 +1,5 @@
 ﻿using CineQuebec.Windows.DAL.Data.Personne;
-using CineQuebec.Windows.DAL.Repositories;
+using CineQuebec.Windows.DAL.InterfacesRepositorie;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
 using System;
 using System.Collections.Generic;
@@ -11,9 +11,9 @@ namespace CineQuebec.Windows.DAL.Services
 {
     public class ActeurService : IActeurService
     {
-        private readonly ActeurRepository _acteurRepository;
+        private readonly IActeurRepository _acteurRepository;
 
-        public ActeurService(ActeurRepository acteurRepository)
+        public ActeurService(IActeurRepository acteurRepository)
         {
             _acteurRepository = acteurRepository;
         }
