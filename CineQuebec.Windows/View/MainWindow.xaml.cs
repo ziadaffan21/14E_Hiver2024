@@ -1,4 +1,5 @@
-﻿using CineQuebec.Windows.View;
+﻿using CineQuebec.Windows.DAL.ServicesInterfaces;
+using CineQuebec.Windows.View;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -22,8 +23,11 @@ namespace CineQuebec.Windows
         {
             
             InitializeComponent();
-            mainContentControl.Content = new ConnexionControl();
-            
+            var container = (IUnityContainer)Application.Current.Resources["UnityContainer"];
+            var connexionControl = container.Resolve<ConnexionControl>();
+
+            mainContentControl.Content = connexionControl;
+
         }
 
         public void ConnecterWindow()

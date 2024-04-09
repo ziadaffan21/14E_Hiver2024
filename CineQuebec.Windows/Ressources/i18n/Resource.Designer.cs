@@ -115,6 +115,15 @@ namespace CineQuebec.Windows.Ressources.i18n {
         }
         
         /// <summary>
+        ///   Recherche une chaîne localisée semblable à User a été ajouté avec succés..
+        /// </summary>
+        public static string ajoutUser {
+            get {
+                return ResourceManager.GetString("ajoutUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Recherche une chaîne localisée semblable à Ciné Québec.
         /// </summary>
         public static string app_name {
@@ -129,6 +138,15 @@ namespace CineQuebec.Windows.Ressources.i18n {
         public static string connexion_connect {
             get {
                 return ResourceManager.GetString("connexion.connect", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Créer un compte.
+        /// </summary>
+        public static string connexion_creer {
+            get {
+                return ResourceManager.GetString("connexion.creer", resourceCulture);
             }
         }
         
@@ -165,6 +183,33 @@ namespace CineQuebec.Windows.Ressources.i18n {
         public static string erreurGenerique {
             get {
                 return ResourceManager.GetString("erreurGenerique", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Une erreur s&apos;est produite lors de l&apos;ajout d&apos;un abonné.
+        /// </summary>
+        public static string errorAjoutUser {
+            get {
+                return ResourceManager.GetString("errorAjoutUser", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Un abonne existe déjà avec le meme username.
+        /// </summary>
+        public static string existingAbonne {
+            get {
+                return ResourceManager.GetString("existingAbonne", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Doublon d&apos;un abonné.
+        /// </summary>
+        public static string existingAbonneTitre {
+            get {
+                return ResourceManager.GetString("existingAbonneTitre", resourceCulture);
             }
         }
         

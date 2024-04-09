@@ -22,6 +22,8 @@
 
             <Button Content="{x:Static rs:Resource.connexion_connect}" 
                      Width="100" Click="Button_Click" />
+            <Button Content="{x:Static rs:Resource.connexion_creer}"
+                    Width="141" Margin="0,10,0,5" Click="Button_Creer_Compte"/>
         </StackPanel>
     </Grid>
 </UserControl>

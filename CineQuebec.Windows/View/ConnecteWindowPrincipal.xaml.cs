@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CineQuebec.Windows.DAL.Interfaces;
+using CineQuebec.Windows.DAL.ServicesInterfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;

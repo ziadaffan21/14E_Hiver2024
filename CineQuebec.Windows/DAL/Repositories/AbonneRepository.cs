@@ -1,6 +1,9 @@
 ﻿using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.InterfacesRepositorie;
 using CineQuebec.Windows.Exceptions;
+using CineQuebec.Windows.Exceptions.AbonneExceptions;
+using CineQuebec.Windows.Exceptions.EntitysExceptions;
+using MongoDB.Bson;
 using MongoDB.Driver;
 using System;
 using System.Collections.Generic;
@@ -18,7 +21,7 @@ namespace CineQuebec.Windows.DAL.Repositories
         private const string ABONNE = "Abonnes";
 
 
-        public AbonneRepository(IDataBaseUtils dataBaseUtils,IMongoClient mongoDBClient = null)
+        public AbonneRepository(IDataBaseUtils dataBaseUtils, IMongoClient mongoDBClient = null)
         {
             _dataBaseUtils = dataBaseUtils;
             _mongoDBClient = mongoDBClient ?? _dataBaseUtils.OuvrirConnexion();
@@ -40,6 +43,47 @@ namespace CineQuebec.Windows.DAL.Repositories
                 throw new MongoDataConnectionException("Une erreur s'est produite lors de la lecture de données d'abonnés");
             }
             return abonnes;
+        }
+
+        public async Task<bool> Add(Abonne abonne)
+        {
+            ArgumentNullException.ThrowIfNull(abonne);
+
+            try
+            {
+                var collection = _database.GetCollection<Abonne>(ABONNE);
+                var existingAbonne = collection.Find(x => x.Username == abonne.Username).FirstOrDefault();
+                if (existingAbonne is null)
+                    await collection.InsertOneAsync(abonne);
+                else throw new ExistingAbonneException($"L'abonne avec le username '{abonne.Username}' exite déjà");
+
+                return true;
+            }
+            catch (Exception)
+            {
+                throw ;
+            }
+        }
+
+        public async Task<Abonne> GetAbonne(ObjectId id)
+        {
+            ArgumentNullException.ThrowIfNull(id);
+
+            if (Guid.TryParse(id.ToString(), out _))
+                throw new InvalidGuidException($"L'id {id} n'est pas valide.");
+
+            Abonne abonne = null;
+            try
+            {
+                var collection = _database.GetCollection<Abonne>(ABONNE);
+                abonne = await collection.Find(x => x.Id == id).FirstOrDefaultAsync();
+            }
+            catch (Exception)
+            {
+                throw ;
+            }
+
+            return abonne;
         }
     }
 }

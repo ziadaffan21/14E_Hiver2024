@@ -15,10 +15,10 @@ namespace CineQuebec.Windows.DAL.Data
     public class Abonne : Entity, IAbonne
     {
         #region CONSTANTES
-        const byte NB_MIN_CARACTERES_USERNAME = 2;
-        const byte NB_MAX_CARACTERES_USERNAME = 50;
-        const byte NB_MAX_CARACTERES_PASSWORD = 50;
-        const byte NB_MIN_CARACTERES_PASSWORD = 2;
+        public const byte NB_MIN_CARACTERES_USERNAME = 2;
+        public const byte NB_MAX_CARACTERES_USERNAME = 50;
+        public const byte NB_MAX_CARACTERES_PASSWORD = 50;
+        public const byte NB_MIN_CARACTERES_PASSWORD = 2;
         #endregion
 
         #region ATTRIBUTS

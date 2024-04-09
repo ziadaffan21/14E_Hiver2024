@@ -1,4 +1,7 @@
 ﻿using CineQuebec.Windows.DAL;
+using CineQuebec.Windows.DAL.Data;
+using CineQuebec.Windows.DAL.ServicesInterfaces;
+using MongoDB.Bson.IO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +16,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Unity;
 
 namespace CineQuebec.Windows.View
 {
@@ -23,14 +27,24 @@ namespace CineQuebec.Windows.View
     {
         public ConnexionControl()
         {
+
             InitializeComponent();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-
-
             ((MainWindow)Application.Current.MainWindow).ConnecterWindow();
+        }
+
+        private void Button_Creer_Compte(object sender, RoutedEventArgs e)
+        {
+            var container = (IUnityContainer)Application.Current.Resources["UnityContainer"];
+            var ajoutUser = container.Resolve<AjoutUser>();
+
+            if ((bool)ajoutUser.ShowDialog())
+            {
+               
+            }
         }
     }
 }
