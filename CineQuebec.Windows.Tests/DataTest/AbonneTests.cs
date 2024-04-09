@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CineQuebec.Windows.Tests
+namespace CineQuebec.Windows.Tests.DataTest
 {
     public class AbonneTests
     {
@@ -23,7 +23,8 @@ namespace CineQuebec.Windows.Tests
         #endregion
 
         #region MÉTHODES
-        public AbonneTests() {
+        public AbonneTests()
+        {
             _abonne = new Abonne(USERNAME, PASSWORD, DATE);
         }
 
@@ -64,13 +65,22 @@ namespace CineQuebec.Windows.Tests
         }
 
         [Fact]
-        public void Username_Password_Date_Prorietes()
+        public void Username_Match_Abonne_Username()
         {
             Assert.Equal(USERNAME, _abonne.Username);
-            Assert.Equal(PASSWORD, _abonne.Password);
-            Assert.Equal(DATE, _abonne.DateAdhesion);
         }
 
+        [Fact]
+        public void Password_Match_Abonne_Password()
+        {
+            Assert.Equal(PASSWORD, _abonne.Password);
+        }
+
+        [Fact]
+        public void Date_Match_Abonne_Date()
+        {
+            Assert.Equal(DATE, _abonne.DateAdhesion);
+        }
         #endregion
     }
 }

@@ -6,7 +6,7 @@ using Moq;
 using CineQuebec.Windows.DAL.Data.Personne;
 
 
-namespace CineQuebec.Windows.Tests
+namespace CineQuebec.Windows.Tests.DataTest
 {
     public class ActeurTests
     {
