@@ -21,8 +21,7 @@
                Margin="10,10,10,10" 
                VerticalAlignment="Center"
                Source="/Ressources/images/logoCinema.png"/>
-        <Frame x:Name="mainContentControl" Grid.Row="1" HorizontalAlignment="Center" 
-VerticalAlignment="Center"  NavigationUIVisibility="Visible"/>
+        <Frame x:Name="mainContentControl" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"  NavigationUIVisibility="Visible" />
         <!--<ContentControl x:Name="mainContentControl" 
                         Grid.Row="1" 
                         HorizontalAlignment="Center" 

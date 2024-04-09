@@ -1,6 +1,7 @@
 ﻿using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.InterfacesRepositorie;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
+using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,6 +21,16 @@ namespace CineQuebec.Windows.DAL.Services
         public List<Abonne> GetAllAbonnes()
         {
             return _abonneRepository.ReadAbonnes();
+        }
+        public async Task<bool> Add(Abonne abonne)
+        {
+            bool result = await _abonneRepository.Add(abonne);
+            return result;
+        }
+
+        public Task<Abonne> GetAbonne(ObjectId id)
+        {
+            return _abonneRepository.GetAbonne(id);
         }
     }
 }

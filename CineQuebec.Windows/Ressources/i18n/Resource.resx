@@ -135,11 +135,17 @@
   <data name="ajoutReussiProjection" xml:space="preserve">
     <value>La projection a bien été ajoutée</value>
   </data>
+  <data name="ajoutUser" xml:space="preserve">
+    <value>User a été ajouté avec succés.</value>
+  </data>
   <data name="app_name" xml:space="preserve">
     <value>Ciné Québec</value>
   </data>
   <data name="connexion.connect" xml:space="preserve">
     <value>Connexion</value>
+  </data>
+  <data name="connexion.creer" xml:space="preserve">
+    <value>Créer un compte</value>
   </data>
   <data name="connexion.password" xml:space="preserve">
     <value>Mot de passe :</value>
@@ -152,6 +158,15 @@
   </data>
   <data name="erreurGenerique" xml:space="preserve">
     <value>Une erreur s'est produite</value>
+  </data>
+  <data name="errorAjoutUser" xml:space="preserve">
+    <value>Une erreur s'est produite lors de l'ajout d'un abonné</value>
+  </data>
+  <data name="existingAbonne" xml:space="preserve">
+    <value>Un abonne existe déjà avec le meme username</value>
+  </data>
+  <data name="existingAbonneTitre" xml:space="preserve">
+    <value>Doublon d'un abonné</value>
   </data>
   <data name="modification" xml:space="preserve">
     <value>Modification</value>

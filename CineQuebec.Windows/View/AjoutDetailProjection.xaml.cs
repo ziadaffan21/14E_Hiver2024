@@ -34,7 +34,7 @@ namespace CineQuebec.Windows.View
         private readonly IFilmService _filmService;
 
 
-        public AjoutDetailProjection(IProjectionService projectionService,IFilmService filmService)
+        public AjoutDetailProjection(IProjectionService projectionService, IFilmService filmService)
         {
             InitializeComponent();
             _projection = new Projection();
@@ -52,6 +52,9 @@ namespace CineQuebec.Windows.View
                 if (ValiderForm(DateTime.Today))
                 {
                     //await GestionFilmAbonne.AjouterProjection(_projection);
+
+                    DateTime formatedTime = GetDateAndTime(_projection.Date, (DateTime)horloge.SelectedTime);
+                    _projection.Date = formatedTime;
                     await _projectionService.AjouterProjection(_projection);
                     MessageBox.Show(Resource.ajoutReussiProjection, Resource.ajout, MessageBoxButton.OK, MessageBoxImage.Information);
                     DialogResult = true;
@@ -73,6 +76,19 @@ namespace CineQuebec.Windows.View
 
         }
 
+        private DateTime GetDateAndTime(DateTime date, DateTime time)
+        {
+            try
+            {
+                DateTime newDate = new(date.Year, date.Month, date.Day, time.Hour, time.Minute, 0);
+                return newDate;
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+        }
+
         private void btnAnnuler_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
@@ -84,17 +100,25 @@ namespace CineQuebec.Windows.View
             {
                 message += $"\nLa date sélectionnée doit être plus grande ou égale à {dateAudjourdhui}";
             }
+
+            if (horloge.SelectedTime is null)
+            {
+                message += "\nIl faut sélectionner une heure pour la projection";
+            }
+
+
+
             if (string.IsNullOrWhiteSpace(txtPlace.Text))
                 message += "\nLe nombre de place ne peut pas être vide";
             if (!int.TryParse(txtPlace.Text.Trim(), out _))
                 message += $"\nLe nombre de place doit être un nombre";
-            else
-            {
-                if (int.Parse(txtPlace.Text.Trim()) < 0)
-                    message += "\nLe nombre de place ne peut pas être inférieur à 0";
-            }
+
+            if (int.Parse(txtPlace.Text.Trim()) < 0)
+                message += "\nLe nombre de place ne peut pas être inférieur à 0";
+
             if (cboFilm.SelectedIndex == -1)
                 message += "\nVous devez assigner un film";
+
             if (string.IsNullOrWhiteSpace(message))
                 return true;
             else
@@ -125,6 +149,14 @@ namespace CineQuebec.Windows.View
                     _projection.IdFilm = film.Id;
                 }
             }
+        }
+
+
+
+        private void horloge_ContextMenuClosing(object sender, ContextMenuEventArgs e)
+        {
+            MessageBox.Show("OK");
+
         }
     }
 }

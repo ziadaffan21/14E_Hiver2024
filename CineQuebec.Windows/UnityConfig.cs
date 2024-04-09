@@ -4,6 +4,7 @@ using CineQuebec.Windows.DAL.InterfacesRepositorie;
 using CineQuebec.Windows.DAL.Repositories;
 using CineQuebec.Windows.DAL.Services;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
+using CineQuebec.Windows.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +31,8 @@ namespace CineQuebec.Windows
             container.RegisterSingleton<IAbonneService, AbonneService>();
             container.RegisterSingleton<IAbonneRepository,AbonneRepository>();
             container.RegisterSingleton<IDataBaseUtils, DataBaseUtils>();
+            container.RegisterType<ConnexionControl>();
+            container.RegisterType<AjoutUser>();
 
             // Enregistrement du conteneur dans le conteneur lui-même
             container.RegisterInstance<IUnityContainer>(container);
