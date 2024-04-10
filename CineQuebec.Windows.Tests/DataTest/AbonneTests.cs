@@ -25,7 +25,7 @@ namespace CineQuebec.Windows.Tests.DataTest
         #region MÉTHODES
         public AbonneTests()
         {
-            _abonne = new Abonne(USERNAME, PASSWORD, DATE);
+            _abonne = new Abonne(USERNAME, DATE);
         }
 
         [Fact]
@@ -46,23 +46,23 @@ namespace CineQuebec.Windows.Tests.DataTest
             Assert.Throws<UsernameNullException>(() => new Abonne(null, DATE));
         }
 
-        [Fact]
-        public void Validation_Fail_Si_Longueur_Password_Inferieur_A_Min()
-        {
-            Assert.Throws<PasswordLengthException>(() => new Abonne(USERNAME, STRING_UN_CARACTERE, DATE));
-        }
+        //[Fact]
+        //public void Validation_Fail_Si_Longueur_Password_Inferieur_A_Min()
+        //{
+        //    Assert.Throws<PasswordLengthException>(() => new Abonne(USERNAME, STRING_UN_CARACTERE, DATE));
+        //}
 
-        [Fact]
-        public void Validation_Fail_Si_Longueur_Password_Superieur_A_Max()
-        {
-            Assert.Throws<PasswordLengthException>(() => new Abonne(USERNAME, STRING_LONG, DATE));
-        }
+        //[Fact]
+        //public void Validation_Fail_Si_Longueur_Password_Superieur_A_Max()
+        //{
+        //    Assert.Throws<PasswordLengthException>(() => new Abonne(USERNAME, STRING_LONG, DATE));
+        //}
 
-        [Fact]
-        public void Validation_Fail_Si_Password_Est_Null()
-        {
-            Assert.Throws<PasswordNullException>(() => new Abonne(USERNAME, null, DATE));
-        }
+        //[Fact]
+        //public void Validation_Fail_Si_Password_Est_Null()
+        //{
+        //    Assert.Throws<PasswordNullException>(() => new Abonne(USERNAME, null, DATE));
+        //}
 
         [Fact]
         public void Username_Match_Abonne_Username()
@@ -70,11 +70,11 @@ namespace CineQuebec.Windows.Tests.DataTest
             Assert.Equal(USERNAME, _abonne.Username);
         }
 
-        [Fact]
-        public void Password_Match_Abonne_Password()
-        {
-            Assert.Equal(PASSWORD, _abonne.Password);
-        }
+        //[Fact]
+        //public void Password_Match_Abonne_Password()
+        //{
+        //    Assert.Equal(PASSWORD, _abonne.Password);
+        //}
 
         [Fact]
         public void Date_Match_Abonne_Date()
