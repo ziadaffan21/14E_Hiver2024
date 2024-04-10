@@ -24,7 +24,7 @@ namespace CineQuebec.Windows.DAL.Data
         #region ATTRIBUTS
         private string? _username;
         private DateTime _dateAdhesion;
-        private string _password;
+        private byte[] _password;
         #endregion
 
         #region PROPRIÉTÉS ET INDEXEURS
@@ -40,16 +40,10 @@ namespace CineQuebec.Windows.DAL.Data
             }
         }
 
-        public string Password
+        public byte[] Password
         {
             get { return _password; }
-            set
-            {
-                if (string.IsNullOrWhiteSpace(value)) throw new PasswordNullException("Le password ne peut pas etre vide");
-                if (value.Trim().Length < NB_MIN_CARACTERES_PASSWORD || value.Trim().Length > NB_MAX_CARACTERES_PASSWORD)
-                    throw new PasswordLengthException($"Le password doit etre entre {NB_MIN_CARACTERES_PASSWORD} et {NB_MAX_CARACTERES_PASSWORD} caractères");
-                _password = value.Trim();
-            }
+            set { _password = value; }
         }
 
         public DateTime DateAdhesion
@@ -61,6 +55,7 @@ namespace CineQuebec.Windows.DAL.Data
                 _dateAdhesion = value;
             }
         }
+        public byte[] Salt { get; set; }
         #endregion
 
         #region CONSTRUCTEURS
@@ -72,9 +67,10 @@ namespace CineQuebec.Windows.DAL.Data
         {
             DateAdhesion = dateAdhesion;
         }
-        public Abonne(string username, string password, DateTime dateAdhesion) : this(username, dateAdhesion)
+        public Abonne(string username, byte[] password, byte[] salt, DateTime dateAdhesion) : this(username, dateAdhesion)
         {
             Password = password;
+            Salt = salt;
         }
         #endregion
 

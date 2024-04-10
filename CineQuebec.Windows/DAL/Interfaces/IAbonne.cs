@@ -3,7 +3,7 @@
     public interface IAbonne
     {
         DateTime DateAdhesion { get; set; }
-        string Password { get; set; }
+        byte[] Password { get; set; }
         string Username { get; set; }
 
         string ToString();

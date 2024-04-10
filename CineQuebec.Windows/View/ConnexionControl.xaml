@@ -12,12 +12,13 @@
             <Label Content="{x:Static rs:Resource.connexion_username}" 
                    Style="{StaticResource MaterialDesignLabel}" />
             <TextBox Width="200"
-                     Margin="0 0 0 10"/>
+                     Margin="0 0 0 10"
+                     x:Name="txtUsername"/>
 
             <Label Content="{x:Static rs:Resource.connexion_password}" 
                    Style="{StaticResource MaterialDesignLabel}" />
-            <TextBox Width="200" 
-                     
+            <PasswordBox Width="200" 
+                     x:Name="txtPassword"
                      Margin="0 0 0 20" />
 
             <Button Content="{x:Static rs:Resource.connexion_connect}" 

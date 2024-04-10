@@ -1,4 +1,5 @@
 ﻿using CineQuebec.Windows.DAL.Data;
+using CineQuebec.Windows.DAL.Interfaces;
 using CineQuebec.Windows.DAL.InterfacesRepositorie;
 using CineQuebec.Windows.Exceptions;
 using CineQuebec.Windows.Exceptions.AbonneExceptions;
@@ -49,41 +50,44 @@ namespace CineQuebec.Windows.DAL.Repositories
         {
             ArgumentNullException.ThrowIfNull(abonne);
 
-            try
-            {
-                var collection = _database.GetCollection<Abonne>(ABONNE);
-                var existingAbonne = collection.Find(x => x.Username == abonne.Username).FirstOrDefault();
-                if (existingAbonne is null)
-                    await collection.InsertOneAsync(abonne);
-                else throw new ExistingAbonneException($"L'abonne avec le username '{abonne.Username}' exite déjà");
 
-                return true;
-            }
-            catch (Exception)
-            {
-                throw ;
-            }
+            var collection = _database.GetCollection<Abonne>(ABONNE);
+            var existingAbonne = collection.Find(x => x.Username == abonne.Username).FirstOrDefault();
+
+            if (existingAbonne is null)
+                await collection.InsertOneAsync(abonne);
+            else throw new ExistingAbonneException($"L'abonne avec le username '{abonne.Username}' exite déjà");
+
+            return true;
+
         }
 
         public async Task<Abonne> GetAbonne(ObjectId id)
         {
-            ArgumentNullException.ThrowIfNull(id);
 
             if (Guid.TryParse(id.ToString(), out _))
                 throw new InvalidGuidException($"L'id {id} n'est pas valide.");
 
             Abonne abonne = null;
-            try
-            {
-                var collection = _database.GetCollection<Abonne>(ABONNE);
-                abonne = await collection.Find(x => x.Id == id).FirstOrDefaultAsync();
-            }
-            catch (Exception)
-            {
-                throw ;
-            }
+
+            var collection = _database.GetCollection<Abonne>(ABONNE);
+            abonne = await collection.Find(x => x.Id == id).FirstOrDefaultAsync();
+
+
 
             return abonne;
         }
+
+        public async Task<bool> GetAbonneConnexion(string username, string password)
+        {
+            var collection = _database.GetCollection<Abonne>(ABONNE);
+            Abonne abonne = await collection.Find(x => x.Username == username).FirstOrDefaultAsync();
+
+            if (abonne is null)
+                return false;
+
+            return PasswodHasher.VerifyHash(password, abonne.Salt, abonne.Password);
+        }
+
     }
 }
