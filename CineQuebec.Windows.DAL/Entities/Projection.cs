@@ -62,7 +62,8 @@ namespace CineQuebec.Windows.DAL.Data
 
         public Projection()
         {
-
+            Date = DateTime.Today;
+            NbPlaces = NB_PLACE_MIN;    
         }
 
         public Projection(DateTime date, int placeDisponible, Film film)
