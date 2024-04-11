@@ -1,6 +1,6 @@
 ﻿namespace CineQuebec.Windows.Tests.ServiceTest
 {
-    internal class AbonneServiceTest
+    public class AbonneServiceTest
     {
     }
 }
