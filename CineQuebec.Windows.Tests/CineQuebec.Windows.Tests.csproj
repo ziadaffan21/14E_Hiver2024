@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Konscious.Security.Cryptography.Argon2" Version="1.3.0" />
     <PackageReference Include="MaterialDesignColors" Version="3.0.0" />
     <PackageReference Include="MaterialDesignThemes" Version="5.0.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.6.0" />
@@ -26,7 +27,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CineQuebec.Windows\CineQuebec.Windows.csproj" />
+    <ProjectReference Include="..\CineQuebec.Windows.BLL\CineQuebec.Windows.BLL.csproj" />
+    <ProjectReference Include="..\CineQuebec.Windows.DAL\CineQuebec.Windows.DAL.csproj" />
   </ItemGroup>
 
 </Project>

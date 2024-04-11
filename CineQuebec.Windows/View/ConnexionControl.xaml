@@ -1,29 +1,30 @@
 ﻿<UserControl x:Class="CineQuebec.Windows.View.ConnexionControl"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:local="clr-namespace:CineQuebec.Windows.View"
-            
-             xmlns:rs="clr-namespace:CineQuebec.Windows.Ressources.i18n">
-    <Grid Background="White" >
 
-        <StackPanel VerticalAlignment="Center" >
-            <Label Content="{x:Static rs:Resource.connexion_username}" 
+             xmlns:rs="clr-namespace:CineQuebec.Windows.Ressources.i18n">
+    <Grid Background="White">
+
+        <StackPanel VerticalAlignment="Center">
+            <Label Content="{x:Static rs:Resource.connexion_username}"
                    Style="{StaticResource MaterialDesignLabel}" />
             <TextBox Width="200"
-                     Margin="0 0 0 10"/>
+                     Margin="0 0 0 10"
+                     x:Name="txtUsername" />
 
-            <Label Content="{x:Static rs:Resource.connexion_password}" 
+            <Label Content="{x:Static rs:Resource.connexion_password}"
                    Style="{StaticResource MaterialDesignLabel}" />
-            <TextBox Width="200" 
-                     
+            <PasswordBox Width="200"
+                     x:Name="txtPassword"
                      Margin="0 0 0 20" />
 
-            <Button Content="{x:Static rs:Resource.connexion_connect}" 
+            <Button Content="{x:Static rs:Resource.connexion_connect}"
                      Width="100" Click="Button_Click" />
             <Button Content="{x:Static rs:Resource.connexion_creer}"
-                    Width="141" Margin="0,10,0,5" Click="Button_Creer_Compte"/>
+                    Width="141" Margin="0,10,0,5" Click="Button_Creer_Compte" />
         </StackPanel>
     </Grid>
 </UserControl>
