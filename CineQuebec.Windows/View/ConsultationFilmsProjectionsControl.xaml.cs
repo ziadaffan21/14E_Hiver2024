@@ -11,12 +11,12 @@ namespace CineQuebec.Windows.View
     /// <summary>
     /// Logique d'interaction pour ConsultationFilmsControl.xaml
     /// </summary>
-    public partial class ConsultationFilmsControl : UserControl
+    public partial class ConsultationFilmsProjectionsControl : UserControl
     {
         private readonly IFilmService _filmService;
         private readonly IProjectionService _projectionService;
 
-        public ConsultationFilmsControl(IFilmService filmService, IProjectionService projectionService)
+        public ConsultationFilmsProjectionsControl(IFilmService filmService, IProjectionService projectionService)
         {
             _filmService = filmService;
             _projectionService = projectionService;
@@ -58,36 +58,30 @@ namespace CineQuebec.Windows.View
                 Film film = lstFilms.SelectedItem as Film;
                 DetailFilm detailFilm = new DetailFilm(_filmService, film);
                 if ((bool)detailFilm.ShowDialog())
-                {
-                    //lstFilms.ItemsSource = GestionFilmAbonne.ReadFilms();
                     ChargerFilmProjection();
-                }
+                
             }
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            DetailFilm detailFilm = new DetailFilm(_filmService);
-            if ((bool)detailFilm.ShowDialog())
-            {
-                //lstFilms.ItemsSource = GestionFilmAbonne.ReadFilms();
-                ChargerFilmProjection();
-            }
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            AjoutDetailProjection detailProjection = new AjoutDetailProjection(_projectionService, _filmService);
-            if ((bool)detailProjection.ShowDialog())
-                return;
         }
 
         private void lstFilms_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             Film selectedFilm = lstFilms.SelectedItem as Film;
-            //lstProjections.ItemsSource = GestionFilmAbonne.ReadProjectionsById(selectedFilm.Id);
             if (selectedFilm is not null)
                 lstProjections.ItemsSource = _projectionService.ReadProjectionsById(selectedFilm.Id);
+        }
+
+        private void btnAjoutFilm_Click(object sender, RoutedEventArgs e)
+        {
+            DetailFilm detailFilm = new DetailFilm(_filmService);
+            if ((bool)detailFilm.ShowDialog())
+                ChargerFilmProjection();
+        }
+
+        private void btnAjoutProjection_Click(object sender, RoutedEventArgs e)
+        {
+            AjoutDetailProjection detailProjection = new AjoutDetailProjection(_projectionService, _filmService);
+            if ((bool)detailProjection.ShowDialog())
+                ChargerFilmProjection();
         }
     }
 }

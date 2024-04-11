@@ -75,11 +75,9 @@ namespace CineQuebec.Windows.DAL.Data
 
         public override string ToString()
         {
-            return $"{Utils.Utils.GetMoisNom(Date).ToUpper()} {Date.Hour:00}:{Date.Minute:00}";
+            return $"{Date.Day} {Utils.Utils.GetMoisNom(Date).ToUpper()} {Date.Hour:00}:{Date.Minute:00}";
         }
-
-            return $"{Date.Day} {Utils.Utils.GetMoisNom(Date)} {Date.Year} {Date.Hour:00}:{Date.Minute:00}";
-        }
+        
         #endregion
     }
 }

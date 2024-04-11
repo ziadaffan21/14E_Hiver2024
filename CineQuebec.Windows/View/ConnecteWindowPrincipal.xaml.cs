@@ -25,7 +25,7 @@ namespace CineQuebec.Windows.View
         public void ConsultationFilmsControls()
         {
             var container = (IUnityContainer)Application.Current.Resources["UnityContainer"];
-            var consultationFilmsControl = container.Resolve<ConsultationFilmsControl>();
+            var consultationFilmsControl = container.Resolve<ConsultationFilmsProjectionsControl>();
             mainContentControl.Content = consultationFilmsControl;
         }
     }
