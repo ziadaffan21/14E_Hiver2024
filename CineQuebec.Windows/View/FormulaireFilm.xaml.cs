@@ -49,7 +49,7 @@ namespace CineQuebec.Windows.View
             cboCategories.IsEnabled = true;
             txtNom.IsEnabled = true;
             lblTitre.Text = "Ajouter un film";
-            btnModifier.Content = "Ajouter";
+            btnAjouterModifier.Content = "Ajouter";
             btnOK.Content = "Annuler";
         }
 
@@ -60,7 +60,7 @@ namespace CineQuebec.Windows.View
             dateSortie.SelectedDate = _film.DateSortie;
             txtNom.IsEnabled = false;
             cboCategories.IsEnabled = false;
-            btnModifier.Content = "Modifier";
+            btnAjouterModifier.Content = "Modifier";
             btnOK.Content = "Ok";
         }
 
@@ -68,15 +68,15 @@ namespace CineQuebec.Windows.View
         {
             try
             {
-                txtNom.Text = _film.Titre;
-                cboCategories.SelectedIndex = (int)_film.Categorie;
-                dateSortie.SelectedDate = _film.DateSortie;
-                txtNom.IsEnabled = true;
-                cboCategories.IsEnabled = true;
-                txtNom.Focus();
-                cboCategories.Focus();
-                btnModifier.Content = "Enregistrer";
-                btnOK.Content = "Annuler";
+            txtNom.Text = _film.Titre;
+            cboCategories.SelectedIndex = (int)_film.Categorie;
+            dateSortie.SelectedDate = _film.DateSortie;
+            txtNom.IsEnabled = true;
+            cboCategories.IsEnabled = true;
+            txtNom.Focus();
+            cboCategories.Focus();
+            btnAjouterModifier.Content = "Enregistrer";
+            btnOK.Content = "Annuler";
             }
             catch (Exception e)
             {
@@ -125,8 +125,8 @@ namespace CineQuebec.Windows.View
             {
                 if (_film is null && ValiderForm())
                 {
-                    DateTime dateTime = (DateTime)dateSortie.SelectedDate;
-                    _film = new Film(txtNom.Text, (DateTime)dateSortie.SelectedDate, (Categories)cboCategories.SelectedIndex);
+                    DateTime dateTime = (DateTime)dateSortie.SelectedDate ;
+                    _film = new Film(txtNom.Text, (DateTime)dateSortie.SelectedDate,int.Parse(txtDuree.Text), (Categories)cboCategories.SelectedIndex);
                     await _filmService.AjouterFilm(_film);
                     InitialiserFormulaireVisualiser();
                     MessageBox.Show(Resource.ajoutReussi, Resource.ajout, MessageBoxButton.OK, MessageBoxImage.Information);
@@ -162,5 +162,6 @@ namespace CineQuebec.Windows.View
                 MessageBox.Show(Resource.erreurGenerique, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
     }
 }
