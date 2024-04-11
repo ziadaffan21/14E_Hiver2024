@@ -1,24 +1,11 @@
-﻿using CineQuebec.Windows.DAL.Data;
+﻿using CineQuebec.Windows.DAL;
+using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
 using CineQuebec.Windows.Exceptions;
 using CineQuebec.Windows.Exceptions.AbonneExceptions;
 using CineQuebec.Windows.Ressources.i18n;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Konscious.Security.Cryptography;
-using CineQuebec.Windows.DAL;
 
 namespace CineQuebec.Windows.View
 {
@@ -30,6 +17,7 @@ namespace CineQuebec.Windows.View
         private Abonne _abonne;
 
         private readonly IAbonneService _abonneService;
+
         public AjoutUser(IAbonneService abonneService)
         {
             InitializeComponent();
@@ -71,13 +59,13 @@ namespace CineQuebec.Windows.View
             {
                 MessageBox.Show(Resource.erreurGenerique, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
         }
 
         private void btnAnnuler_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
         }
+
         private bool ValidationFormulaire()
         {
             StringBuilder sb = new StringBuilder();

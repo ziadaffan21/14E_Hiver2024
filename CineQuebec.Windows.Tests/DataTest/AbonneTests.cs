@@ -1,28 +1,22 @@
 ﻿using CineQuebec.Windows.DAL.Data;
-using CineQuebec.Windows.DAL.Interfaces;
-using CineQuebec.Windows.Exceptions.AbonneExceptions.Password;
 using CineQuebec.Windows.Exceptions.AbonneExceptions.Username;
-using CineQuebec.Windows.Exceptions.ActeurExceptions.PrenomEtNom;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CineQuebec.Windows.Tests.DataTest
 {
     public class AbonneTests
     {
         #region CONSTANTES
+
         private const string USERNAME = "Username Abonne";
         private DateTime DATE = new DateTime(1990, 10, 10);
-        private string PASSWORD = "123";
         private string STRING_UN_CARACTERE = "a";
         private string STRING_LONG = "nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss";
         private Abonne _abonne;
-        #endregion
+
+        #endregion CONSTANTES
 
         #region MÉTHODES
+
         public AbonneTests()
         {
             _abonne = new Abonne(USERNAME, DATE);
@@ -81,6 +75,7 @@ namespace CineQuebec.Windows.Tests.DataTest
         {
             Assert.Equal(DATE, _abonne.DateAdhesion);
         }
-        #endregion
+
+        #endregion MÉTHODES
     }
 }

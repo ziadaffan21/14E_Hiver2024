@@ -1,19 +1,14 @@
 ﻿using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.Enums;
-using CineQuebec.Windows.Exceptions.ActeurExceptions.PrenomEtNom;
 using CineQuebec.Windows.Exceptions.FilmExceptions.CategorieExceptions;
 using CineQuebec.Windows.Exceptions.FilmExceptions.TitreExceptions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace CineQuebec.Windows.Tests.DataTest
 {
     public class FilmTests
     {
         #region CONSTANTES
+
         private const string TITRE_FILM = "Titre Film";
         private DateTime DATE = new DateTime(1990, 10, 10);
         private string STRING_VIDE = "";
@@ -21,7 +16,8 @@ namespace CineQuebec.Windows.Tests.DataTest
         private Categories categorie = Categories.ACTION;
         private Film film;
         private string STRING_LONG = "nssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss";
-        #endregion
+
+        #endregion CONSTANTES
 
         #region MÉTHODES
 
@@ -34,29 +30,28 @@ namespace CineQuebec.Windows.Tests.DataTest
         public void Titre_Throw_Titre_Null_Exception_Si_Titre_Null()
         {
             //Act et Assert
-            Assert.Throws<TitreNullException>(() => new Film(STRING_VIDE, Categories.COMEDY));
+            Assert.Throws<TitreNullException>(() => new Film(STRING_VIDE, DATE, Categories.COMEDY));
         }
 
         [Fact]
         public void Titre_Throw_TitreLengthException_Si_Titre_Est_Long()
         {
             //Act et Assert
-            Assert.Throws<TitreLengthException>(() => new Film(STRING_LONG, Categories.COMEDY));
-
+            Assert.Throws<TitreLengthException>(() => new Film(STRING_LONG, DATE, Categories.COMEDY));
         }
 
         [Fact]
         public void Titre_Throw_TitreLengthException_Si_Titre_Est_Court()
         {
             //Act et Assert
-            Assert.Throws<TitreLengthException>(() => new Film(STRING_UN_CARACTERE, Categories.COMEDY));
+            Assert.Throws<TitreLengthException>(() => new Film(STRING_UN_CARACTERE, DATE, Categories.COMEDY));
         }
 
         [Fact]
         public void Categorie_Throw_CategorieUndefinedException_Si_Categorie_Est_Null()
         {
             //Act et Assert
-            Assert.Throws<CategorieUndefinedException>(() => new Film(TITRE_FILM, (Categories)999));
+            Assert.Throws<CategorieUndefinedException>(() => new Film(TITRE_FILM, DATE, (Categories)999));
         }
 
         [Fact]
@@ -64,7 +59,6 @@ namespace CineQuebec.Windows.Tests.DataTest
         {
             //Act et Assert
             Assert.Equal(TITRE_FILM, film.Titre);
-
         }
 
         [Fact]
@@ -82,6 +76,7 @@ namespace CineQuebec.Windows.Tests.DataTest
 
             Assert.Equal(Categories.ACTION, film.Categorie);
         }
-        #endregion
+
+        #endregion MÉTHODES
     }
 }

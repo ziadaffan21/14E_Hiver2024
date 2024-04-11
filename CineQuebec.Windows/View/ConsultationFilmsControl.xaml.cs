@@ -1,23 +1,10 @@
-﻿using CineQuebec.Windows.DAL;
-using CineQuebec.Windows.DAL.Data;
-using CineQuebec.Windows.DAL.Interfaces;
+﻿using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
 using CineQuebec.Windows.Exceptions;
 using CineQuebec.Windows.Ressources.i18n;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CineQuebec.Windows.View
 {
@@ -35,8 +22,8 @@ namespace CineQuebec.Windows.View
             _projectionService = projectionService;
             InitializeComponent();
             ChargerFilmProjection();
-
         }
+
         private void ChargerFilmProjection()
         {
             try
@@ -54,8 +41,6 @@ namespace CineQuebec.Windows.View
             }
         }
 
-     
-
         /// <summary>
         /// Événement lancé lors de lu double click d'un élément dans la liste des films
         /// </summary>
@@ -70,8 +55,8 @@ namespace CineQuebec.Windows.View
         {
             if (lstFilms.SelectedItem != null)
             {
-                Film film =lstFilms.SelectedItem as Film;
-                DetailFilm detailFilm = new DetailFilm(_filmService,film);
+                Film film = lstFilms.SelectedItem as Film;
+                DetailFilm detailFilm = new DetailFilm(_filmService, film);
                 if ((bool)detailFilm.ShowDialog())
                 {
                     //lstFilms.ItemsSource = GestionFilmAbonne.ReadFilms();
@@ -92,7 +77,7 @@ namespace CineQuebec.Windows.View
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            AjoutDetailProjection detailProjection = new AjoutDetailProjection(_projectionService,_filmService);
+            AjoutDetailProjection detailProjection = new AjoutDetailProjection(_projectionService, _filmService);
             if ((bool)detailProjection.ShowDialog())
                 return;
         }
@@ -101,9 +86,8 @@ namespace CineQuebec.Windows.View
         {
             Film selectedFilm = lstFilms.SelectedItem as Film;
             //lstProjections.ItemsSource = GestionFilmAbonne.ReadProjectionsById(selectedFilm.Id);
-            if(selectedFilm is not null)
+            if (selectedFilm is not null)
                 lstProjections.ItemsSource = _projectionService.ReadProjectionsById(selectedFilm.Id);
-
         }
     }
 }
