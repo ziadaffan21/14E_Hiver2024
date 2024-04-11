@@ -70,7 +70,7 @@
         <Label Grid.Row="2" Style="{StaticResource MaterialDesignLabel}" Content="Film" VerticalAlignment="Center" Margin="5"/>
         <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox }" x:Name="cboFilm" Grid.Row="2" Grid.Column="1" Width="191" HorizontalAlignment="Left"  Cursor="Hand" SelectionChanged="cboFilm_SelectionChanged"/>
         <Label Grid.Row="3" Style="{StaticResource MaterialDesignLabel}" Grid.Column="0" Content="Places disponibles" VerticalAlignment="Bottom" Margin="5"/>
-        <TextBox Grid.Row="3" Grid.Column="1" Width="40" HorizontalAlignment="Left" x:Name="txtPlace" Margin="5,6,0,4" Text="{Binding PlaceDisponible, UpdateSourceTrigger=PropertyChanged, ValidatesOnExceptions=True}" />
+        <TextBox Grid.Row="3" Grid.Column="1" Width="40" HorizontalAlignment="Left" x:Name="txtPlace" Margin="5,6,0,4" Text="{Binding PlaceDisponible, UpdateSourceTrigger=Default, ValidatesOnExceptions=True}" />
         <TextBlock Visibility="Hidden" Text="{Binding SelectedTime, ElementName=horloge, Mode=OneWay, StringFormat=HH:mm}" Grid.Column="1" Margin="151,5,51,5" FontSize="16" VerticalAlignment="Center"/>
 
         <!--<StackPanel Grid.Row="1" Grid.Column="1">
