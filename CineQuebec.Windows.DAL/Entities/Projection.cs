@@ -8,7 +8,7 @@ namespace CineQuebec.Windows.DAL.Data
     {
         #region CONSTANTES
 
-        private const byte NB_PLACE_MIN = 0;
+        public const int NB_PLACE_MIN = 1;
 
         #endregion CONSTANTES
 
@@ -57,13 +57,6 @@ namespace CineQuebec.Windows.DAL.Data
         #endregion PROPRIÉTÉS ET INDEXEURS
 
         #region CONSTRUCTEURS
-
-        //public Projection(DateTime date, ushort placeDispo,string idFilm)
-        //{
-        //    Date=date;
-        //    PlaceDisponible=placeDispo;
-        //    IdFilm = ObjectId.Parse(idFilm);
-        //}
         public Projection()
         {
             Date = DateTime.Today;

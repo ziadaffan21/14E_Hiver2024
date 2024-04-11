@@ -9,10 +9,7 @@ namespace CineQuebec.Windows.DAL.Enums
         DRAMA,
         HORROR,
         ROMANCE,
-
-        [Description("Science-fiction")]
         SCIENCE_FICTION,
-
         THRILLER,
         DOCUMENTARY,
         ANIMATION,

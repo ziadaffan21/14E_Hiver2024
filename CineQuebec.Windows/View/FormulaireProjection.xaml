@@ -3,7 +3,6 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:local="clr-namespace:CineQuebec.Windows.View"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="CineQuebec.Windows.View.AjoutDetailProjection"
       mc:Ignorable="d"
       Title="AjoutDetailProjection" Loaded="Window_Loaded" Height="291" Width="456">

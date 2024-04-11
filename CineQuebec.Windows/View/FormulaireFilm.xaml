@@ -49,7 +49,7 @@
 
         <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Orientation="Horizontal">
             <Button x:Name="btnOK" Content="Ok" Width="150" Margin="5" Cursor="Hand" Click="btnOK_Click" />
-            <Button x:Name="btnModifier" Content="Modifier" Width="150" Margin="5" Cursor="Hand" Click="btnModifier_Click" />
+            <Button x:Name="btnModifier" Content="Modifier" Width="150" Margin="5" Cursor="Hand" Click="btnAjouterModifier_Click" />
         </StackPanel>
     </Grid>
 </Window>

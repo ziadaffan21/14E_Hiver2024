@@ -65,6 +65,8 @@ namespace CineQuebec.Windows.View
 
         private void InitialiserFormulaireModification()
         {
+            try
+            {
             txtNom.Text = _film.Titre;
             cboCategories.SelectedIndex = (int)_film.Categorie;
             dateSortie.SelectedDate = _film.DateSortie;
@@ -74,6 +76,12 @@ namespace CineQuebec.Windows.View
             cboCategories.Focus();
             btnModifier.Content = "Enregistrer";
             btnOK.Content = "Annuler";
+            }
+            catch (Exception e)
+            {
+                //TODO : Terminer l'exception ici
+                MessageBox.Show(e.Message);
+            }
         }
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
@@ -109,7 +117,7 @@ namespace CineQuebec.Windows.View
                 return false;
         }
 
-        private async void btnModifier_Click(object sender, RoutedEventArgs e)
+        private async void btnAjouterModifier_Click(object sender, RoutedEventArgs e)
         {
             try
             {

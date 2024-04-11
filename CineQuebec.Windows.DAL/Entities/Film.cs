@@ -42,7 +42,15 @@ namespace CineQuebec.Windows.DAL.Data
         public int Duree
         {
             get { return _duree; }
-            set { _duree = value; }
+            set 
+            {
+                if (value <= 0)
+                {
+                    throw new ArgumentOutOfRangeException("La durée ne peut pas être négative");
+                }
+                _duree = value; 
+            
+            }
         }
 
         public DateTime DateSortie
@@ -69,16 +77,6 @@ namespace CineQuebec.Windows.DAL.Data
 
         #region CONSTRUCTEURS
 
-        public Film()
-        {
-        }
-
-        //public Film(string titre, Categories categorie)
-        //{
-        //    Titre = titre;
-        //    Categorie = categorie;
-        //}
-
         public Film(string titre, DateTime dateSortie, Categories categorie)
         {
             Titre = titre;
@@ -92,7 +90,7 @@ namespace CineQuebec.Windows.DAL.Data
 
         public override string ToString()
         {
-            return $"{Titre}";
+            return $"{Titre} ({DateSortie.Year})";
         }
 
         #endregion MÉTHODES
