@@ -1,22 +1,11 @@
-﻿using CineQuebec.Windows.DAL.Data;
+﻿using CineQuebec.Windows.DAL;
+using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
 using CineQuebec.Windows.Exceptions;
 using CineQuebec.Windows.Exceptions.AbonneExceptions;
 using CineQuebec.Windows.Ressources.i18n;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace CineQuebec.Windows.View
 {
@@ -26,7 +15,9 @@ namespace CineQuebec.Windows.View
     public partial class AjoutUser : Window
     {
         private Abonne _abonne;
+
         private readonly IAbonneService _abonneService;
+
         public AjoutUser(IAbonneService abonneService)
         {
             InitializeComponent();
@@ -39,16 +30,18 @@ namespace CineQuebec.Windows.View
             {
                 if (ValidationFormulaire())
                 {
-                    _abonne = new Abonne(txtUsername.Text, txtPassword.Password, DateTime.Now);
+                    _abonne = new Abonne(txtUsername.Text, DateTime.Now);
+                    _abonne.Salt = PasswodHasher.CreateSalt();
+                    _abonne.Password = PasswodHasher.HashPassword(txtPassword.Password.ToString(), _abonne.Salt);
                     bool result = await _abonneService.Add(_abonne);
                     if (result)
                     {
-                        MessageBox.Show(Resource.ajoutUser, Resource.ajout, MessageBoxButton.OKCancel, MessageBoxImage.Information);
+                        MessageBox.Show(Resource.ajoutUser, Resource.ajout, MessageBoxButton.OK, MessageBoxImage.Information);
                         DialogResult = true;
                     }
                     else
                     {
-                        MessageBox.Show(Resource.errorAjoutUser, Resource.erreur, MessageBoxButton.OKCancel, MessageBoxImage.Error);
+                        MessageBox.Show(Resource.errorAjoutUser, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
 
                         DialogResult = false;
                     }
@@ -57,7 +50,6 @@ namespace CineQuebec.Windows.View
             catch (ExistingAbonneException ex)
             {
                 MessageBox.Show(ex.Message, Resource.existingAbonneTitre, MessageBoxButton.OK, MessageBoxImage.Error);
-
             }
             catch (MongoDataConnectionException ex)
             {
@@ -67,13 +59,13 @@ namespace CineQuebec.Windows.View
             {
                 MessageBox.Show(Resource.erreurGenerique, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
         }
 
         private void btnAnnuler_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false;
         }
+
         private bool ValidationFormulaire()
         {
             StringBuilder sb = new StringBuilder();
