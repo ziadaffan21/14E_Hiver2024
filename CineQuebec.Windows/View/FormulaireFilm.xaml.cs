@@ -4,6 +4,7 @@ using CineQuebec.Windows.DAL.ServicesInterfaces;
 using CineQuebec.Windows.DAL.Utils;
 using CineQuebec.Windows.Exceptions;
 using CineQuebec.Windows.Ressources.i18n;
+using System.Text;
 using System.Windows;
 
 namespace CineQuebec.Windows.View
@@ -67,15 +68,15 @@ namespace CineQuebec.Windows.View
         {
             try
             {
-            txtNom.Text = _film.Titre;
-            cboCategories.SelectedIndex = (int)_film.Categorie;
-            dateSortie.SelectedDate = _film.DateSortie;
-            txtNom.IsEnabled = true;
-            cboCategories.IsEnabled = true;
-            txtNom.Focus();
-            cboCategories.Focus();
-            btnModifier.Content = "Enregistrer";
-            btnOK.Content = "Annuler";
+                txtNom.Text = _film.Titre;
+                cboCategories.SelectedIndex = (int)_film.Categorie;
+                dateSortie.SelectedDate = _film.DateSortie;
+                txtNom.IsEnabled = true;
+                cboCategories.IsEnabled = true;
+                txtNom.Focus();
+                cboCategories.Focus();
+                btnModifier.Content = "Enregistrer";
+                btnOK.Content = "Annuler";
             }
             catch (Exception e)
             {
@@ -103,18 +104,19 @@ namespace CineQuebec.Windows.View
 
         private bool ValiderForm()
         {
-            if (string.IsNullOrWhiteSpace(txtNom.Text))
-                message += "Le nom du film ne peut pas être vide";
-            if(!DateTime.TryParse(dateSortie.SelectedDate.ToString(),out _))
-                message += $"\nLa date ne peut pas etre null.";
+            StringBuilder sb = new();
+
+            sb.AppendLine(string.IsNullOrWhiteSpace(txtNom.Text) ? "Le nom du film ne peut pas être vide" : "");
+            sb.AppendLine(!DateTime.TryParse(dateSortie.SelectedDate.ToString(), out _) ? $"\nLa date ne peut pas etre null." : "");
+            sb.AppendLine(cboCategories.SelectedIndex == -1 ? message += "\nVous devez assigner une catégorie" : "");
+
             if (txtNom.Text.Trim().Length < Film.NB_MIN_CARACTERES_USERNAME || txtNom.Text.Trim().Length > Film.NB_MAX_CARACTERES_USERNAME)
-                message += $"\nLe titre doit etre entre {Film.NB_MIN_CARACTERES_USERNAME} et {Film.NB_MAX_CARACTERES_USERNAME} caractères.";
-            if (cboCategories.SelectedIndex == -1)
-                message += "\nVous devez assigner une catégorie";
-            if (string.IsNullOrWhiteSpace(message))
+                sb.AppendLine($"\nLe titre doit etre entre {Film.NB_MIN_CARACTERES_USERNAME} et {Film.NB_MAX_CARACTERES_USERNAME} caractères.");  
+
+            if (sb.Length <= 0)
                 return true;
-            else
-                return false;
+                
+            return false;
         }
 
         private async void btnAjouterModifier_Click(object sender, RoutedEventArgs e)
@@ -123,7 +125,7 @@ namespace CineQuebec.Windows.View
             {
                 if (_film is null && ValiderForm())
                 {
-                    DateTime dateTime = (DateTime)dateSortie.SelectedDate ;
+                    DateTime dateTime = (DateTime)dateSortie.SelectedDate;
                     _film = new Film(txtNom.Text, (DateTime)dateSortie.SelectedDate, (Categories)cboCategories.SelectedIndex);
                     await _filmService.AjouterFilm(_film);
                     InitialiserFormulaireVisualiser();

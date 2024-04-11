@@ -39,7 +39,7 @@ namespace CineQuebec.Windows.View
                 MessageBox.Show(Resource.erreurGenerique, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        priv
+        
 
         /// <summary>
         /// Événement lancé lors de lu double click d'un élément dans la liste des films
@@ -68,6 +68,7 @@ namespace CineQuebec.Windows.View
             Film selectedFilm = lstFilms.SelectedItem as Film;
             if (selectedFilm is not null)
                 lstProjections.ItemsSource = _projectionService.ReadProjectionsById(selectedFilm.Id);
+            gpoProjections.Header = selectedFilm is not null ? $"Projections ({selectedFilm.Titre})" : "Projections";
         }
 
         private void btnAjoutFilm_Click(object sender, RoutedEventArgs e)
