@@ -37,7 +37,7 @@ namespace CineQuebec.Windows.DAL.Data
         }
 
         /// <summary>
-        /// Durée définie en secondes
+        /// Durée définie en minutes
         /// </summary>
         public int Duree
         {

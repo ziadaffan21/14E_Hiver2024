@@ -29,7 +29,6 @@ namespace CineQuebec.Windows.View
             try
             {
                 lstFilms.ItemsSource = _filmService.GetAllFilms();
-                lstProjections.ItemsSource = _projectionService.GetAllProjections();
             }
             catch (MongoDataConnectionException err)
             {
@@ -40,6 +39,7 @@ namespace CineQuebec.Windows.View
                 MessageBox.Show(Resource.erreurGenerique, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        priv
 
         /// <summary>
         /// Événement lancé lors de lu double click d'un élément dans la liste des films

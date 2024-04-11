@@ -18,7 +18,9 @@ namespace CineQuebec.Windows.DAL.Data
 
         private int _placeDisponible;
 
-        private ObjectId _idFilm;
+        private Film _film;
+
+       
 
         #endregion ATTRIBUTS
 
@@ -43,24 +45,33 @@ namespace CineQuebec.Windows.DAL.Data
                 _placeDisponible = value;
             }
         }
-
-        public ObjectId IdFilm
+        public Film Film
         {
-            get { return _idFilm; }
+            get { return _film; }
             set
             {
-                if (!ObjectId.TryParse(value.ToString(), out _)) throw new InvalidGuidException($"L'id {IdFilm} est invalid");
-                _idFilm = value;
+                if (value is null) throw new ArgumentNullException($"L'id {_film} est invalid");
+                _film = value;
             }
         }
+
 
         #endregion PROPRIÉTÉS ET INDEXEURS
 
         #region CONSTRUCTEURS
+
         public Projection()
         {
-            Date = DateTime.Today;
+
         }
+
+        public Projection(DateTime date, int placeDisponible, Film film)
+        {
+            Date = date;
+            PlaceDisponible = placeDisponible;
+            Film = film;
+        }
+
 
         #endregion CONSTRUCTEURS
 
