@@ -1,10 +1,25 @@
-﻿using CineQuebec.Windows.DAL.Data;
+﻿using CineQuebec.Windows.DAL;
+using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.Enums;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
 using CineQuebec.Windows.DAL.Utils;
 using CineQuebec.Windows.Exceptions;
+using CineQuebec.Windows.Exceptions.FilmExceptions.TitreExceptions;
 using CineQuebec.Windows.Ressources.i18n;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
 namespace CineQuebec.Windows.View
 {
@@ -13,16 +28,17 @@ namespace CineQuebec.Windows.View
     /// </summary>
     public partial class DetailFilm : Window
     {
+
         private Film _film;
         private bool modification;
         private string message;
         private readonly IFilmService _filmService;
 
-        public DetailFilm(IFilmService filmService, Film film = null)
+        public DetailFilm(IFilmService filmService,Film film=null)
         {
             InitializeComponent();
             _filmService = filmService;
-            _film = film;
+            _film= film;
             modification = false;
         }
 
@@ -31,13 +47,14 @@ namespace CineQuebec.Windows.View
             cboCategories.ItemsSource = UtilEnum.GetAllDescriptions<Categories>();
             if (_film is null)
             {
+                
                 InitialiserFormulaireAjout();
             }
             else
             {
                 InitialiserFormulaireVisualiser();
             }
-        }
+       }
 
         private void InitialiserFormulaireAjout()
         {
@@ -51,12 +68,10 @@ namespace CineQuebec.Windows.View
             btnModifier.Content = "Ajouter";
             btnOK.Content = "Annuler";
         }
-
         private void InitialiserFormulaireVisualiser()
         {
-            txtNom.Text = _film.Titre;
+            txtNom.Text=_film.Titre;
             cboCategories.SelectedIndex = (int)_film.Categorie;
-            dateSortie.SelectedDate = _film.DateSortie;
             txtNom.IsEnabled = false;
             cboCategories.IsEnabled = false;
             btnModifier.Content = "Modifier";
@@ -67,7 +82,6 @@ namespace CineQuebec.Windows.View
         {
             txtNom.Text = _film.Titre;
             cboCategories.SelectedIndex = (int)_film.Categorie;
-            dateSortie.SelectedDate = _film.DateSortie;
             txtNom.IsEnabled = true;
             cboCategories.IsEnabled = true;
             txtNom.Focus();
@@ -78,6 +92,7 @@ namespace CineQuebec.Windows.View
 
         private void btnOK_Click(object sender, RoutedEventArgs e)
         {
+
             if (_film is null)
             {
                 DialogResult = false;
@@ -91,14 +106,14 @@ namespace CineQuebec.Windows.View
                 modification = false;
                 InitialiserFormulaireVisualiser();
             }
+
         }
 
         private bool ValiderForm()
         {
+
             if (string.IsNullOrWhiteSpace(txtNom.Text))
                 message += "Le nom du film ne peut pas être vide";
-            if(!DateTime.TryParse(dateSortie.SelectedDate.ToString(),out _))
-                message += $"\nLa date ne peut pas etre null.";
             if (txtNom.Text.Trim().Length < Film.NB_MIN_CARACTERES_USERNAME || txtNom.Text.Trim().Length > Film.NB_MAX_CARACTERES_USERNAME)
                 message += $"\nLe titre doit etre entre {Film.NB_MIN_CARACTERES_USERNAME} et {Film.NB_MAX_CARACTERES_USERNAME} caractères.";
             if (cboCategories.SelectedIndex == -1)
@@ -108,15 +123,14 @@ namespace CineQuebec.Windows.View
             else
                 return false;
         }
-
         private async void btnModifier_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (_film is null && ValiderForm())
+                if(_film is null && ValiderForm())
                 {
-                    DateTime dateTime = (DateTime)dateSortie.SelectedDate ;
-                    _film = new Film(txtNom.Text, (DateTime)dateSortie.SelectedDate, (Categories)cboCategories.SelectedIndex);
+                    _film = new Film(txtNom.Text, (Categories)cboCategories.SelectedIndex);
+                    //await GestionFilmAbonne.AjouterFilm(_film);
                     await _filmService.AjouterFilm(_film);
                     InitialiserFormulaireVisualiser();
                     MessageBox.Show(Resource.ajoutReussi, Resource.ajout, MessageBoxButton.OK, MessageBoxImage.Information);
@@ -133,24 +147,25 @@ namespace CineQuebec.Windows.View
                     {
                         _film.Titre = txtNom.Text;
                         _film.Categorie = (Categories)cboCategories.SelectedIndex;
-                        _film.DateSortie = (DateTime)dateSortie.SelectedDate;
+                        //  await GestionFilmAbonne.ModifierFilm(_film);
                         await _filmService.ModifierFilm(_film);
                         InitialiserFormulaireVisualiser();
                         MessageBox.Show(Resource.modificationReussi, Resource.modification, MessageBoxButton.OK, MessageBoxImage.Information);
                     }
                     else
-                        MessageBox.Show(message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
+                        MessageBox.Show(message,Resource.erreur,MessageBoxButton.OK,MessageBoxImage.Error);
                     message = "";
                 }
             }
-            catch (MongoDataConnectionException ex)
+            catch(MongoDataConnectionException ex)
             {
                 MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
             }
-            catch (Exception)
+            catch(Exception)
             {
                 MessageBox.Show(Resource.erreurGenerique, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
         }
     }
 }

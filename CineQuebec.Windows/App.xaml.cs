@@ -1,4 +1,6 @@
-﻿using System.Windows;
+﻿using System.Configuration;
+using System.Data;
+using System.Windows;
 
 namespace CineQuebec.Windows
 {
@@ -13,4 +15,5 @@ namespace CineQuebec.Windows
             UnityConfig.RegisterComponents();
         }
     }
+
 }

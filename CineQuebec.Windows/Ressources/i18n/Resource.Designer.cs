@@ -196,15 +196,6 @@ namespace CineQuebec.Windows.Ressources.i18n {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Username ou mot de passe est incorrect.
-        /// </summary>
-        public static string errorConnection {
-            get {
-                return ResourceManager.GetString("errorConnection", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Recherche une chaîne localisée semblable à Un abonne existe déjà avec le meme username.
         /// </summary>
         public static string existingAbonne {

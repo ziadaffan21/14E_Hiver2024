@@ -1,9 +1,24 @@
-﻿using CineQuebec.Windows.DAL.Data;
+﻿using CineQuebec.Windows.DAL;
+using CineQuebec.Windows.DAL.Data;
+using CineQuebec.Windows.DAL.Interfaces;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
 using CineQuebec.Windows.Exceptions;
 using CineQuebec.Windows.Ressources.i18n;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 
 namespace CineQuebec.Windows.View
 {
@@ -14,11 +29,10 @@ namespace CineQuebec.Windows.View
     {
         private Projection _projection;
         private string message;
-
         //private readonly DatabasePeleMele databasePeleMele = new DatabasePeleMele();
         private readonly IProjectionService _projectionService;
-
         private readonly IFilmService _filmService;
+
 
         public AjoutDetailProjection(IProjectionService projectionService, IFilmService filmService)
         {
@@ -28,6 +42,7 @@ namespace CineQuebec.Windows.View
             _filmService = filmService;
             DataContext = _projection;
             calendrier.DisplayDateStart = DateTime.Now;
+
         }
 
         private async void btnCreer_Click(object sender, RoutedEventArgs e)
@@ -58,6 +73,7 @@ namespace CineQuebec.Windows.View
             {
                 MessageBox.Show(Resource.erreurGenerique, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
             }
+
         }
 
         private DateTime GetDateAndTime(DateTime date, DateTime time)
@@ -90,6 +106,8 @@ namespace CineQuebec.Windows.View
                 message += "\nIl faut sélectionner une heure pour la projection";
             }
 
+
+
             if (string.IsNullOrWhiteSpace(txtPlace.Text))
                 message += "\nLe nombre de place ne peut pas être vide";
             if (!int.TryParse(txtPlace.Text.Trim(), out _))
@@ -118,6 +136,7 @@ namespace CineQuebec.Windows.View
             cboFilm.ItemsSource = _filmService.GetAllFilms();
             cboFilm.Focus();
             txtPlace.Focus();
+
         }
 
         private void cboFilm_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -132,9 +151,12 @@ namespace CineQuebec.Windows.View
             }
         }
 
+
+
         private void horloge_ContextMenuClosing(object sender, ContextMenuEventArgs e)
         {
             MessageBox.Show("OK");
+
         }
     }
 }

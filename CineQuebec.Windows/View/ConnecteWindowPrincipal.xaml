@@ -6,27 +6,28 @@
         xmlns:local="clr-namespace:CineQuebec.Windows"
         xmlns:rs="clr-namespace:CineQuebec.Windows.Ressources.i18n"
         mc:Ignorable="d"
-        Title="{x:Static rs:Resource.app_name}"
+        Title="{x:Static rs:Resource.app_name}" 
         ResizeMode="NoResize"
         Height="700" Width="1200"
-         Icon="/Ressources/images/logoCinemaWithoutText.png">
+         Icon="/Ressources/images/logoCinemaWithoutText.png" >
 
-    <Grid>
+    <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="2*"></RowDefinition>
         </Grid.RowDefinitions>
         <Image Grid.Row="0"
-               HorizontalAlignment="Center"
-               Margin="10,10,10,10"
+               HorizontalAlignment="Center" 
+               Margin="10,10,10,10" 
                VerticalAlignment="Center"
-               Source="/Ressources/images/logoCinema.png" />
+               Source="/Ressources/images/logoCinema.png"/>
         <Frame x:Name="mainContentControl" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"  NavigationUIVisibility="Visible" />
-        <!--<ContentControl x:Name="mainContentControl"
-                        Grid.Row="1"
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
+        <!--<ContentControl x:Name="mainContentControl" 
+                        Grid.Row="1" 
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Center" 
                         />-->
-        <!--<Button Grid.Row="0" Name="btnRetour" Width="50" Height="40" Content="Retour" Margin="880,114,270,74" Click="btnRetour_Click" RenderTransformOrigin="-3.856,0.156" />-->
+        <!--<Button Grid.Row="0" Name="btnRetour" Width="50" Height="40" Content="Retour" Margin="880,114,270,74" Click="btnRetour_Click" RenderTransformOrigin="-3.856,0.156"/>-->
+
     </Grid>
 </Window>

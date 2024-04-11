@@ -16,16 +16,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Konscious.Security.Cryptography.Argon2" Version="1.3.0" />
     <PackageReference Include="MaterialDesignColors" Version="3.0.0" />
     <PackageReference Include="MaterialDesignThemes" Version="5.0.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.24.0" />
     <PackageReference Include="Unity" Version="5.11.10" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\CineQuebec.Windows.BLL\CineQuebec.Windows.BLL.csproj" />
-    <ProjectReference Include="..\CineQuebec.Windows.DAL\CineQuebec.Windows.DAL.csproj" />
   </ItemGroup>
 
 	<ItemGroup>

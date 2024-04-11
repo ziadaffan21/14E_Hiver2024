@@ -162,9 +162,6 @@
   <data name="errorAjoutUser" xml:space="preserve">
     <value>Une erreur s'est produite lors de l'ajout d'un abonné</value>
   </data>
-  <data name="errorConnection" xml:space="preserve">
-    <value>Username ou mot de passe est incorrect</value>
-  </data>
   <data name="existingAbonne" xml:space="preserve">
     <value>Un abonne existe déjà avec le meme username</value>
   </data>
