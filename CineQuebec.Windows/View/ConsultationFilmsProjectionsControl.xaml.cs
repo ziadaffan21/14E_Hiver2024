@@ -39,7 +39,6 @@ namespace CineQuebec.Windows.View
                 MessageBox.Show(Resource.erreurGenerique, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        priv
 
         /// <summary>
         /// Événement lancé lors de lu double click d'un élément dans la liste des films

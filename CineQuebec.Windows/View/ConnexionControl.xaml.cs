@@ -1,4 +1,5 @@
-﻿using CineQuebec.Windows.DAL.ServicesInterfaces;
+﻿using CineQuebec.Windows.DAL;
+using CineQuebec.Windows.DAL.ServicesInterfaces;
 using CineQuebec.Windows.Ressources.i18n;
 using System.Text;
 using System.Windows;
@@ -13,12 +14,15 @@ namespace CineQuebec.Windows.View
     public partial class ConnexionControl : UserControl
     {
         private readonly IAbonneService _abonneService;
+        private readonly IDataBaseSeeder _dataBaseSeeder;
         private StringBuilder sb = new();
 
-        public ConnexionControl(IAbonneService abonneService)
+        public ConnexionControl(IAbonneService abonneService, IDataBaseSeeder dataBaseSeeder)
         {
             _abonneService = abonneService;
+            _dataBaseSeeder = dataBaseSeeder;
             InitializeComponent();
+            _dataBaseSeeder.Seed();
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)

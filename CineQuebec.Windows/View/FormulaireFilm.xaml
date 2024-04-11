@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:CineQuebec.Windows.View"
         mc:Ignorable="d"
-        Height="291" Width="456"
+        Height="320" Width="456"
         Title="DetailFilm" Loaded="Window_Loaded">
     <Grid Margin="20">
         <Grid.ColumnDefinitions>
@@ -27,15 +27,17 @@
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto" />
+                <RowDefinition Height="auto" />
+                <!-- Ajout d'une nouvelle ligne pour le champ Durée -->
             </Grid.RowDefinitions>
             <Label Style="{StaticResource MaterialDesignLabel}" Grid.Row="0" Grid.Column="0" Content="Nom" VerticalAlignment="Bottom" Margin="5" />
-            <TextBox x:Name="txtNom" Grid.Row="0" Grid.Column="1" Width="169" HorizontalAlignment="Left" Margin="5,5,0,5" FontSize="14" />
+            <TextBox x:Name="txtNom" Grid.Row="0" Grid.Column="1" Width="170" HorizontalAlignment="Left" Margin="5,5,0,5" FontSize="14" />
 
             <Label Style="{StaticResource MaterialDesignLabel}" Grid.Row="1" Grid.Column="0" Content="Catégorie" VerticalAlignment="Center" Margin="5" />
-            <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}" x:Name="cboCategories" Grid.Row="1" Grid.Column="1" Width="272" HorizontalAlignment="Left" Margin="5,0,0,0" Cursor="Hand" />
+            <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}" x:Name="cboCategories" Grid.Row="1" Grid.Column="1" Width="170" HorizontalAlignment="Left" Margin="5,0,0,0" Cursor="Hand" />
 
             <Label Style="{StaticResource MaterialDesignLabel}" Grid.Row="2" Grid.Column="0" Content="Date Sortie" VerticalAlignment="Center" Margin="5" />
-            <DatePicker x:Name="dateSortie" Grid.Row="2" Grid.Column="1" Width="151" HorizontalAlignment="Left" Style="{StaticResource MaterialDesignDatePicker}" RenderTransformOrigin="0.5,0.5" HorizontalContentAlignment="Center" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0">
+            <DatePicker x:Name="dateSortie" Grid.Row="2" Grid.Column="1" Width="170" HorizontalAlignment="Left" Style="{StaticResource MaterialDesignDatePicker}" RenderTransformOrigin="0.5,0.5" HorizontalContentAlignment="Center" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0">
                 <DatePicker.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
@@ -45,11 +47,15 @@
                     </TransformGroup>
                 </DatePicker.RenderTransform>
             </DatePicker>
+
+            <!-- Ajout du champ Durée -->
+            <Label Style="{StaticResource MaterialDesignLabel}" Grid.Row="3" Grid.Column="0" Content="Durée" VerticalAlignment="Center" Margin="5" />
+            <TextBox x:Name="txtDuree" Grid.Row="3" Grid.Column="1" Width="170" HorizontalAlignment="Left" Margin="5,5,0,5" FontSize="14" />
         </Grid>
 
         <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Orientation="Horizontal">
             <Button x:Name="btnOK" Content="Ok" Width="150" Margin="5" Cursor="Hand" Click="btnOK_Click" />
-            <Button x:Name="btnModifier" Content="Modifier" Width="150" Margin="5" Cursor="Hand" Click="btnAjouterModifier_Click" />
+            <Button x:Name="btnAjouterModifier" Content="Modifier" Width="150" Margin="5" Cursor="Hand" Click="btnAjouterModifier_Click" />
         </StackPanel>
     </Grid>
 </Window>
