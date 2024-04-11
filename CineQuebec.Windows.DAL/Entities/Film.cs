@@ -37,7 +37,7 @@ namespace CineQuebec.Windows.DAL.Data
         }
 
         /// <summary>
-        /// Durée définie en secondes
+        /// Durée définie en minutes
         /// </summary>
         public int Duree
         {
@@ -77,10 +77,11 @@ namespace CineQuebec.Windows.DAL.Data
 
         #region CONSTRUCTEURS
 
-        public Film(string titre, DateTime dateSortie, Categories categorie)
+        public Film(string titre, DateTime dateSortie, int duree, Categories categorie)
         {
             Titre = titre;
             DateSortie = dateSortie;
+            Duree = duree;
             Categorie = categorie;
         }
 

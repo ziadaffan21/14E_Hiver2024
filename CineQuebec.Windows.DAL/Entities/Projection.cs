@@ -16,9 +16,11 @@ namespace CineQuebec.Windows.DAL.Data
 
         private DateTime _date;
 
-        private int _placeDisponible;
+        private int _nbPlaces;
 
-        private ObjectId _idFilm;
+        private Film _film;
+
+       
 
         #endregion ATTRIBUTS
 
@@ -34,33 +36,43 @@ namespace CineQuebec.Windows.DAL.Data
             }
         }
 
-        public int PlaceDisponible
+        public int NbPlaces
         {
-            get { return _placeDisponible; }
+            get { return _nbPlaces; }
             set
             {
-                if (!int.TryParse(value.ToString(), out _) || value < NB_PLACE_MIN) throw new PlaceDisponibleException($"La quantité de place doit être plus grand que {NB_PLACE_MIN}");
-                _placeDisponible = value;
+                if (!int.TryParse(value.ToString(), out _) || value < NB_PLACE_MIN) throw new PlaceDisponibleException($"Le nombre de place doit être plus grand que {NB_PLACE_MIN}");
+                _nbPlaces = value;
+            }
+        }
+        public Film Film
+        {
+            get { return _film; }
+            set
+            {
+                if (value is null) throw new ArgumentNullException($"L'id {_film} est invalid");
+                _film = value;
             }
         }
 
-        public ObjectId IdFilm
-        {
-            get { return _idFilm; }
-            set
-            {
-                if (!ObjectId.TryParse(value.ToString(), out _)) throw new InvalidGuidException($"L'id {IdFilm} est invalid");
-                _idFilm = value;
-            }
-        }
 
         #endregion PROPRIÉTÉS ET INDEXEURS
 
         #region CONSTRUCTEURS
+
         public Projection()
         {
             Date = DateTime.Today;
+            NbPlaces = NB_PLACE_MIN;    
         }
+
+        public Projection(DateTime date, int placeDisponible, Film film)
+        {
+            Date = date;
+            NbPlaces = placeDisponible;
+            Film = film;
+        }
+
 
         #endregion CONSTRUCTEURS
 

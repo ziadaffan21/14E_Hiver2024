@@ -58,7 +58,7 @@ namespace CineQuebec.Windows.DAL.Repositories
 
             foreach (var projection in projections)
             {
-                if (projection.IdFilm.Equals(idFilm))
+                if (projection.Film.Id.Equals(idFilm))
                 {
                     projectionsFiltre.Add(projection);
                 }

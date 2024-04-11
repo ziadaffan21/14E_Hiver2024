@@ -22,6 +22,7 @@ namespace CineQuebec.Windows
             container.RegisterSingleton<IAbonneService, AbonneService>();
             container.RegisterSingleton<IAbonneRepository, AbonneRepository>();
             container.RegisterSingleton<IDataBaseUtils, DataBaseUtils>();
+            container.RegisterSingleton<IDataBaseSeeder, DataBaseSeeder>();
 
             // Enregistrement du conteneur dans le conteneur lui-même
             container.RegisterInstance<IUnityContainer>(container);
