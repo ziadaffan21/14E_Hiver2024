@@ -34,5 +34,10 @@ namespace CineQuebec.Windows.DAL.Services
         {
             return await _abonneRepository.GetAbonneConnexion(username, password);
         }
+
+        public async Task<Abonne> GetAbonne(ObjectId id)
+        {
+            return await _abonneRepository.GetAbonne(id);
+        }
     }
 }
