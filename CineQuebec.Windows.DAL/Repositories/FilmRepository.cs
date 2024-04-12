@@ -38,7 +38,7 @@ namespace CineQuebec.Windows.DAL.Repositories
             var filter = Builders<Film>.Filter.Eq(f => f.Id, film.Id);
 
             var duplicateFilter = Builders<Film>.Filter.And(Builders<Film>.Filter.Eq(f => f.Titre, film.Titre), Builders<Film>.Filter.Ne(f => f.Id, film.Id));
-            var duplicateCount = await tableFilm.CountDocumentsAsync(duplicateFilter);
+            var duplicateCount = tableFilm.CountDocuments(duplicateFilter);
 
             if (duplicateCount > 0)
                 throw new ExistingFilmException($"Un film avec le titre {film.Titre} existe déjà.");
