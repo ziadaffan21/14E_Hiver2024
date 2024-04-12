@@ -22,7 +22,7 @@ namespace CineQuebec.Windows.View
             _abonneService = abonneService;
             _dataBaseSeeder = dataBaseSeeder;
             InitializeComponent();
-            _dataBaseSeeder.Seed();
+            //_dataBaseSeeder.Seed();
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)
@@ -43,8 +43,6 @@ namespace CineQuebec.Windows.View
             var container = (IUnityContainer)Application.Current.Resources["UnityContainer"];
             var ajoutUser = container.Resolve<AjoutUser>();
             ajoutUser.ShowDialog();
-            //if (!(bool)ajoutUser.ShowDialog())
-            //    MessageBox.Show(Resource.errorAjoutUser, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         private bool ValiderFomulaire()
