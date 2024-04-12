@@ -12,5 +12,6 @@ namespace CineQuebec.Windows.DAL.InterfacesRepositorie
         Task<Abonne> GetAbonneByUsername(string username);
 
         Task<bool> GetAbonneConnexion(string username, string password);
+        Task<Abonne> GetAbonne(ObjectId id);
     }
 }
