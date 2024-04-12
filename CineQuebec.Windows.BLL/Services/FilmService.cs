@@ -19,7 +19,7 @@ namespace CineQuebec.Windows.DAL.Services
             var existingFilm = await _filmRepository.GetFilmByTitre(film.Titre);
 
             if (existingFilm is not null)
-                throw new ExistingFilmException($"Le film avec le titre '{film.Titre}' et la date de sortie '{film.DateSortie}' existe dèjà.");
+                throw new ExistingFilmException($"Un film avec le titre '{film.Titre}' et la date de sortie '{film.DateSortie.Year}/{film.DateSortie.Month}/{film.DateSortie.Day}' existe dèjà.");
 
 
             await _filmRepository.AjouterFilm(film);

@@ -21,7 +21,7 @@ namespace CineQuebec.Windows.DAL.Services
             var existingProjection = await _projectionRepository.GetProjectionByDateAndFilmId(projection.Date, projection.Film.Titre);
 
             if (existingProjection is not null)
-                throw new ExistingProjectionException($"La projection avec la date {projection.Date.Year}/{projection.Date.Month}/{projection.Date.Day} pour le film {projection.Film.Titre} existe déjà.");
+                throw new ExistingProjectionException($"Un projection avec la date {projection.Date.Year}/{projection.Date.Month}/{projection.Date.Day} pour le film {projection.Film.Titre} existe déjà.");
 
 
             await _projectionRepository.AjouterProjection(projection);
