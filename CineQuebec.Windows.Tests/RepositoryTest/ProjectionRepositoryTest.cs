@@ -4,29 +4,29 @@ using Moq;
 
 namespace CineQuebec.Windows.Tests.RepositoryTest
 {
-    public class FilmRepositoryTest
+    public class ProjectionRepositoryTest
     {
         [Fact]
         public void GetAllAbonnes_ShouldReturnListOfAbonnes()
         {
             // Arrange
-            var expectedFilms = new List<Film>
+            var expectedProjections = new List<Projection>
                 {
-                    new Film ("Titre",DateTime.Now,120,DAL.Enums.Categories.ACTION),
-                    new Film("Titre1",DateTime.Now,120,DAL.Enums.Categories.ACTION)
+                    new Projection (DateTime.Now,120,new Film("titre",DateTime.Now,120,DAL.Enums.Categories.ACTION)),
+                    new Projection (DateTime.Now,120,new Film("titre2",DateTime.Now,120,DAL.Enums.Categories.ACTION))
                 };
-            var mockRepository = new Mock<IFilmRepository>();
-            mockRepository.Setup(repo => repo.ReadFilms())
-                          .Returns(expectedFilms);
+            var mockRepository = new Mock<IProjectionRepository>();
+            mockRepository.Setup(repo => repo.ReadProjections())
+                          .Returns(expectedProjections);
 
             // Act
-            var result = mockRepository.Object.ReadFilms();
+            var result = mockRepository.Object.ReadProjections();
 
 
             // Assert
             Assert.NotNull(result);
-            Assert.IsType<List<Film>>(result);
-            Assert.Equal(expectedFilms, result);
+            Assert.IsType<List<Projection>>(result);
+            Assert.Equal(expectedProjections, result);
         }
 
         [Fact]
@@ -95,7 +95,6 @@ namespace CineQuebec.Windows.Tests.RepositoryTest
             Assert.NotNull(result);
             Assert.Equal(expectedFilm, result);
         }
-
 
     }
 }
