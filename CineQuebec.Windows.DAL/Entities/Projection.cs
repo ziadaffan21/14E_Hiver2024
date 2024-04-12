@@ -8,7 +8,7 @@ namespace CineQuebec.Windows.DAL.Data
     {
         #region CONSTANTES
 
-        public const int NB_PLACE_MIN = 1;
+        public const int NB_PLACE_MIN = 50;
 
         #endregion CONSTANTES
 
@@ -80,7 +80,7 @@ namespace CineQuebec.Windows.DAL.Data
 
         public override string ToString()
         {
-            return $"{Date.Day} {Utils.Utils.GetMoisNom(Date).ToUpper()} {Date.Hour:00}:{Date.Minute:00}";
+            return $"({Film.Titre}) {Date.Day} {Utils.Utils.GetMoisNom(Date).ToUpper()} {Date.Hour:00}:{Date.Minute:00}";
         }
         
         #endregion

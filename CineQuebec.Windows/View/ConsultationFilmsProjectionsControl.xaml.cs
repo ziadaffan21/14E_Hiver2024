@@ -29,6 +29,7 @@ namespace CineQuebec.Windows.View
             try
             {
                 lstFilms.ItemsSource = _filmService.GetAllFilms();
+                lstProjections.ItemsSource = _projectionService.GetAllProjections();
             }
             catch (MongoDataConnectionException err)
             {
@@ -39,7 +40,7 @@ namespace CineQuebec.Windows.View
                 MessageBox.Show(Resource.erreurGenerique, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        
+
 
         /// <summary>
         /// Événement lancé lors de lu double click d'un élément dans la liste des films
@@ -48,18 +49,14 @@ namespace CineQuebec.Windows.View
         /// <param name="e"></param>
         private void lstFilm_DoubleClick(object sender, MouseButtonEventArgs e)
         {
-            AfficherDetailsFilm();
-        }
-
-        private void AfficherDetailsFilm()
-        {
             if (lstFilms.SelectedItem != null)
             {
                 Film film = lstFilms.SelectedItem as Film;
                 DetailFilm detailFilm = new DetailFilm(_filmService, film);
+                detailFilm.Etat = DAL.Enums.Etat.Modifier;
+
                 if ((bool)detailFilm.ShowDialog())
                     ChargerFilmProjection();
-                
             }
         }
 
@@ -74,6 +71,7 @@ namespace CineQuebec.Windows.View
         private void btnAjoutFilm_Click(object sender, RoutedEventArgs e)
         {
             DetailFilm detailFilm = new DetailFilm(_filmService);
+            detailFilm.Etat = DAL.Enums.Etat.Ajouter;
             if ((bool)detailFilm.ShowDialog())
                 ChargerFilmProjection();
         }

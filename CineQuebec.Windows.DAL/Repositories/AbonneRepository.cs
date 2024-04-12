@@ -25,43 +25,24 @@ namespace CineQuebec.Windows.DAL.Repositories
 
         public List<Abonne> ReadAbonnes()
         {
-            var abonnes = new List<Abonne>();
+            var collection = _database.GetCollection<Abonne>(ABONNE);
+            List<Abonne> abonnes = collection.Aggregate().ToList();
 
-            try
-            {
-                var collection = _database.GetCollection<Abonne>(ABONNE);
-                abonnes = collection.Aggregate().ToList();
-            }
-            catch (Exception)
-            {
-                throw new MongoDataConnectionException("Une erreur s'est produite lors de la lecture de données d'abonnés");
-            }
             return abonnes;
         }
 
         public async Task<bool> Add(Abonne abonne)
         {
-            ArgumentNullException.ThrowIfNull(abonne);
-
             var collection = _database.GetCollection<Abonne>(ABONNE);
-            var existingAbonne = collection.Find(x => x.Username == abonne.Username).FirstOrDefault();
 
-            if (existingAbonne is null)
-                await collection.InsertOneAsync(abonne);
-            else throw new ExistingAbonneException($"L'abonne avec le username '{abonne.Username}' exite déjà");
-
+            await collection.InsertOneAsync(abonne);
             return true;
         }
 
-        public async Task<Abonne> GetAbonne(ObjectId id)
+        public async Task<Abonne> GetAbonneByUsername(string username)
         {
-            if (Guid.TryParse(id.ToString(), out _))
-                throw new InvalidGuidException($"L'id {id} n'est pas valide.");
-
-            Abonne abonne = null;
-
             var collection = _database.GetCollection<Abonne>(ABONNE);
-            abonne = await collection.Find(x => x.Id == id).FirstOrDefaultAsync();
+            Abonne abonne = await collection.Find(x => x.Username.ToUpper() == username.ToUpper()).FirstOrDefaultAsync();
 
             return abonne;
         }

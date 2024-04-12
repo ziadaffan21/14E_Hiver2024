@@ -1,5 +1,6 @@
 ﻿using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.Enums;
+using CineQuebec.Windows.DAL.Exceptions.FilmExceptions;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
 using CineQuebec.Windows.DAL.Utils;
 using CineQuebec.Windows.Exceptions;
@@ -15,143 +16,82 @@ namespace CineQuebec.Windows.View
     public partial class DetailFilm : Window
     {
         private Film _film;
-        private bool modification;
-        private string message;
+        public Etat Etat;
         private readonly IFilmService _filmService;
+        StringBuilder sb = new();
+
 
         public DetailFilm(IFilmService filmService, Film film = null)
         {
             InitializeComponent();
             _filmService = filmService;
             _film = film;
-            modification = false;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             cboCategories.ItemsSource = UtilEnum.GetAllDescriptions<Categories>();
-            if (_film is null)
-            {
-                InitialiserFormulaireAjout();
-            }
-            else
-            {
-                InitialiserFormulaireVisualiser();
-            }
+            InitialiserFormulaire();
         }
 
-        private void InitialiserFormulaireAjout()
+        private void InitialiserFormulaire()
         {
-            txtNom.Text = "";
-            cboCategories.SelectedIndex = -1;
-            txtNom.Focus();
-            cboCategories.Focus();
-            cboCategories.IsEnabled = true;
-            txtNom.IsEnabled = true;
-            lblTitre.Text = "Ajouter un film";
-            btnAjouterModifier.Content = "Ajouter";
-            btnOK.Content = "Annuler";
-        }
-
-        private void InitialiserFormulaireVisualiser()
-        {
-            txtNom.Text = _film.Titre;
-            cboCategories.SelectedIndex = (int)_film.Categorie;
-            dateSortie.SelectedDate = _film.DateSortie;
-            txtNom.IsEnabled = false;
-            cboCategories.IsEnabled = false;
-            btnAjouterModifier.Content = "Modifier";
-            btnOK.Content = "Ok";
-        }
-
-        private void InitialiserFormulaireModification()
-        {
-            try
+            switch (Etat)
             {
-            txtNom.Text = _film.Titre;
-            cboCategories.SelectedIndex = (int)_film.Categorie;
-            dateSortie.SelectedDate = _film.DateSortie;
-            txtNom.IsEnabled = true;
-            cboCategories.IsEnabled = true;
-            txtNom.Focus();
-            cboCategories.Focus();
-            btnAjouterModifier.Content = "Enregistrer";
-            btnOK.Content = "Annuler";
+                case Etat.Ajouter:
+                    txtTitre.Text = "";
+                    cboCategories.SelectedIndex = -1;
+                    dateSortie.SelectedDate = DateTime.Now;
+                    txtDuree.Text = "";
+                    lblTitre.Text = "Ajouter un film";
+                    btnAjouterModifier.Content = "Ajouter";
+                    break;
+                case Etat.Modifier:
+                    txtTitre.Text = _film.Titre;
+                    cboCategories.SelectedIndex = (int)_film.Categorie;
+                    dateSortie.SelectedDate = _film.DateSortie;
+                    txtDuree.Text = _film.Duree.ToString();
+                    lblTitre.Text = "Modifier un film";
+                    btnAjouterModifier.Content = "Modifier";
+                    break;
+                default:
+                    break;
             }
-            catch (Exception e)
-            {
-                //TODO : Terminer l'exception ici
-                MessageBox.Show(e.Message);
-            }
-        }
-
-        private void btnOK_Click(object sender, RoutedEventArgs e)
-        {
-            if (_film is null)
-            {
-                DialogResult = false;
-                return;
-            }
-
-            if (!modification)
-                DialogResult = true;
-            else
-            {
-                modification = false;
-                InitialiserFormulaireVisualiser();
-            }
-        }
-
-        private bool ValiderForm()
-        {
-            StringBuilder sb = new();
-
-            sb.AppendLine(string.IsNullOrWhiteSpace(txtNom.Text) ? "Le nom du film ne peut pas être vide" : "");
-            sb.AppendLine(!DateTime.TryParse(dateSortie.SelectedDate.ToString(), out _) ? $"\nLa date ne peut pas etre null." : "");
-            sb.AppendLine(cboCategories.SelectedIndex == -1 ? message += "\nVous devez assigner une catégorie" : "");
-
-            if (txtNom.Text.Trim().Length < Film.NB_MIN_CARACTERES_USERNAME || txtNom.Text.Trim().Length > Film.NB_MAX_CARACTERES_USERNAME)
-                sb.AppendLine($"\nLe titre doit etre entre {Film.NB_MIN_CARACTERES_USERNAME} et {Film.NB_MAX_CARACTERES_USERNAME} caractères.");  
-
-            if (sb.Length <= 0)
-                return true;
-                
-            return false;
         }
 
         private async void btnAjouterModifier_Click(object sender, RoutedEventArgs e)
         {
             try
             {
-                if (_film is null && ValiderForm())
+                if (ValiderForm())
                 {
-                    DateTime dateTime = (DateTime)dateSortie.SelectedDate ;
-                    _film = new Film(txtNom.Text, (DateTime)dateSortie.SelectedDate,int.Parse(txtDuree.Text), (Categories)cboCategories.SelectedIndex);
-                    await _filmService.AjouterFilm(_film);
-                    InitialiserFormulaireVisualiser();
-                    MessageBox.Show(Resource.ajoutReussi, Resource.ajout, MessageBoxButton.OK, MessageBoxImage.Information);
-                    return;
-                }
-                modification = !modification;
-                if (modification)
-                {
-                    InitialiserFormulaireModification();
+                    switch (Etat)
+                    {
+                        case Etat.Ajouter:
+                            _film = new Film(txtTitre.Text, (DateTime)dateSortie.SelectedDate, int.Parse(txtDuree.Text), (Categories)cboCategories.SelectedIndex);
+                            await _filmService.AjouterFilm(_film);
+                            DialogResult = true;
+                            MessageBox.Show(Resource.ajoutReussi, Resource.ajout, MessageBoxButton.OK, MessageBoxImage.Information);
+                            break;
+                        case Etat.Modifier:
+                            _film.Titre = txtTitre.Text;
+                            _film.Categorie = (Categories)cboCategories.SelectedIndex;
+                            _film.DateSortie = (DateTime)dateSortie.SelectedDate;
+                            DialogResult = true;
+                            await _filmService.ModifierFilm(_film);
+                            MessageBox.Show(Resource.modificationReussi, Resource.modification, MessageBoxButton.OK, MessageBoxImage.Information);
+                            break;
+                        default:
+                            break;
+                    }
                 }
                 else
-                {
-                    if (ValiderForm())
-                    {
-                        _film.Titre = txtNom.Text;
-                        _film.Categorie = (Categories)cboCategories.SelectedIndex;
-                        _film.DateSortie = (DateTime)dateSortie.SelectedDate;
-                        await _filmService.ModifierFilm(_film);
-                        InitialiserFormulaireVisualiser();
-                        MessageBox.Show(Resource.modificationReussi, Resource.modification, MessageBoxButton.OK, MessageBoxImage.Information);
-                    }
-                    else
-                        MessageBox.Show(message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
-                    message = "";
-                }
+                    MessageBox.Show(sb.ToString(), Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
+
+            }
+            catch(ExistingFilmException ex)
+            {
+                MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (MongoDataConnectionException ex)
             {
@@ -163,5 +103,28 @@ namespace CineQuebec.Windows.View
             }
         }
 
+        private void btnAnnuler_Click(object sender, RoutedEventArgs e)
+        {
+            DialogResult = false;
+        }
+
+        private bool ValiderForm()
+        {
+            sb.Clear();
+
+            if (string.IsNullOrWhiteSpace(txtTitre.Text.Trim()) || txtTitre.Text.Trim().Length < Film.NB_MIN_CARACTERES_USERNAME || txtTitre.Text.Trim().Length > Film.NB_MAX_CARACTERES_USERNAME)
+                sb.AppendLine($"Le titre doit etre entre {Film.NB_MIN_CARACTERES_USERNAME} et {Film.NB_MAX_CARACTERES_USERNAME} caractères.");
+            if (!DateTime.TryParse(dateSortie.SelectedDate.ToString(), out _))
+                sb.AppendLine("La date ne peut pas etre vide.");
+            if (cboCategories.SelectedIndex == -1)
+                sb.AppendLine("Vous devez assigner une catégorie");
+            if (string.IsNullOrWhiteSpace(txtDuree.Text) || int.Parse(txtDuree.Text) <= Film.NB_MIN_DUREE)
+                sb.AppendLine($"La durée du film doit etre plus grande que {Film.NB_MIN_DUREE} minutes.");
+
+            if (sb.Length > 0)
+                return false;
+
+            return true;
+        }
     }
 }

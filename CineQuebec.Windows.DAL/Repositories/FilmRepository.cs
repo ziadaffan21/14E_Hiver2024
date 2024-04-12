@@ -1,6 +1,10 @@
-﻿using CineQuebec.Windows.DAL.Data;
+﻿using Amazon.Util.Internal;
+using CineQuebec.Windows.DAL.Data;
+using CineQuebec.Windows.DAL.Exceptions.FilmExceptions;
 using CineQuebec.Windows.DAL.InterfacesRepositorie;
 using CineQuebec.Windows.Exceptions;
+using CineQuebec.Windows.Exceptions.EntitysExceptions;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace CineQuebec.Windows.DAL.Repositories
@@ -22,16 +26,9 @@ namespace CineQuebec.Windows.DAL.Repositories
 
         public List<Film> ReadFilms()
         {
-            var films = new List<Film>();
-            try
-            {
-                var collection = _mongoDataBase.GetCollection<Film>(FILMS);
-                films = collection.Aggregate().ToList();
-            }
-            catch (Exception)
-            {
-                throw new MongoDataConnectionException("Une erreur s'est produite lors de la lecture de données des films");
-            }
+            var collection = _mongoDataBase.GetCollection<Film>(FILMS);
+            List<Film> films = collection.Aggregate().ToList();
+
             return films;
         }
 
@@ -39,27 +36,30 @@ namespace CineQuebec.Windows.DAL.Repositories
         {
             var tableFilm = _mongoDataBase.GetCollection<Film>(FILMS);
             var filter = Builders<Film>.Filter.Eq(f => f.Id, film.Id);
-            try
-            {
-                await tableFilm.ReplaceOneAsync(filter, film);
-            }
-            catch (Exception)
-            {
-                throw new MongoDataConnectionException("Une erreur s'est produite lors de la modification du film.");
-            }
+
+            var duplicateFilter = Builders<Film>.Filter.And(Builders<Film>.Filter.Eq(f => f.Titre, film.Titre), Builders<Film>.Filter.Ne(f => f.Id, film.Id));
+            var duplicateCount = await tableFilm.CountDocumentsAsync(duplicateFilter);
+
+            if (duplicateCount > 0)
+                throw new ExistingFilmException($"Un film avec le titre {film.Titre} existe déjà.");
+
+
+            await tableFilm.ReplaceOneAsync(filter, film);
         }
 
         public async Task AjouterFilm(Film film)
         {
             var tableFilm = _mongoDataBase.GetCollection<Film>(FILMS);
-            try
-            {
-                await tableFilm.InsertOneAsync(film);
-            }
-            catch (Exception)
-            {
-                throw new MongoDataConnectionException("Une erreur s'est produite lors de la modification du film.");
-            }
+
+            await tableFilm.InsertOneAsync(film);
+        }
+
+        public async Task<Film> GetFilmByTitre(string titre)
+        {
+            var tableFilm = _mongoDataBase.GetCollection<Film>(FILMS);
+            Film film = await tableFilm.Find(f => f.Titre.ToUpper() == titre.ToUpper()).FirstOrDefaultAsync();
+
+            return film;
         }
     }
 }

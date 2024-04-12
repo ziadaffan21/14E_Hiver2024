@@ -1,4 +1,5 @@
 ﻿using CineQuebec.Windows.DAL.Data;
+using CineQuebec.Windows.DAL.Exceptions.ProjectionException;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
 using CineQuebec.Windows.Exceptions;
 using CineQuebec.Windows.Ressources.i18n;
@@ -14,9 +15,8 @@ namespace CineQuebec.Windows.View
     public partial class AjoutDetailProjection : Window
     {
         private Projection _projection;
-        private string message;
+        StringBuilder sb = new();
 
-        //private readonly DatabasePeleMele databasePeleMele = new DatabasePeleMele();
         private readonly IProjectionService _projectionService;
 
         private readonly IFilmService _filmService;
@@ -37,19 +37,19 @@ namespace CineQuebec.Windows.View
             {
                 if (ValiderForm())
                 {
-                    //await GestionFilmAbonne.AjouterProjection(_projection);
-
                     DateTime formatedTime = GetDateAndTime(_projection.Date, (DateTime)horloge.SelectedTime);
-                    _projection.Date = formatedTime;
-                    await _projectionService.AjouterProjection(_projection);
+                    await _projectionService.AjouterProjection(new Projection(formatedTime,int.Parse(txtPlace.Text),cboFilm.SelectedItem as Film));
                     MessageBox.Show(Resource.ajoutReussiProjection, Resource.ajout, MessageBoxButton.OK, MessageBoxImage.Information);
                     DialogResult = true;
                 }
                 else
                 {
-                    MessageBox.Show(message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
-                    message = "";
+                    MessageBox.Show(sb.ToString(), Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
                 }
+            }
+            catch (ExistingProjectionException ex)
+            {
+                MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (MongoDataConnectionException ex)
             {
@@ -63,15 +63,10 @@ namespace CineQuebec.Windows.View
 
         private DateTime GetDateAndTime(DateTime date, DateTime time)
         {
-            try
-            {
-                DateTime newDate = new(date.Year, date.Month, date.Day, time.Hour, time.Minute, 0);
-                return newDate;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+
+            DateTime newDate = new(date.Year, date.Month, date.Day, time.Hour, time.Minute, 0);
+            return newDate;
+
         }
 
         private void btnAnnuler_Click(object sender, RoutedEventArgs e)
@@ -81,28 +76,21 @@ namespace CineQuebec.Windows.View
 
         private bool ValiderForm()
         {
-            try
-            {
-                StringBuilder sb = new();
+            sb.Clear();
 
-                sb.Append(calendrier.SelectedDate is null || calendrier.SelectedDate < DateTime.Today ? $"\nLa date sélectionnée doit être plus grande ou égale à {DateTime.Today}" : "");
-                sb.Append(horloge.SelectedTime is null ? "\nIl faut sélectionner une heure pour la projection" : "");
-                sb.Append(string.IsNullOrWhiteSpace(txtPlace.Text) ? "\nLe nombre de place ne peut pas être vide" : "");
-                sb.Append(cboFilm.SelectedIndex == -1 ? "\nVous devez assigner un film" : "");
+            if (calendrier.SelectedDate is null || calendrier.SelectedDate < DateTime.Today)
+                sb.AppendLine($"La date sélectionnée doit être plus grande ou égale à {DateTime.Today}.");
+            if (horloge.SelectedTime is null)
+                sb.AppendLine($"Il faut sélectionner une heure pour la projection.");
+            if (cboFilm.SelectedIndex == -1)
+                sb.AppendLine($"Vous devez assigner un film");
+            if (string.IsNullOrWhiteSpace(txtPlace.Text) || int.Parse(txtPlace.Text) < Projection.NB_PLACE_MIN)
+                sb.AppendLine($"Le nombre de place doit être plus grand que {Projection.NB_PLACE_MIN}.");
 
-                if (int.Parse(txtPlace.Text.Trim()) <= 0 || !int.TryParse(txtPlace.Text.Trim(), out _))
-                    sb.Append($"\nLe nombre de place doit être plus grand que {Projection.NB_PLACE_MIN}");
-
-                if (string.IsNullOrWhiteSpace(message))
-                    return true;
-                else
-                    return false;
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show(e.Message);
+            if (sb.Length > 0)
                 return false;
-            }
+
+            return true;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -112,7 +100,6 @@ namespace CineQuebec.Windows.View
 
         private void InitialiserFormulaireAjout()
         {
-            // cboFilm.ItemsSource = GestionFilmAbonne.ReadFilms();
             cboFilm.ItemsSource = _filmService.GetAllFilms();
             cboFilm.Focus();
             txtPlace.Focus();
