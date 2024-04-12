@@ -39,10 +39,10 @@ namespace CineQuebec.Windows.Tests.ServiceTest
                           .ReturnsAsync(actionValide);
 
             var service = new AbonneService(mockRepository.Object);
-            var abonneToAdd = new Mock<Abonne>(); // Create a dummy abonne object to add
+            var abonneToAdd = new Abonne("XXX",DateTime.Now); // Create a dummy abonne object to add
 
             // Act
-            var result = await service.Add(abonneToAdd.Object);
+            var result = await service.Add(abonneToAdd);
 
             // Assert
             Assert.Equal(result, resultatAttendu);
