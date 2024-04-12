@@ -77,6 +77,7 @@ namespace CineQuebec.Windows.View
                             _film.Titre = txtTitre.Text;
                             _film.Categorie = (Categories)cboCategories.SelectedIndex;
                             _film.DateSortie = (DateTime)dateSortie.SelectedDate;
+                            _film.Duree = int.Parse(txtDuree.Text);
                             DialogResult = true;
                             await _filmService.ModifierFilm(_film);
                             MessageBox.Show(Resource.modificationReussi, Resource.modification, MessageBoxButton.OK, MessageBoxImage.Information);
