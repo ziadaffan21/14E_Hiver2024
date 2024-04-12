@@ -1,6 +1,7 @@
 ﻿using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.InterfacesRepositorie;
 using CineQuebec.Windows.Exceptions;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace CineQuebec.Windows.DAL.Repositories
@@ -22,17 +23,8 @@ namespace CineQuebec.Windows.DAL.Repositories
 
         public List<Projection> ReadProjections()
         {
-            var projections = new List<Projection>();
-
-            try
-            {
-                var collection = _mongoDatabase.GetCollection<Projection>(PROJECTION);
-                projections = collection.Aggregate().ToList();
-            }
-            catch (Exception)
-            {
-                throw new MongoDataConnectionException("Une erreur s'est produite lors de la lecture de données des projections");
-            }
+            var collection = _mongoDatabase.GetCollection<Projection>(PROJECTION);
+            List<Projection> projections = collection.Aggregate().ToList();
 
             return projections;
         }
@@ -40,19 +32,12 @@ namespace CineQuebec.Windows.DAL.Repositories
         public async Task AjouterProjection(Projection projection)
         {
             var tableProjection = _mongoDatabase.GetCollection<Projection>(PROJECTION);
-            try
-            {
-                await tableProjection.InsertOneAsync(projection);
-            }
-            catch (Exception)
-            {
-                throw new MongoDataConnectionException("Une erreur s'est produite lors de l'ajout de la projection.");
-            }
+
+            await tableProjection.InsertOneAsync(projection);
         }
 
         public List<Projection> ReadProjectionsById(Object idFilm)
         {
-            //TODO : Trouver comment fair eune requete avec id à la BD.
             List<Projection> projections = ReadProjections();
             List<Projection> projectionsFiltre = new();
 
@@ -65,5 +50,22 @@ namespace CineQuebec.Windows.DAL.Repositories
             }
             return projectionsFiltre;
         }
+
+        public async Task<Projection> GetProjectionByDateAndFilmId(DateTime dateProjection, string titreFilm)
+        {
+            var projectionCollection = _mongoDatabase.GetCollection<Projection>(PROJECTION);
+
+            var filter = Builders<Projection>.Filter.And(
+                Builders<Projection>.Filter.Eq(p => p.Date, dateProjection),
+                Builders<Projection>.Filter.Eq(p => p.Film.Titre, titreFilm)
+            );
+
+            var projection = await projectionCollection.FindAsync(filter);
+
+            var projectionList = await projection.ToListAsync();
+
+            return projectionList.FirstOrDefault();
+        }
+
     }
 }

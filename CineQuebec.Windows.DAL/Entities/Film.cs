@@ -11,7 +11,7 @@ namespace CineQuebec.Windows.DAL.Data
 
         public const byte NB_MIN_CARACTERES_USERNAME = 2;
         public const byte NB_MAX_CARACTERES_USERNAME = 100;
-
+        public const byte NB_MIN_DUREE = 30;
         #endregion CONSTANTES
 
         #region ATTRIBUTS

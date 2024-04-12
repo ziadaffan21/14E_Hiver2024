@@ -5,7 +5,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:CineQuebec.Windows.View"
         mc:Ignorable="d"
-        Height="320" Width="456"
+        Height="360" Width="456"
         Title="DetailFilm" Loaded="Window_Loaded">
     <Grid Margin="20">
         <Grid.ColumnDefinitions>
@@ -31,7 +31,7 @@
                 <!-- Ajout d'une nouvelle ligne pour le champ Durée -->
             </Grid.RowDefinitions>
             <Label Style="{StaticResource MaterialDesignLabel}" Grid.Row="0" Grid.Column="0" Content="Nom" VerticalAlignment="Bottom" Margin="5" />
-            <TextBox x:Name="txtNom" Grid.Row="0" Grid.Column="1" Width="170" HorizontalAlignment="Left" Margin="5,5,0,5" FontSize="14" />
+            <TextBox x:Name="txtTitre" Grid.Row="0" Grid.Column="1" Width="170" HorizontalAlignment="Left" Margin="5,5,0,5" FontSize="14" />
 
             <Label Style="{StaticResource MaterialDesignLabel}" Grid.Row="1" Grid.Column="0" Content="Catégorie" VerticalAlignment="Center" Margin="5" />
             <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}" x:Name="cboCategories" Grid.Row="1" Grid.Column="1" Width="170" HorizontalAlignment="Left" Margin="5,0,0,0" Cursor="Hand" />
@@ -54,8 +54,8 @@
         </Grid>
 
         <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Orientation="Horizontal">
-            <Button x:Name="btnOK" Content="Ok" Width="150" Margin="5" Cursor="Hand" Click="btnOK_Click" />
             <Button x:Name="btnAjouterModifier" Content="Modifier" Width="150" Margin="5" Cursor="Hand" Click="btnAjouterModifier_Click" />
+            <Button x:Name="btnAnnuler" Content="Annuler" Width="150" Margin="5" Cursor="Hand" Click="btnAnnuler_Click" />
         </StackPanel>
     </Grid>
 </Window>

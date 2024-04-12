@@ -1,6 +1,7 @@
 ﻿using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.InterfacesRepositorie;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
+using CineQuebec.Windows.Exceptions.AbonneExceptions;
 using MongoDB.Bson;
 
 namespace CineQuebec.Windows.DAL.Services
@@ -21,13 +22,12 @@ namespace CineQuebec.Windows.DAL.Services
 
         public async Task<bool> Add(Abonne abonne)
         {
-            bool result = await _abonneRepository.Add(abonne);
-            return result;
-        }
+            var existingAbonne = await _abonneRepository.GetAbonneByUsername(abonne.Username);
 
-        public Task<Abonne> GetAbonne(ObjectId id)
-        {
-            return _abonneRepository.GetAbonne(id);
+            if (existingAbonne is not null)
+                throw new ExistingAbonneException($"L'abonne avec le username '{abonne.Username}' exite déjà");
+
+            return await _abonneRepository.Add(abonne);
         }
 
         public async Task<bool> GetAbonneConnexion(string username, string password)

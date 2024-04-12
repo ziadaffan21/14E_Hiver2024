@@ -35,28 +35,26 @@ namespace CineQuebec.Windows.DAL
         {
             var filmsCollection = _database.GetCollection<BsonDocument>("Films");
 
-            var count = await filmsCollection.CountDocumentsAsync(new BsonDocument());
-            if (count == 0)
-            {
-                var films = new List<Film>
-                {
-                    film1,
-                    film2
-                };
+            await filmsCollection.DeleteManyAsync(new BsonDocument());
 
-                var bsonFilms = films.Select(film => film.ToBsonDocument()).ToList();
-                await filmsCollection.InsertManyAsync(bsonFilms);
-            }
+            var films = new List<Film>
+                    {
+                        film1,
+                        film2
+                    };
+
+            var bsonFilms = films.Select(film => film.ToBsonDocument()).ToList();
+
+            await filmsCollection.InsertManyAsync(bsonFilms);
         }
 
         private async Task SeedAbonnes()
         {
             var abonneCollection = _database.GetCollection<BsonDocument>("Abonnes");
+            await abonneCollection.DeleteManyAsync(new BsonDocument());
 
-            var count = await abonneCollection.CountDocumentsAsync(new BsonDocument());
             var salt = PasswodHasher.CreateSalt();
-            if (count == 0)
-            {
+
                 var abonnes = new List<Abonne>
                 {
                     new Abonne("admin",PasswodHasher.HashPassword("12345",salt),salt,DateTime.Now),
@@ -65,7 +63,7 @@ namespace CineQuebec.Windows.DAL
 
                 var bsonAbonnes = abonnes.Select(abonne => abonne.ToBsonDocument()).ToList();
                 await abonneCollection.InsertManyAsync(bsonAbonnes);
-            }
+            
         }
 
     }
