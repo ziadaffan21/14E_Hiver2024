@@ -14,7 +14,7 @@ namespace CineQuebec.Windows
         {
             var container = new UnityContainer();
 
-            // Enregistrement des services
+            // Enregistrement des services.
             container.RegisterSingleton<IFilmService, FilmService>();
             container.RegisterSingleton<IFilmRepository, FilmRepository­>();
             container.RegisterSingleton<IProjectionService, ProjectionService>();
