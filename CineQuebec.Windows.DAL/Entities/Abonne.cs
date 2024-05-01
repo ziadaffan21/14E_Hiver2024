@@ -1,4 +1,5 @@
-﻿using CineQuebec.Windows.Exceptions.AbonneExceptions.DateAdhesion;
+﻿using CineQuebec.Windows.DAL.Enums;
+using CineQuebec.Windows.Exceptions.AbonneExceptions.DateAdhesion;
 using CineQuebec.Windows.Exceptions.AbonneExceptions.Username;
 
 namespace CineQuebec.Windows.DAL.Data
@@ -47,6 +48,10 @@ namespace CineQuebec.Windows.DAL.Data
         }
 
         public byte[] Salt { get; set; }
+        public bool isAdmin { get; set; }
+        public List<Acteur> Acteurs { get; set; } = new List<Acteur>();
+        public List<Realisateur> Realisateurs { get; set; } = new List<Realisateur>();
+        public List<Categories> CategoriesPrefere { get; set; } = new List<Categories>();
 
         #endregion PROPRIÉTÉS ET INDEXEURS
 
@@ -62,6 +67,7 @@ namespace CineQuebec.Windows.DAL.Data
         {
             Password = password;
             Salt = salt;
+
         }
 
         #endregion CONSTRUCTEURS

@@ -85,5 +85,6 @@ namespace CineQuebec.Windows.Tests.ServiceTest
             // Assert
             mockRepository.Verify(repo => repo.ModifierFilm(film)); // Verify that the method ModifierFilm in the repository was called once with the film parameter
         }
+
     }
 }

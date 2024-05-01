@@ -1,4 +1,5 @@
 ﻿using CineQuebec.Windows.DAL.Data;
+using CineQuebec.Windows.DAL.Enums;
 using MongoDB.Bson;
 
 namespace CineQuebec.Windows.DAL.ServicesInterfaces
@@ -9,7 +10,10 @@ namespace CineQuebec.Windows.DAL.ServicesInterfaces
 
         Task<bool> Add(Abonne abonne);
 
-        Task<bool> GetAbonneConnexion(string username, string password);
+        Task<Abonne> GetAbonneConnexion(string username, string password);
         Task<Abonne> GetAbonne(ObjectId id);
+        Task<bool> AddActeurInAbonne(ObjectId abonneId, Acteur acteur);
+        Task<bool> AddRealisateurInAbonne(ObjectId abonneId, Realisateur realisateur);
+        Task<bool> AddCategorieInAbonne(ObjectId abonneId, Categories categorie);
     }
 }

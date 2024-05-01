@@ -48,15 +48,15 @@ namespace CineQuebec.Windows.DAL.Repositories
         }
         
 
-        public async Task<bool> GetAbonneConnexion(string username, string password)
+        public async Task<Abonne> GetAbonneConnexion(string username, string password)
         {
             var collection = _database.GetCollection<Abonne>(ABONNE);
             Abonne abonne = await collection.Find(x => x.Username == username).FirstOrDefaultAsync();
 
-            if (abonne is null)
-                return false;
-
-            return PasswodHasher.VerifyHash(password, abonne.Salt, abonne.Password);
+            var result = PasswodHasher.VerifyHash(password, abonne.Salt, abonne.Password);
+            if (!result)
+                return null;
+            return abonne;
         }
 
         public async Task<Abonne> GetAbonne(ObjectId id)
@@ -65,6 +65,13 @@ namespace CineQuebec.Windows.DAL.Repositories
             Abonne abonne = await collection.Find(x => x.Id == id).FirstOrDefaultAsync();
 
             return abonne;
+        }
+
+        public async Task<bool> UpdateAbonne(Abonne abonne)
+        {
+            var collection = _database.GetCollection<Abonne>(ABONNE);
+            await collection.ReplaceOneAsync(filter: g => g.Id == abonne.Id, replacement: abonne);
+            return true;
         }
     }
 }

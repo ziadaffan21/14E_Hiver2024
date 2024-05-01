@@ -1,7 +1,8 @@
-﻿using CineQuebec.Windows.Exceptions.ActeurExceptions.DateNaissance;
+﻿using CineQuebec.Windows.DAL.Data;
+using CineQuebec.Windows.Exceptions.ActeurExceptions.DateNaissance;
 using CineQuebec.Windows.Exceptions.ActeurExceptions.PrenomEtNom;
 
-namespace CineQuebec.Windows.DAL.Data.Personne
+namespace CineQuebec.Windows.DAL.Entities
 {
     public abstract class Personne : Entity
     {
@@ -56,6 +57,15 @@ namespace CineQuebec.Windows.DAL.Data.Personne
             }
         }
 
+        protected Personne(string? prenom, string? nom, DateTime naissance)
+        {
+            Prenom = prenom;
+            Nom = nom;
+            Naissance = naissance;
+        }
+
         #endregion PROPRIÉTÉS ET INDEXEURS
+
+
     }
 }

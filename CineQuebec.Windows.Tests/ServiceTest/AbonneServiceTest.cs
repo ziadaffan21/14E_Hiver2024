@@ -1,4 +1,5 @@
 ﻿using CineQuebec.Windows.DAL.Data;
+using CineQuebec.Windows.DAL.Enums;
 using CineQuebec.Windows.DAL.InterfacesRepositorie;
 using CineQuebec.Windows.DAL.Services;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
@@ -83,6 +84,60 @@ namespace CineQuebec.Windows.Tests.ServiceTest
 
             // Assert
             Assert.Equal(result, resultatAttendu);
+        }
+        [Fact]
+        public async Task AddActeurInAbonne_AddsActeur_WhenActeursCountDoesNotExceedLimit()
+        {
+            // Arrange
+            var mockRepo = new Mock<IAbonneRepository>();
+            var abonneId = new ObjectId();
+            var acteur = new Acteur("ActeurName","NomActeur", DateTime.Now);
+            mockRepo.Setup(repo => repo.GetAbonne(abonneId)).ReturnsAsync(new Abonne("Abonne", DateTime.Now) { Acteurs = new List<Acteur> { new Acteur("Acteur1","Actuers", DateTime.Now), new Acteur("Acteur2","efwef", DateTime.Now) } });
+
+            var service = new AbonneService(mockRepo.Object); 
+
+            // Act
+            var result = await service.AddActeurInAbonne(abonneId, acteur);
+
+            // Assert
+            Assert.True(result);
+            mockRepo.Verify(repo => repo.GetAbonne(abonneId), Times.Once);
+        }
+        [Fact]
+        public async Task AddRealisateurInAbonne_AddsRealisateur_WhenRealisateursCountDoesNotExceedLimit()
+        {
+            // Arrange
+            var mockRepo = new Mock<IAbonneRepository>();
+            var abonneId = new ObjectId();
+            var realisateur = new Realisateur("RealisateurName","RealisNom", DateTime.Now);
+            mockRepo.Setup(repo => repo.GetAbonne(abonneId)).ReturnsAsync(new Abonne("Abonne", DateTime.Now) { Realisateurs = new List<Realisateur> { new Realisateur("Realisateur1","Realis", DateTime.Now), new Realisateur("Realisateur2", "Realis", DateTime.Now) } });
+
+            var service = new AbonneService(mockRepo.Object);
+
+            // Act
+            var result = await service.AddRealisateurInAbonne(abonneId, realisateur);
+
+            // Assert
+            Assert.True(result);
+            mockRepo.Verify(repo => repo.GetAbonne(abonneId), Times.Once);
+        }
+        [Fact]
+        public async Task AddCategorieInAbonne_AddsCategorie_WhenCategoriesCountDoesNotExceedLimit()
+        {
+            // Arrange
+            var mockRepo = new Mock<IAbonneRepository>();
+            var abonneId = new ObjectId();
+            var categorie = Categories.ACTION;
+            mockRepo.Setup(repo => repo.GetAbonne(abonneId)).ReturnsAsync(new Abonne("Abonne", DateTime.Now) { CategoriesPrefere = new List<Categories> { Categories.ACTION, Categories.COMEDY } });
+
+            var service = new AbonneService(mockRepo.Object);
+
+            // Act
+            var result = await service.AddCategorieInAbonne(abonneId, categorie);
+
+            // Assert
+            Assert.True(result);
+            mockRepo.Verify(repo => repo.GetAbonne(abonneId), Times.Once);
         }
     }
 }
