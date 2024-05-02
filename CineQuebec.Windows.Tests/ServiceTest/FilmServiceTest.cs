@@ -43,13 +43,13 @@ namespace CineQuebec.Windows.Tests.ServiceTest
         }
 
         [Fact]
-        public void GetAllFilms_ShouldReturnListOfFilms()
+        public async void GetAllFilms_ShouldReturnListOfFilms()
         {
             // Arrange
             var mockRepository = new Mock<IFilmRepository>();
             var expectedFilms = new List<Film>();
             mockRepository.Setup(repo => repo.ReadFilms())
-                          .Returns(expectedFilms); 
+                          .ReturnsAsync(expectedFilms); 
 
             var service = new FilmService(mockRepository.Object);
 
@@ -57,7 +57,7 @@ namespace CineQuebec.Windows.Tests.ServiceTest
             var result = service.GetAllFilms();
 
             // Assert
-            Assert.Equal(expectedFilms, result); // Verify that the returned list of films matches the expected list
+            Assert.Equal(expectedFilms, (IEnumerable<Film>)result); // Verify that the returned list of films matches the expected list
         }
 
         [Fact]

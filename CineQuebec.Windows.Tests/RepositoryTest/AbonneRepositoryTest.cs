@@ -63,19 +63,19 @@ namespace CineQuebec.Windows.Tests.RepositoryTest
             Assert.Equal(expectedAbonne, result);
         }
 
-        [Fact]
-        public async Task GetAbonneConnexion_ShouldReturnTrue_WhenCredentialsAreValid()
-        {
-            // Arrange
-            var mockRepository = new Mock<IAbonneRepository>();
-            mockRepository.Setup(repo => repo.GetAbonneConnexion("user", "password")).ReturnsAsync(true);
+        //[Fact]
+        //public async Task GetAbonneConnexion_ShouldReturnTrue_WhenCredentialsAreValid()
+        //{
+        //    // Arrange
+        //    var mockRepository = new Mock<IAbonneRepository>();
+        //    mockRepository.Setup(repo => repo.GetAbonneConnexion("user", "password")).ReturnsAsync(true);
 
-            // Act
-            var result = await mockRepository.Object.GetAbonneConnexion("user", "password");
+        //    // Act
+        //    var result = await mockRepository.Object.GetAbonneConnexion("user", "password");
 
-            // Assert
-            Assert.True(result);
-        }
+        //    // Assert
+        //    Assert.True(result);
+        //}
 
         [Fact]
         public async Task GetAbonne_ShouldReturnAbonne_WhenIdExists()

@@ -9,7 +9,7 @@ namespace CineQuebec.Windows.DAL.InterfacesRepositorie
 
         Task ModifierFilm(Film film);
 
-        List<Film> ReadFilms();
+        Task<List<Film>> ReadFilms();
 
         Task<Film> GetFilmByTitre(string titre);
     }

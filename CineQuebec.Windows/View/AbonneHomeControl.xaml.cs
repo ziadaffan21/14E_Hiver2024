@@ -29,12 +29,14 @@ namespace CineQuebec.Windows.View
         private readonly IAbonneService _abonneService;
         private readonly IRealisateurRepository _realisateurRepository;
         private readonly IActeurRepository _acteurRepository;
-        public AbonneHomeControl(IAbonneService abonneService, IRealisateurRepository realisateurRepository, IActeurRepository acteurRepository)
+        private readonly IFilmService _filmService;
+        public AbonneHomeControl(IAbonneService abonneService, IRealisateurRepository realisateurRepository, IActeurRepository acteurRepository, IFilmService filmService)
         {
             InitializeComponent();
             _abonneService = abonneService;
             _realisateurRepository = realisateurRepository;
             _acteurRepository = acteurRepository;
+            _filmService = filmService;
         }
 
         private void btnReserverUnePlace_Click(object sender, RoutedEventArgs e)
@@ -44,8 +46,9 @@ namespace CineQuebec.Windows.View
 
         private void btnVoirPreferance_Click(object sender, RoutedEventArgs e)
         {
-            var listPreferanceView = new ListPreferencesView(_abonneService, _realisateurRepository, _acteurRepository, User);
-            listPreferanceView.ShowDialog();
+            var listPreferanceView = new ListPreferencesView(_abonneService, _realisateurRepository, _acteurRepository, _filmService, User);
+            if ((bool)listPreferanceView.ShowDialog())
+                User = listPreferanceView.User;
         }
 
         private void btnNoteUnFilm_Click(object sender, RoutedEventArgs e)

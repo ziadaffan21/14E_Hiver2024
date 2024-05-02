@@ -239,5 +239,77 @@ namespace CineQuebec.Windows.Ressources.i18n {
                 return ResourceManager.GetString("modificationReussi", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Veuillez selectionner un acteur pour ajouter.
+        /// </summary>
+        public static string selection_un_acteur_ajout {
+            get {
+                return ResourceManager.GetString("selection_un_acteur_ajout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Veuillez selectionner un acteur pour supprimer.
+        /// </summary>
+        public static string selection_un_acteur_supression {
+            get {
+                return ResourceManager.GetString("selection_un_acteur_supression", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Veuillez selectionner une catégorie pour ajouter.
+        /// </summary>
+        public static string selection_un_cat_ajout {
+            get {
+                return ResourceManager.GetString("selection_un_cat_ajout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Veuillez selectionner une catégorie pour supprimer.
+        /// </summary>
+        public static string selection_un_categorie_supression {
+            get {
+                return ResourceManager.GetString("selection_un_categorie_supression", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Veuillez selectionner un film pour ajouter.
+        /// </summary>
+        public static string selection_un_film_ajout {
+            get {
+                return ResourceManager.GetString("selection_un_film_ajout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Veuillez selectionner un film pour supprimer.
+        /// </summary>
+        public static string selection_un_film_supression {
+            get {
+                return ResourceManager.GetString("selection_un_film_supression", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Veuillez selectionner un réalisateur pour ajouter.
+        /// </summary>
+        public static string selection_un_realisateur_ajout {
+            get {
+                return ResourceManager.GetString("selection_un_realisateur_ajout", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Recherche une chaîne localisée semblable à Veuillez selectionner un réalisateur pour supprimer.
+        /// </summary>
+        public static string selection_un_realisateur_supression {
+            get {
+                return ResourceManager.GetString("selection_un_realisateur_supression", resourceCulture);
+            }
+        }
     }
 }

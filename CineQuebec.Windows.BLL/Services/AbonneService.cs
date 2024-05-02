@@ -1,5 +1,6 @@
 ﻿using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.Enums;
+using CineQuebec.Windows.DAL.Exceptions.AbonneExceptions;
 using CineQuebec.Windows.DAL.InterfacesRepositorie;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
 using CineQuebec.Windows.Exceptions.AbonneExceptions;
@@ -44,9 +45,10 @@ namespace CineQuebec.Windows.DAL.Services
         public async Task<bool> AddActeurInAbonne(ObjectId abonneId, Acteur acteur)
         {
             var abonne = await GetAbonne(abonneId);
-
-            if (abonne.Acteurs.Count > 6)
-                throw new ArgumentException("Vous pouvez pas ajouter plus que 5 acteurs");
+            if (abonne.Acteurs.Contains(acteur))
+                throw new ActeurAlreadyExistInRealisateurList($"L'acteur {acteur.Prenom} {acteur.Nom} exite déjà dans la liste acteurs");
+            if (abonne.Acteurs.Count >= 5)
+                throw new NumberActeursOutOfRange("Vous ne pouvez pas ajouter plus que 5 acteurs");
 
 
             abonne.Acteurs.Add(acteur);
@@ -60,9 +62,10 @@ namespace CineQuebec.Windows.DAL.Services
         public async Task<bool> AddRealisateurInAbonne(ObjectId abonneId, Realisateur realisateur)
         {
             var abonne = await GetAbonne(abonneId);
-
-            if (abonne.Realisateurs.Count > 6)
-                throw new ArgumentException("Vous pouvez pas ajouter plus que 5 realisateurs");
+            if(abonne.Realisateurs.Contains(realisateur))
+                throw new RealisateurAlreadyExistInRealisateurList($"Le réalisateur {realisateur.Prenom} {realisateur.Nom} exite déjà dans la liste acteurs");
+            if (abonne.Realisateurs.Count >= 5)
+                throw new NumberRealisateursOutOfRange("Vous ne pouvez pas ajouter plus que 5 realisateurs");
 
 
             abonne.Realisateurs.Add(realisateur);
@@ -76,9 +79,10 @@ namespace CineQuebec.Windows.DAL.Services
         public async Task<bool> AddCategorieInAbonne(ObjectId abonneId, Categories categorie)
         {
             var abonne = await GetAbonne(abonneId);
-
-            if (abonne.CategoriesPrefere.Count > 4)
-                throw new ArgumentException("Vous pouvez pas ajouter plus que 3 categories");
+            if(abonne.CategoriesPrefere.Contains(categorie))
+                throw new CategorieAlreadyExistInRealisateurList($"La catégorie {categorie.ToString()} exite déjà dans la liste acteurs");
+            if (abonne.CategoriesPrefere.Count >= 3)
+                throw new NumberCategoriesOutOfRange("Vous pouvez pas ajouter plus que 3 categories");
 
 
             abonne.CategoriesPrefere.Add(categorie);
@@ -86,6 +90,74 @@ namespace CineQuebec.Windows.DAL.Services
             if (!result)
                 return false;
 
+            return true;
+        }
+
+        public async Task<bool> AddFilmInAbonne(ObjectId abonneId, Film film)
+        {
+            var abonne = await GetAbonne(abonneId);
+
+            if(abonne.Films.Contains(film))
+                throw new FilmAlreadyExistInRealisateurList($"Le film {film.Titre} exite déjà dans la liste acteurs");
+
+
+            abonne.Films.Add(film);
+            var result = await _abonneRepository.UpdateAbonne(abonne);
+            if (!result)
+                return false;
+
+            return true;
+        }
+
+        public async Task<bool> RemoveActeurInAbonne(ObjectId abonneId, Acteur acteur)
+        {
+            var abonne = await GetAbonne(abonneId);
+
+            if (abonne.Acteurs.Remove(acteur))
+            {
+                var result = await _abonneRepository.UpdateAbonne(abonne);
+                if (!result)
+                    return false;
+            }
+            return true;
+        }
+
+        public async Task<bool> RemoveRealisateurInAbonne(ObjectId abonneId, Realisateur realisateur)
+        {
+            var abonne = await GetAbonne(abonneId);
+
+            if (abonne.Realisateurs.Remove(realisateur))
+            {
+                var result = await _abonneRepository.UpdateAbonne(abonne);
+                if (!result)
+                    return false;
+            }
+            return true;
+        }
+
+        public async Task<bool> RemoveCategorieInAbonne(ObjectId abonneId, Categories categorie)
+        {
+            var abonne = await GetAbonne(abonneId);
+
+            if (abonne.CategoriesPrefere.Remove(categorie))
+            {
+                var result = await _abonneRepository.UpdateAbonne(abonne);
+                if (!result)
+                    return false;
+            }
+            return true;
+        }
+
+        public async Task<bool> RemoveFilmInAbonne(ObjectId abonneId, Film film)
+        {
+            var abonne = await GetAbonne(abonneId);
+
+            if (abonne.Films.Remove(film))
+            {
+                var result = await _abonneRepository.UpdateAbonne(abonne);
+                if (!result)
+                    return false;
+            }
             return true;
         }
     }

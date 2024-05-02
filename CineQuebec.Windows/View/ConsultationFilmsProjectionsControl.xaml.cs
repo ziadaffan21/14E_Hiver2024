@@ -24,11 +24,11 @@ namespace CineQuebec.Windows.View
             ChargerFilmProjection();
         }
 
-        private void ChargerFilmProjection()
+        private async void ChargerFilmProjection()
         {
             try
             {
-                lstFilms.ItemsSource = _filmService.GetAllFilms();
+                lstFilms.ItemsSource = await _filmService.GetAllFilms();
                 lstProjections.ItemsSource = _projectionService.GetAllProjections();
             }
             catch (MongoDataConnectionException err)

@@ -51,12 +51,17 @@ namespace CineQuebec.Windows.DAL.Data
         public bool isAdmin { get; set; }
         public List<Acteur> Acteurs { get; set; } = new List<Acteur>();
         public List<Realisateur> Realisateurs { get; set; } = new List<Realisateur>();
+        public List<Film> Films { get; set; } = new List<Film>();
         public List<Categories> CategoriesPrefere { get; set; } = new List<Categories>();
 
         #endregion PROPRIÉTÉS ET INDEXEURS
 
         #region CONSTRUCTEURS
 
+        public Abonne()
+        {
+            
+        }
         public Abonne(string username, DateTime dateAdhesion)
         {
             Username = username;

@@ -98,9 +98,9 @@ namespace CineQuebec.Windows.View
             InitialiserFormulaireAjout();
         }
 
-        private void InitialiserFormulaireAjout()
+        private async void InitialiserFormulaireAjout()
         {
-            cboFilm.ItemsSource = _filmService.GetAllFilms();
+            cboFilm.ItemsSource = await _filmService.GetAllFilms();
             cboFilm.Focus();
             txtPlace.Focus();
         }

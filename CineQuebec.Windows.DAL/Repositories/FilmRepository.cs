@@ -24,12 +24,12 @@ namespace CineQuebec.Windows.DAL.Repositories
             _mongoDataBase = _dataBaseUtils.ConnectDatabase(_mongoBDClinet);
         }
 
-        public List<Film> ReadFilms()
+        public async Task<List<Film>> ReadFilms()
         {
             var collection = _mongoDataBase.GetCollection<Film>(FILMS);
-            List<Film> films = collection.Aggregate().ToList();
+            
 
-            return films;
+            return await collection.Aggregate().ToListAsync();
         }
 
         public async Task ModifierFilm(Film film)

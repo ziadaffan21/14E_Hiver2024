@@ -7,7 +7,7 @@ namespace CineQuebec.Windows.Tests.RepositoryTest
     public class FilmRepositoryTest
     {
         [Fact]
-        public void GetAllAbonnes_ShouldReturnListOfAbonnes()
+        public async void GetAllAbonnes_ShouldReturnListOfAbonnes()
         {
             // Arrange
             var expectedFilms = new List<Film>
@@ -17,7 +17,7 @@ namespace CineQuebec.Windows.Tests.RepositoryTest
                 };
             var mockRepository = new Mock<IFilmRepository>();
             mockRepository.Setup(repo => repo.ReadFilms())
-                          .Returns(expectedFilms);
+                          .ReturnsAsync(expectedFilms);
 
             // Act
             var result = mockRepository.Object.ReadFilms();
@@ -26,7 +26,7 @@ namespace CineQuebec.Windows.Tests.RepositoryTest
             // Assert
             Assert.NotNull(result);
             Assert.IsType<List<Film>>(result);
-            Assert.Equal(expectedFilms, result);
+            Assert.Equal(expectedFilms, (IEnumerable<Film>)result);
         }
 
         [Fact]
@@ -60,7 +60,7 @@ namespace CineQuebec.Windows.Tests.RepositoryTest
         }
 
         [Fact]
-        public void GetAllFilms_ShouldReturnListOfFilms()
+        public async void GetAllFilms_ShouldReturnListOfFilms()
         {
             // Arrange
             var expectedFilms = new List<Film>
@@ -69,7 +69,7 @@ namespace CineQuebec.Windows.Tests.RepositoryTest
                     new Film("Titre1", DateTime.Now, 120, DAL.Enums.Categories.ACTION)
                 };
             var mockRepository = new Mock<IFilmRepository>();
-            mockRepository.Setup(repo => repo.ReadFilms()).Returns(expectedFilms);
+            mockRepository.Setup(repo => repo.ReadFilms()).ReturnsAsync(expectedFilms);
 
             // Act
             var result = mockRepository.Object.ReadFilms();
@@ -77,7 +77,7 @@ namespace CineQuebec.Windows.Tests.RepositoryTest
             // Assert
             Assert.NotNull(result);
             Assert.IsType<List<Film>>(result);
-            Assert.Equal(expectedFilms, result);
+            Assert.Equal(expectedFilms, (IEnumerable<Film>)result);
         }
 
         [Fact]
