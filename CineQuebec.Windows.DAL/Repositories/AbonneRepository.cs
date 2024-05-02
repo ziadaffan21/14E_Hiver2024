@@ -46,7 +46,7 @@ namespace CineQuebec.Windows.DAL.Repositories
 
             return abonne;
         }
-        
+
 
         public async Task<Abonne> GetAbonneConnexion(string username, string password)
         {
@@ -67,11 +67,13 @@ namespace CineQuebec.Windows.DAL.Repositories
             return abonne;
         }
 
-        public async Task<bool> UpdateAbonne(Abonne abonne)
+        public async Task<Abonne> UpdateOne(Abonne abonne)
         {
             var collection = _database.GetCollection<Abonne>(ABONNE);
-            await collection.ReplaceOneAsync(filter: g => g.Id == abonne.Id, replacement: abonne);
-            return true;
+            var replace = await collection.ReplaceOneAsync(filter: g => g.Id == abonne.Id, replacement: abonne);
+            if (replace.IsAcknowledged)
+                return abonne;
+            return null;
         }
     }
 }

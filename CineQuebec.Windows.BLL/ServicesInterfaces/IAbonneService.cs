@@ -12,13 +12,13 @@ namespace CineQuebec.Windows.DAL.ServicesInterfaces
 
         Task<Abonne> GetAbonneConnexion(string username, string password);
         Task<Abonne> GetAbonne(ObjectId id);
-        Task<bool> AddActeurInAbonne(ObjectId abonneId, Acteur acteur);
-        Task<bool> AddRealisateurInAbonne(ObjectId abonneId, Realisateur realisateur);
-        Task<bool> AddCategorieInAbonne(ObjectId abonneId, Categories categorie);
-        Task<bool> AddFilmInAbonne(ObjectId abonneId, Film film);
-        Task<bool> RemoveActeurInAbonne(ObjectId abonneId, Acteur acteur);
-        Task<bool> RemoveRealisateurInAbonne(ObjectId abonneId, Realisateur realisateur);
-        Task<bool> RemoveCategorieInAbonne(ObjectId abonneId, Categories categorie);
-        Task<bool> RemoveFilmInAbonne(ObjectId abonneId, Film film);
+        Task<Abonne> AddActeurInAbonne(Abonne abonne, Acteur acteur);
+        Task<Abonne> AddRealisateurInAbonne(Abonne abonne, Realisateur realisateur);
+        Task<Abonne> AddCategorieInAbonne(Abonne abonne, Categories categorie);
+        Task<Abonne> AddFilmInAbonne(Abonne abonne, Film film);
+        Task<Abonne> RemoveActeurInAbonne(Abonne abonne, Acteur acteur);
+        Task<Abonne> RemoveRealisateurInAbonne(Abonne abonne, Realisateur realisateur);
+        Task<Abonne> RemoveCategorieInAbonne(Abonne abonne, Categories categorie);
+        Task<Abonne> RemoveFilmInAbonne(Abonne abonne, Film film);
     }
 }

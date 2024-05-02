@@ -4,6 +4,10 @@ namespace CineQuebec.Windows.DAL.Data
 {
     public class Realisateur : Personne
     {
+        public Realisateur()
+        {
+            
+        }
         public Realisateur(string? prenom, string? nom, DateTime naissance) : base(prenom, nom, naissance)
         {
         }

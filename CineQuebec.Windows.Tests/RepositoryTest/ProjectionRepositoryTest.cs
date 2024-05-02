@@ -60,24 +60,25 @@ namespace CineQuebec.Windows.Tests.RepositoryTest
         }
 
         [Fact]
-        public async void GetAllFilms_ShouldReturnListOfFilms()
+        public async Task GetAllFilms_ShouldReturnListOfFilms()
         {
             // Arrange
             var expectedFilms = new List<Film>
-                {
-                    new Film("Titre", DateTime.Now, 120, DAL.Enums.Categories.ACTION),
-                    new Film("Titre1", DateTime.Now, 120, DAL.Enums.Categories.ACTION)
-                };
+        {
+            new Film("Titre", DateTime.Now, 120, DAL.Enums.Categories.ACTION),
+            new Film("Titre1", DateTime.Now, 120, DAL.Enums.Categories.ACTION)
+        };
             var mockRepository = new Mock<IFilmRepository>();
-            mockRepository.Setup(repo => repo.ReadFilms()).ReturnsAsync(expectedFilms);
+            mockRepository.Setup(repo => repo.ReadFilms())
+                       .ReturnsAsync(expectedFilms);
 
             // Act
-            var result = mockRepository.Object.ReadFilms();
+            var result = await mockRepository.Object.ReadFilms();
 
             // Assert
             Assert.NotNull(result);
             Assert.IsType<List<Film>>(result);
-            Assert.Equal(expectedFilms, (IEnumerable<Film>)result);
+            Assert.Equal(expectedFilms, result);
         }
 
         [Fact]

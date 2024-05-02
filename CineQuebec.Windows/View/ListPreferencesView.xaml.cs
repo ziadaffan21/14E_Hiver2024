@@ -82,10 +82,10 @@ namespace CineQuebec.Windows.View
                 var selectedRealisateur = cbRealisateurs.SelectedItem as Realisateur;
                 if (selectedRealisateur != null)
                 {
-                    var result = await _abonneService.AddRealisateurInAbonne(User.Id, selectedRealisateur);
-                    if (result)
+                    var result = await _abonneService.AddRealisateurInAbonne(User, selectedRealisateur);
+                    if (result is not null)
                     {
-                        User = await _abonneService.GetAbonne(User.Id);
+                        User = result;
                         cbRealisateurs.SelectedIndex = -1;
                         InitializeListsAndComboBoxes();
                     }
@@ -100,7 +100,7 @@ namespace CineQuebec.Windows.View
                 MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Warning);
                 cbRealisateurs.SelectedIndex = -1;
             }
-            catch (RealisateurAlreadyExistInRealisateurList ex)
+            catch (RealisateurAlreadyExistInRealisateursList ex)
             {
                 MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Warning);
                 cbRealisateurs.SelectedIndex = -1;
@@ -118,10 +118,10 @@ namespace CineQuebec.Windows.View
                 var selectedActeur = cbActeurs.SelectedItem as Acteur;
                 if (selectedActeur != null)
                 {
-                    var result = await _abonneService.AddActeurInAbonne(User.Id, selectedActeur);
-                    if (result)
+                    var result = await _abonneService.AddActeurInAbonne(User, selectedActeur);
+                    if (result is not null)
                     {
-                        User = await _abonneService.GetAbonne(User.Id);
+                        User = result;
                         cbActeurs.SelectedIndex = -1;
                         InitializeListsAndComboBoxes();
                     }
@@ -136,7 +136,7 @@ namespace CineQuebec.Windows.View
                 MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Warning);
                 cbActeurs.SelectedIndex = -1;
             }
-            catch (ActeurAlreadyExistInRealisateurList ex)
+            catch (ActeurAlreadyExistInActeursList ex)
             {
                 MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Warning);
                 cbActeurs.SelectedIndex = -1;
@@ -154,10 +154,10 @@ namespace CineQuebec.Windows.View
                 var selectedCategorie = cbCategorie.SelectedIndex;
                 if (selectedCategorie != -1)
                 {
-                    var result = await _abonneService.AddCategorieInAbonne(User.Id, (Categories)selectedCategorie);
-                    if (result)
+                    var result = await _abonneService.AddCategorieInAbonne(User, (Categories)selectedCategorie);
+                    if (result is not null)
                     {
-                        User = await _abonneService.GetAbonne(User.Id);
+                        User = result;
                         cbCategorie.SelectedIndex = -1;
                         InitializeListsAndComboBoxes();
                     }
@@ -172,7 +172,7 @@ namespace CineQuebec.Windows.View
                 MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Warning);
                 cbCategorie.SelectedIndex = -1;
             }
-            catch (CategorieAlreadyExistInRealisateurList ex)
+            catch (CategorieAlreadyExistInCategoriesList ex)
             {
                 MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Warning);
                 cbCategorie.SelectedIndex = -1;
@@ -190,10 +190,10 @@ namespace CineQuebec.Windows.View
                 var selectedFilm = cbFilms.SelectedItem as Film;
                 if (selectedFilm != null)
                 {
-                    var result = await _abonneService.AddFilmInAbonne(User.Id, selectedFilm);
-                    if (result)
+                    var result = await _abonneService.AddFilmInAbonne(User, selectedFilm);
+                    if (result is not null)
                     {
-                        User = await _abonneService.GetAbonne(User.Id);
+                        User = result;
                         cbFilms.SelectedIndex = -1;
                         InitializeListsAndComboBoxes();
                     }
@@ -201,9 +201,10 @@ namespace CineQuebec.Windows.View
                 else
                     MessageBox.Show(Resource.selection_un_film_ajout, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Warning);
             }
-            catch (FilmAlreadyExistInRealisateurList ex)
+            catch (FilmAlreadyExistInFilmsList ex)
             {
                 MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Warning);
+                cbFilms.SelectedIndex = -1;
             }
             catch (Exception ex)
             {
@@ -218,10 +219,10 @@ namespace CineQuebec.Windows.View
                 var selectedRealisateur = lstRealisateurs.SelectedItem as Realisateur;
                 if (selectedRealisateur != null)
                 {
-                    var result = await _abonneService.RemoveRealisateurInAbonne(User.Id, selectedRealisateur);
-                    if (result)
+                    var result = await _abonneService.RemoveRealisateurInAbonne(User, selectedRealisateur);
+                    if (result is not null)
                     {
-                        User = await _abonneService.GetAbonne(User.Id);
+                        User = result;
                         lstRealisateurs.SelectedItem = null;
                         InitializeListsAndComboBoxes();
                     }
@@ -231,7 +232,7 @@ namespace CineQuebec.Windows.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -242,10 +243,10 @@ namespace CineQuebec.Windows.View
                 var selectedActeur = lstActeurs.SelectedItem as Acteur;
                 if (selectedActeur != null)
                 {
-                    var result = await _abonneService.RemoveActeurInAbonne(User.Id, selectedActeur);
-                    if (result)
+                    var result = await _abonneService.RemoveActeurInAbonne(User, selectedActeur);
+                    if (result is not null)
                     {
-                        User = await _abonneService.GetAbonne(User.Id);
+                        User = result;
                         lstActeurs.SelectedItem = null;
                         InitializeListsAndComboBoxes();
                     }
@@ -255,7 +256,7 @@ namespace CineQuebec.Windows.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -266,8 +267,8 @@ namespace CineQuebec.Windows.View
                 var selectedFilm = lstFilms.SelectedItem as Film;
                 if (selectedFilm != null)
                 {
-                    var result = await _abonneService.RemoveFilmInAbonne(User.Id, selectedFilm);
-                    if (result)
+                    var result = await _abonneService.RemoveFilmInAbonne(User, selectedFilm);
+                    if (result is not null)
                     {
                         User = await _abonneService.GetAbonne(User.Id);
                         lstFilms.SelectedItem = null;
@@ -279,7 +280,7 @@ namespace CineQuebec.Windows.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -290,10 +291,10 @@ namespace CineQuebec.Windows.View
                 var selectedCategorie = lstCategories.SelectedIndex;
                 if (selectedCategorie != -1)
                 {
-                    var result = await _abonneService.RemoveCategorieInAbonne(User.Id, (Categories)selectedCategorie);
-                    if (result)
+                    var result = await _abonneService.RemoveCategorieInAbonne(User, (Categories)selectedCategorie);
+                    if (result is not null)
                     {
-                        User = await _abonneService.GetAbonne(User.Id);
+                        User = result;
                         lstCategories.SelectedIndex = -1;
                         InitializeListsAndComboBoxes();
                     }
@@ -303,7 +304,7 @@ namespace CineQuebec.Windows.View
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 

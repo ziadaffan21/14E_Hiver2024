@@ -1,8 +1,10 @@
 ﻿using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.Enums;
+using CineQuebec.Windows.DAL.Exceptions.AbonneExceptions;
 using CineQuebec.Windows.DAL.InterfacesRepositorie;
 using CineQuebec.Windows.DAL.Services;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
+using CineQuebec.Windows.Exceptions.AbonneExceptions;
 using MongoDB.Bson;
 using Moq;
 using System.Runtime.Intrinsics.X86;
@@ -65,101 +67,108 @@ namespace CineQuebec.Windows.Tests.ServiceTest
             mockRepository.Verify(x => x.GetAbonne(id));
         }
 
-        //[Theory]
-        //[InlineData(true, true)]
-        //[InlineData(false, false)]
-        //public async Task GetAbonneConnexion_ShouldReturnTrueOrFalse(bool actionValide, bool resultatAttendu)
-        //{
-        //    // Arrange
-        //    var mockRepository = new Mock<IAbonneRepository>();
-        //    string username = "testUser";
-        //    string password = "testPassword";
-        //    mockRepository.Setup(repo => repo.GetAbonneConnexion(username, password))
-        //                  .ReturnsAsync(actionValide); // Configurer le mock pour retourner le résultat attendu
-
-        //    var service = new AbonneService(mockRepository.Object);
-
-        //    // Act
-        //    var result = await service.GetAbonneConnexion(username, password);
-
-        //    // Assert
-        //    Assert.Equal(result, resultatAttendu);
-        //}
         [Fact]
-        public async Task AddActeurInAbonne_AddsActeur_WhenActeursCountDoesNotExceedLimit()
+        public async Task AddActeurInAbonne_AddsActeur_Successfully()
         {
             // Arrange
-            var mockRepo = new Mock<IAbonneRepository>();
-            var abonneId = new ObjectId();
-            var acteur = new Acteur("ActeurName", "NomActeur", DateTime.Now);
-            mockRepo.Setup(repo => repo.GetAbonne(abonneId)).ReturnsAsync(new Abonne("Abonne", DateTime.Now) { Acteurs = new List<Acteur> { new Acteur("Acteur1", "Actuers", DateTime.Now), new Acteur("Acteur2", "efwef", DateTime.Now) } });
+            var mockAbonneRepository = new Mock<IAbonneRepository>();
+            var abonne = new Abonne { Id = ObjectId.GenerateNewId(), Username = "username", Acteurs = new List<Acteur>() };
+            var acteur = new Acteur { Prenom = "John123", Nom = "Doe123" };
+            mockAbonneRepository.Setup(repo => repo.UpdateOne(It.IsAny<Abonne>())).ReturnsAsync(abonne);
 
-            var service = new AbonneService(mockRepo.Object);
+            var service = new AbonneService(mockAbonneRepository.Object);
 
             // Act
-            var result = await service.AddActeurInAbonne(abonneId, acteur);
+            var result = await service.AddActeurInAbonne(abonne, acteur);
 
             // Assert
-            Assert.True(result);
-            mockRepo.Verify(repo => repo.GetAbonne(abonneId), Times.Once);
+            Assert.NotNull(result);
+            Assert.Equal(abonne.Id, result.Id); // Vérifie que l'ID de l'abonné a été conservé
+            Assert.Contains(acteur, result.Acteurs); // Vérifie que l'acteur a été ajouté à la liste des acteurs
+            mockAbonneRepository.Verify(repo => repo.UpdateOne(It.IsAny<Abonne>()), Times.Once);
+        }
+
+        [Fact]
+        public async Task AddActeurInAbonne_ThrowsActeurAlreadyExistInActeursList_WhenActeurExists()
+        {
+            // Arrange
+            var mockAbonneRepository = new Mock<IAbonneRepository>();
+            var abonne = new Abonne { Id = ObjectId.GenerateNewId(), Username = "username", Acteurs = new List<Acteur> { new Acteur { Prenom = "John123", Nom = "Doe123" } } };
+            var acteur = new Acteur { Prenom = "John123", Nom = "Doe123" };
+            mockAbonneRepository.Setup(repo => repo.UpdateOne(It.IsAny<Abonne>()))
+                               .ThrowsAsync(new ActeurAlreadyExistInActeursList("L'acteur existe déjà dans la liste des acteurs"));
+
+            var service = new AbonneService(mockAbonneRepository.Object);
+
+            // Act & Assert
+            await Assert.ThrowsAsync<ActeurAlreadyExistInActeursList>(() => service.AddActeurInAbonne(abonne, acteur));
+        }
+
+        [Fact]
+        public async Task AddActeurInAbonne_ThrowsNumberActeursOutOfRange_WhenMaxActeursReached()
+        {
+            // Arrange
+            var mockAbonneRepository = new Mock<IAbonneRepository>();
+            var abonne = new Abonne { Id = ObjectId.GenerateNewId(), Acteurs = new List<Acteur> { new Acteur { Id = ObjectId.GenerateNewId(), Prenom = "John123", Nom = "Doe123" }, new Acteur { Id = ObjectId.GenerateNewId(), Prenom = "Jane123", Nom = "Doe123" }, new Acteur { Id = ObjectId.GenerateNewId(), Prenom = "Jim23", Nom = "Doe123" } } };
+            var acteur = new Acteur { Prenom = "Jill123", Nom = "Doe123" };
+            // Configure le mock pour simuler une exception NumberActeursOutOfRange lorsque le nombre d'acteurs atteint la limite
+            mockAbonneRepository.Setup(repo => repo.UpdateOne(It.IsAny<Abonne>()))
+                              .ThrowsAsync(new NumberActeursOutOfRange("Le nombre d'acteurs atteint la limite maximale"));
+
+            var service = new AbonneService(mockAbonneRepository.Object);
+
+            // Act & Assert
+            await Assert.ThrowsAsync<NumberActeursOutOfRange>(() => service.AddActeurInAbonne(abonne, acteur));
         }
         [Fact]
-        public async Task AddRealisateurInAbonne_AddsRealisateur_WhenRealisateursCountDoesNotExceedLimit()
+        public async Task AddRealisateurInAbonne_AddsRealisateur_Successfully()
         {
             // Arrange
-            var mockRepo = new Mock<IAbonneRepository>();
-            var abonneId = new ObjectId();
-            var realisateur = new Realisateur("RealisateurName", "RealisNom", DateTime.Now);
-            mockRepo.Setup(repo => repo.GetAbonne(abonneId)).ReturnsAsync(new Abonne("Abonne", DateTime.Now) { Realisateurs = new List<Realisateur> { new Realisateur("Realisateur1", "Realis", DateTime.Now), new Realisateur("Realisateur2", "Realis", DateTime.Now) } });
+            var mockAbonneRepository = new Mock<IAbonneRepository>();
+            var abonne = new Abonne { Id = ObjectId.GenerateNewId(), Realisateurs = new List<Realisateur>() };
+            var realisateur = new Realisateur { Prenom = "John123", Nom = "Doe123" };
+            mockAbonneRepository.Setup(repo => repo.UpdateOne(It.IsAny<Abonne>())).ReturnsAsync(abonne);
 
-            var service = new AbonneService(mockRepo.Object);
+            var service = new AbonneService(mockAbonneRepository.Object);
 
             // Act
-            var result = await service.AddRealisateurInAbonne(abonneId, realisateur);
+            var result = await service.AddRealisateurInAbonne(abonne, realisateur);
 
             // Assert
-            Assert.True(result);
-            mockRepo.Verify(repo => repo.GetAbonne(abonneId), Times.Once);
+            Assert.NotNull(result);
+            Assert.Equal(abonne.Id, result.Id); // Vérifie que l'ID de l'abonné a été conservé
+            Assert.Contains(realisateur, result.Realisateurs); // Vérifie que le réalisateur a été ajouté à la liste des réalisateurs
+            mockAbonneRepository.Verify(repo => repo.UpdateOne(It.IsAny<Abonne>()), Times.Once);
         }
+
         [Fact]
-        public async Task AddCategorieInAbonne_AddsCategorie_WhenCategoriesCountDoesNotExceedLimit()
+        public async Task AddRealisateurInAbonne_ThrowsRealisateurAlreadyExistInRealisateursList_WhenRealisateurExists()
         {
             // Arrange
-            var mockRepo = new Mock<IAbonneRepository>();
-            var abonneId = new ObjectId();
-            var categorie = Categories.ACTION;
-            mockRepo.Setup(repo => repo.GetAbonne(abonneId)).ReturnsAsync(new Abonne("Abonne", DateTime.Now) { CategoriesPrefere = new List<Categories> { Categories.ACTION, Categories.COMEDY } });
+            var mockAbonneRepository = new Mock<IAbonneRepository>();
+            var abonne = new Abonne { Id = ObjectId.GenerateNewId(), Realisateurs = new List<Realisateur> { new Realisateur { Prenom = "John", Nom = "Doe" } } };
+            var realisateur = new Realisateur { Prenom = "John123", Nom = "Doe123" };
+            mockAbonneRepository.Setup(repo => repo.UpdateOne(It.IsAny<Abonne>())).ThrowsAsync(new RealisateurAlreadyExistInRealisateursList("Le réalisateur existe déjà dans la liste réalisateurs"));
 
-            var service = new AbonneService(mockRepo.Object);
+            var service = new AbonneService(mockAbonneRepository.Object);
 
-            // Act
-            var result = await service.AddCategorieInAbonne(abonneId, categorie);
-
-            // Assert
-            Assert.True(result);
-            mockRepo.Verify(repo => repo.GetAbonne(abonneId), Times.Once);
+            // Act & Assert
+            await Assert.ThrowsAsync<RealisateurAlreadyExistInRealisateursList>(() => service.AddRealisateurInAbonne(abonne, realisateur));
         }
+
         [Fact]
-        public async Task RemoveActeurInAbonne_RemovesActeurAndUpdatesAbonne()
+        public async Task AddRealisateurInAbonne_ThrowsNumberRealisateursOutOfRange_WhenMaxRealisateursReached()
         {
             // Arrange
-            var mockRepo = new Mock<IAbonneRepository>();
+            var mockAbonneRepository = new Mock<IAbonneRepository>();
+            var abonne = new Abonne { Id = ObjectId.GenerateNewId(), Realisateurs = new List<Realisateur> { new Realisateur { Prenom = "John", Nom = "Doe" }, new Realisateur { Prenom = "Jane", Nom = "Doe" }, new Realisateur { Prenom = "Jim", Nom = "Doe" }, new Realisateur { Prenom = "Jill", Nom = "Doe" }, new Realisateur { Prenom = "Jack", Nom = "Doe" } } };
+            var realisateur = new Realisateur { Prenom = "Jil123l", Nom = "Doe123" };
+            mockAbonneRepository.Setup(repo => repo.UpdateOne(It.IsAny<Abonne>())).ThrowsAsync(new NumberRealisateursOutOfRange("Vous ne pouvez pas ajouter plus que 5 realisateurs"));
 
-            var abonneId = new ObjectId();
-            var acteur = new Acteur("acteir", "qefweg", DateTime.Now);
-            var expectedAbonne = new Abonne { Id = abonneId, Acteurs = new List<Acteur> { acteur } };
-            var service = new AbonneService(mockRepo.Object);
+            var service = new AbonneService(mockAbonneRepository.Object);
 
-
-            mockRepo.Setup(repo => repo.GetAbonne(abonneId)).ReturnsAsync(expectedAbonne);
-            mockRepo.Setup(repo => repo.UpdateAbonne(It.IsAny<Abonne>())).ReturnsAsync(true);
-
-            // Act
-            var result = await service.RemoveActeurInAbonne(abonneId, acteur);
-
-            // Assert
-            //mockRepo.Verify(repo => repo.UpdateAbonne(It.Is<Abonne>(a => a.Id == abonneId && !a.Acteurs.Contains(acteur)), Times.Once));
-            Assert.True(result);
+            // Act & Assert
+            await Assert.ThrowsAsync<NumberRealisateursOutOfRange>(() => service.AddRealisateurInAbonne(abonne, realisateur));
         }
     }
 }

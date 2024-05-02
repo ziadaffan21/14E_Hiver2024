@@ -42,123 +42,96 @@ namespace CineQuebec.Windows.DAL.Services
             return await _abonneRepository.GetAbonne(id);
         }
 
-        public async Task<bool> AddActeurInAbonne(ObjectId abonneId, Acteur acteur)
+        public async Task<Abonne> AddActeurInAbonne(Abonne abonne, Acteur acteur)
         {
-            var abonne = await GetAbonne(abonneId);
             if (abonne.Acteurs.Contains(acteur))
-                throw new ActeurAlreadyExistInRealisateurList($"L'acteur {acteur.Prenom} {acteur.Nom} exite déjà dans la liste acteurs");
+                throw new ActeurAlreadyExistInActeursList($"L'acteur {acteur.Prenom} {acteur.Nom} exite déjà dans la liste acteurs");
             if (abonne.Acteurs.Count >= 5)
                 throw new NumberActeursOutOfRange("Vous ne pouvez pas ajouter plus que 5 acteurs");
 
 
             abonne.Acteurs.Add(acteur);
-            var result = await _abonneRepository.UpdateAbonne(abonne);
-            if (!result)
-                return false;
+            var result = await _abonneRepository.UpdateOne(abonne);
 
-            return true;
+            return result;
+
         }
 
-        public async Task<bool> AddRealisateurInAbonne(ObjectId abonneId, Realisateur realisateur)
+        public async Task<Abonne> AddRealisateurInAbonne(Abonne abonne, Realisateur realisateur)
         {
-            var abonne = await GetAbonne(abonneId);
-            if(abonne.Realisateurs.Contains(realisateur))
-                throw new RealisateurAlreadyExistInRealisateurList($"Le réalisateur {realisateur.Prenom} {realisateur.Nom} exite déjà dans la liste acteurs");
+            if (abonne.Realisateurs.Contains(realisateur))
+                throw new RealisateurAlreadyExistInRealisateursList($"Le réalisateur {realisateur.Prenom} {realisateur.Nom} exite déjà dans la liste réalisateurs");
             if (abonne.Realisateurs.Count >= 5)
                 throw new NumberRealisateursOutOfRange("Vous ne pouvez pas ajouter plus que 5 realisateurs");
 
 
             abonne.Realisateurs.Add(realisateur);
-            var result = await _abonneRepository.UpdateAbonne(abonne);
-            if (!result)
-                return false;
+            var result = await _abonneRepository.UpdateOne(abonne);
 
-            return true;
+            return result;
         }
 
-        public async Task<bool> AddCategorieInAbonne(ObjectId abonneId, Categories categorie)
+        public async Task<Abonne> AddCategorieInAbonne(Abonne abonne, Categories categorie)
         {
-            var abonne = await GetAbonne(abonneId);
-            if(abonne.CategoriesPrefere.Contains(categorie))
-                throw new CategorieAlreadyExistInRealisateurList($"La catégorie {categorie.ToString()} exite déjà dans la liste acteurs");
+            if (abonne.CategoriesPrefere.Contains(categorie))
+                throw new CategorieAlreadyExistInCategoriesList($"La catégorie {categorie.ToString()} exite déjà dans la liste catégories");
             if (abonne.CategoriesPrefere.Count >= 3)
                 throw new NumberCategoriesOutOfRange("Vous pouvez pas ajouter plus que 3 categories");
 
 
             abonne.CategoriesPrefere.Add(categorie);
-            var result = await _abonneRepository.UpdateAbonne(abonne);
-            if (!result)
-                return false;
+            var result = await _abonneRepository.UpdateOne(abonne);
 
-            return true;
+            return result;
         }
 
-        public async Task<bool> AddFilmInAbonne(ObjectId abonneId, Film film)
+        public async Task<Abonne> AddFilmInAbonne(Abonne abonne, Film film)
         {
-            var abonne = await GetAbonne(abonneId);
 
-            if(abonne.Films.Contains(film))
-                throw new FilmAlreadyExistInRealisateurList($"Le film {film.Titre} exite déjà dans la liste acteurs");
+            if (abonne.Films.Contains(film))
+                throw new FilmAlreadyExistInFilmsList($"Le film {film.Titre} exite déjà dans la liste films");
 
 
             abonne.Films.Add(film);
-            var result = await _abonneRepository.UpdateAbonne(abonne);
-            if (!result)
-                return false;
+            var result = await _abonneRepository.UpdateOne(abonne);
 
-            return true;
+            return result;
         }
 
-        public async Task<bool> RemoveActeurInAbonne(ObjectId abonneId, Acteur acteur)
+        public async Task<Abonne> RemoveActeurInAbonne(Abonne abonne, Acteur acteur)
         {
-            var abonne = await GetAbonne(abonneId);
 
             if (abonne.Acteurs.Remove(acteur))
-            {
-                var result = await _abonneRepository.UpdateAbonne(abonne);
-                if (!result)
-                    return false;
-            }
-            return true;
+                return await _abonneRepository.UpdateOne(abonne);
+
+            return abonne;
         }
 
-        public async Task<bool> RemoveRealisateurInAbonne(ObjectId abonneId, Realisateur realisateur)
+        public async Task<Abonne> RemoveRealisateurInAbonne(Abonne abonne, Realisateur realisateur)
         {
-            var abonne = await GetAbonne(abonneId);
 
             if (abonne.Realisateurs.Remove(realisateur))
-            {
-                var result = await _abonneRepository.UpdateAbonne(abonne);
-                if (!result)
-                    return false;
-            }
-            return true;
+                return await _abonneRepository.UpdateOne(abonne); ;
+
+
+            return abonne;
         }
 
-        public async Task<bool> RemoveCategorieInAbonne(ObjectId abonneId, Categories categorie)
+        public async Task<Abonne> RemoveCategorieInAbonne(Abonne abonne, Categories categorie)
         {
-            var abonne = await GetAbonne(abonneId);
 
             if (abonne.CategoriesPrefere.Remove(categorie))
-            {
-                var result = await _abonneRepository.UpdateAbonne(abonne);
-                if (!result)
-                    return false;
-            }
-            return true;
+                return await _abonneRepository.UpdateOne(abonne);
+
+            return abonne;
         }
 
-        public async Task<bool> RemoveFilmInAbonne(ObjectId abonneId, Film film)
+        public async Task<Abonne> RemoveFilmInAbonne(Abonne abonne, Film film)
         {
-            var abonne = await GetAbonne(abonneId);
-
             if (abonne.Films.Remove(film))
-            {
-                var result = await _abonneRepository.UpdateAbonne(abonne);
-                if (!result)
-                    return false;
-            }
-            return true;
+                return await _abonneRepository.UpdateOne(abonne);
+
+            return abonne;
         }
     }
 }

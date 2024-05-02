@@ -56,7 +56,10 @@ namespace CineQuebec.Windows.DAL.Entities
                 _naissance = value;
             }
         }
-
+        public Personne()
+        {
+            
+        }
         protected Personne(string? prenom, string? nom, DateTime naissance)
         {
             Prenom = prenom;
