@@ -32,9 +32,14 @@ namespace CineQuebec.Windows.DAL.Services
             return _projectionRepository.ReadProjections();
         }
 
-        public List<Projection> ReadProjectionsById(ObjectId idFilm)
+        public async Task<List<Projection>> GetProjectionsById(ObjectId idFilm)
         {
-            return _projectionRepository.ReadProjectionsById(idFilm);
+            return await _projectionRepository.ReadProjectionsById(idFilm);
+        }
+
+        public async Task<List<Projection>> GetProjectionByName(string name)
+        {
+            return await _projectionRepository.ReadProjectionsByName(name);
         }
     }
 }

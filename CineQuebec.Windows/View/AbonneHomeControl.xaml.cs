@@ -30,18 +30,26 @@ namespace CineQuebec.Windows.View
         private readonly IRealisateurRepository _realisateurRepository;
         private readonly IActeurRepository _acteurRepository;
         private readonly IFilmService _filmService;
-        public AbonneHomeControl(IAbonneService abonneService, IRealisateurRepository realisateurRepository, IActeurRepository acteurRepository, IFilmService filmService)
+        private readonly IProjectionService _projectionService;
+
+        public AbonneHomeControl(IAbonneService abonneService, IRealisateurRepository realisateurRepository, IActeurRepository acteurRepository, IFilmService filmService, IProjectionService projectionService)
         {
             InitializeComponent();
             _abonneService = abonneService;
             _realisateurRepository = realisateurRepository;
             _acteurRepository = acteurRepository;
             _filmService = filmService;
+            _projectionService = projectionService;
+            
         }
 
         private void btnReserverUnePlace_Click(object sender, RoutedEventArgs e)
         {
-
+            var reservationView = new ReservationView( _filmService, _projectionService, User);
+            if ((bool)reservationView.ShowDialog())
+            {
+                User = reservationView.User;
+            }
         }
 
         private void btnVoirPreferance_Click(object sender, RoutedEventArgs e)
@@ -53,7 +61,6 @@ namespace CineQuebec.Windows.View
 
         private void btnNoteUnFilm_Click(object sender, RoutedEventArgs e)
         {
-
         }
     }
 }

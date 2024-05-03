@@ -5,17 +5,29 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CineQuebec.Windows.View">
 
-    <Grid Background="White" Height="180" Width="220">
+
+
+    <Grid Background="White" Height="350" Width="800">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="5*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+
         <!-- Center the buttons using a StackPanel -->
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <StackPanel HorizontalAlignment="Center" Orientation="Horizontal" VerticalAlignment="Center">
             <!-- Button for reserving a seat for a projection -->
-            <Button x:Name="btnReserverUnePlace" Content="Reserve a Seat" Width="200" Click="btnReserverUnePlace_Click"/>
+            <Button x:Name="btnReserverUnePlace" Content="Reserve a Seat" Width="200" Click="btnReserverUnePlace_Click" Margin="5,0,5,0"/>
 
             <!-- Button for introducing preferences -->
-            <Button x:Name="btnVoirPreferance" Margin="0,30,0,30" Content="Introduce Preferences" Width="200" Click="btnVoirPreferance_Click" />
+            <Button x:Name="btnVoirPreferance" Margin="5,30,5,30" Content="Preferences" Width="200" Click="btnVoirPreferance_Click" />
 
             <!-- Button for rating a movie -->
-            <Button x:Name="btnNoteUnFilm" Content="Rate a Movie" Width="200" Click="btnNoteUnFilm_Click"/>
+            <Button x:Name="btnNoteUnFilm" Content="Rate a Movie" Width="200" Click="btnNoteUnFilm_Click" Margin="5,0,5,0"/>
         </StackPanel>
     </Grid>
 </UserControl>

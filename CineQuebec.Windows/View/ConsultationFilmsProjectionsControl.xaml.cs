@@ -64,8 +64,14 @@ namespace CineQuebec.Windows.View
         {
             Film selectedFilm = lstFilms.SelectedItem as Film;
             if (selectedFilm is not null)
-                lstProjections.ItemsSource = _projectionService.ReadProjectionsById(selectedFilm.Id);
+                _ = getprojectionsAsync(selectedFilm);
             gpoProjections.Header = selectedFilm is not null ? $"Projections ({selectedFilm.Titre})" : "Projections";
+        }
+
+        private async Task getprojectionsAsync(Film selectedFilm)
+        {
+            var projections = await _projectionService.GetProjectionsById(selectedFilm.Id);
+            lstProjections.ItemsSource = projections;
         }
 
         private void btnAjoutFilm_Click(object sender, RoutedEventArgs e)

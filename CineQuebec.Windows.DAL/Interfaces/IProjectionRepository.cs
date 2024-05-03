@@ -9,7 +9,10 @@ namespace CineQuebec.Windows.DAL.InterfacesRepositorie
 
         List<Projection> ReadProjections();
 
-        List<Projection> ReadProjectionsById(object idFilm);
+        Task<List<Projection>> ReadProjectionsById(object idFilm);
+
+        Task<List<Projection>> ReadProjectionsByName(string Name);
+
         Task<Projection> GetProjectionByDateAndFilmId(DateTime dateProjection, string titreFilm);
     }
 }
