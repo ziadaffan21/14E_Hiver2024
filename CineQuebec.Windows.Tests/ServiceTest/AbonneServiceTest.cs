@@ -146,9 +146,11 @@ namespace CineQuebec.Windows.Tests.ServiceTest
         {
             // Arrange
             var mockAbonneRepository = new Mock<IAbonneRepository>();
-            var abonne = new Abonne { Id = ObjectId.GenerateNewId(), Realisateurs = new List<Realisateur> { new Realisateur { Prenom = "John", Nom = "Doe" } } };
+            var abonne = new Abonne { Id = ObjectId.GenerateNewId(), Realisateurs = new List<Realisateur> { new Realisateur { Prenom = "John123", Nom = "Doe123" }, new Realisateur { Prenom = "John1234", Nom = "Doe1234" } } };
             var realisateur = new Realisateur { Prenom = "John123", Nom = "Doe123" };
-            mockAbonneRepository.Setup(repo => repo.UpdateOne(It.IsAny<Abonne>())).ThrowsAsync(new RealisateurAlreadyExistInRealisateursList("Le réalisateur existe déjà dans la liste réalisateurs"));
+            // Configure le mock pour simuler une exception RealisateurAlreadyExistInRealisateursList lorsque le réalisateur existe déjà
+            mockAbonneRepository.Setup(repo => repo.UpdateOne(It.IsAny<Abonne>()))
+                            .ThrowsAsync(new RealisateurAlreadyExistInRealisateursList("Le réalisateur existe déjà dans la liste réalisateurs"));
 
             var service = new AbonneService(mockAbonneRepository.Object);
 
@@ -161,9 +163,11 @@ namespace CineQuebec.Windows.Tests.ServiceTest
         {
             // Arrange
             var mockAbonneRepository = new Mock<IAbonneRepository>();
-            var abonne = new Abonne { Id = ObjectId.GenerateNewId(), Realisateurs = new List<Realisateur> { new Realisateur { Prenom = "John", Nom = "Doe" }, new Realisateur { Prenom = "Jane", Nom = "Doe" }, new Realisateur { Prenom = "Jim", Nom = "Doe" }, new Realisateur { Prenom = "Jill", Nom = "Doe" }, new Realisateur { Prenom = "Jack", Nom = "Doe" } } };
+            var abonne = new Abonne { Id = ObjectId.GenerateNewId(), Realisateurs = new List<Realisateur> { new Realisateur { Id = ObjectId.GenerateNewId(), Prenom = "prename1", Nom = "nomRea2" }, new Realisateur { Id = ObjectId.GenerateNewId(), Prenom = "prename2", Nom = "nomRea3" }, new Realisateur { Id = ObjectId.GenerateNewId(), Prenom = "prename3", Nom = "nomRea4" }, new Realisateur { Id = ObjectId.GenerateNewId(), Prenom = "prename4", Nom = "nomRea5" }, new Realisateur { Id = ObjectId.GenerateNewId(), Prenom = "prename5", Nom = "nomRea6" } } };
             var realisateur = new Realisateur { Prenom = "Jil123l", Nom = "Doe123" };
-            mockAbonneRepository.Setup(repo => repo.UpdateOne(It.IsAny<Abonne>())).ThrowsAsync(new NumberRealisateursOutOfRange("Vous ne pouvez pas ajouter plus que 5 realisateurs"));
+            // Configure le mock pour simuler une exception NumberRealisateursOutOfRange lorsque le nombre de réalisateurs atteint la limite
+            mockAbonneRepository.Setup(repo => repo.UpdateOne(It.IsAny<Abonne>()))
+                             .ThrowsAsync(new NumberRealisateursOutOfRange("Vous ne pouvez pas ajouter plus que 5 realisateurs"));
 
             var service = new AbonneService(mockAbonneRepository.Object);
 
