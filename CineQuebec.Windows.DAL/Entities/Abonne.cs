@@ -17,14 +17,14 @@ namespace CineQuebec.Windows.DAL.Data
 
         #region ATTRIBUTS
 
-        private string _username;
+        private string? _username;
         private DateTime _dateAdhesion;
 
         #endregion ATTRIBUTS
 
         #region PROPRIÉTÉS ET INDEXEURS
 
-        public string Username
+        public string? Username
         {
             get { return _username; }
             set
@@ -35,7 +35,7 @@ namespace CineQuebec.Windows.DAL.Data
                 _username = value.Trim();
             }
         }
-        public byte[] Password { get; set; }
+        public byte[]? Password { get; set; }
 
         public DateTime DateAdhesion
         {
@@ -47,8 +47,8 @@ namespace CineQuebec.Windows.DAL.Data
             }
         }
 
-        public byte[] Salt { get; set; }
-        public bool isAdmin { get; set; }
+        public byte[]? Salt { get; set; }
+        public bool? isAdmin { get; set; } = false;
         public List<Acteur> Acteurs { get; set; } = new List<Acteur>();
         public List<Realisateur> Realisateurs { get; set; } = new List<Realisateur>();
         public List<Film> Films { get; set; } = new List<Film>();

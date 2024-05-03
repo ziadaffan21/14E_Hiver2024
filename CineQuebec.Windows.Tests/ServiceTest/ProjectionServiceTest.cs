@@ -31,7 +31,7 @@ namespace CineQuebec.Windows.Tests.ServiceTest
             // Arrange
             var mockRepository = new Mock<IProjectionRepository>();
             mockRepository.Setup(repo => repo.GetProjectionByDateAndFilmId(It.IsAny<DateTime>(), It.IsAny<string>()))
-                          .ReturnsAsync((Projection)null);
+                         .ReturnsAsync((Projection?)null);
 
             var service = new ProjectionService(mockRepository.Object);
             var newProjection = new Projection() { Date = DateTime.Today, Film = new Film("XXX", DateTime.Now, 10, Categories.ANIMATION) };
@@ -40,8 +40,9 @@ namespace CineQuebec.Windows.Tests.ServiceTest
             await service.AjouterProjection(newProjection);
 
             // Assert
-            mockRepository.Verify(repo => repo.AjouterProjection(newProjection)); // Verify that the projection was added to the repository
+            mockRepository.Verify(repo => repo.AjouterProjection(newProjection), Times.Once); // Assurez-vous que la méthode AjouterProjection a été appelée une fois
         }
+
 
         [Fact]
         public void GetAllProjections_ShouldReturnListOfProjections()

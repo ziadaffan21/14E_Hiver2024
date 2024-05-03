@@ -13,7 +13,7 @@ namespace CineQuebec.Windows.View
         public ConnecteWindowPrincipal(Abonne abonne = null)
         {
             InitializeComponent();
-            if (abonne.isAdmin)
+            if ((bool)abonne.isAdmin)
             {
                 var container = (IUnityContainer)Application.Current.Resources["UnityContainer"];
                 var adminHomeControl = container.Resolve<AdminHomeControl>();
