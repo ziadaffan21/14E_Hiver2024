@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace CineQuebec.Windows.Exceptions.AbonneExceptions
+﻿namespace CineQuebec.Windows.Exceptions.AbonneExceptions
 {
     [Serializable]
     public class ActeurAlreadyExistInActeursList : Exception
@@ -9,15 +7,11 @@ namespace CineQuebec.Windows.Exceptions.AbonneExceptions
         {
         }
 
-        public ActeurAlreadyExistInActeursList(string? message) : base(message)
+        public ActeurAlreadyExistInActeursList(string message) : base(message)
         {
         }
 
-        public ActeurAlreadyExistInActeursList(string? message, Exception? innerException) : base(message, innerException)
-        {
-        }
-
-        protected ActeurAlreadyExistInActeursList(SerializationInfo info, StreamingContext context) : base(info, context)
+        public ActeurAlreadyExistInActeursList(string message, Exception innerException) : base(message, innerException)
         {
         }
     }

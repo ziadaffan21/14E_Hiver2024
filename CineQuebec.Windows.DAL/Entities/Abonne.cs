@@ -35,6 +35,7 @@ namespace CineQuebec.Windows.DAL.Data
                 _username = value.Trim();
             }
         }
+
         public byte[] Password { get; set; }
 
         public DateTime DateAdhesion
@@ -60,8 +61,8 @@ namespace CineQuebec.Windows.DAL.Data
 
         public Abonne()
         {
-            
         }
+
         public Abonne(string username, DateTime dateAdhesion)
         {
             Username = username;
@@ -72,7 +73,6 @@ namespace CineQuebec.Windows.DAL.Data
         {
             Password = password;
             Salt = salt;
-
         }
 
         #endregion CONSTRUCTEURS

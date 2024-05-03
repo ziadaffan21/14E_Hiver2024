@@ -6,16 +6,18 @@ namespace CineQuebec.Windows.DAL.Data
     {
         public Acteur()
         {
-            
         }
+
         public Acteur(string prenom, string nom, DateTime naissance) : base(prenom, nom, naissance)
         {
         }
+
         public override string ToString()
         {
             return $"{Prenom} {Nom}";
         }
-        public override bool Equals(object? obj)
+
+        public override bool Equals(object obj)
         {
             if (obj is Acteur other)
             {
@@ -23,6 +25,7 @@ namespace CineQuebec.Windows.DAL.Data
             }
             return false;
         }
+
         public override int GetHashCode()
         {
             return Id.GetHashCode();

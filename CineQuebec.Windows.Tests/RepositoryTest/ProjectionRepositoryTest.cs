@@ -22,7 +22,6 @@ namespace CineQuebec.Windows.Tests.RepositoryTest
             // Act
             var result = mockRepository.Object.ReadProjections();
 
-
             // Assert
             Assert.NotNull(result);
             Assert.IsType<List<Projection>>(result);
@@ -96,6 +95,5 @@ namespace CineQuebec.Windows.Tests.RepositoryTest
             Assert.NotNull(result);
             Assert.Equal(expectedFilm, result);
         }
-
     }
 }

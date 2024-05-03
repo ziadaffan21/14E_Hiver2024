@@ -15,7 +15,7 @@ namespace CineQuebec.Windows.View
     public partial class AjoutDetailProjection : Window
     {
         private Projection _projection;
-        StringBuilder sb = new();
+        private StringBuilder sb = new();
 
         private readonly IProjectionService _projectionService;
 
@@ -38,7 +38,7 @@ namespace CineQuebec.Windows.View
                 if (ValiderForm())
                 {
                     DateTime formatedTime = GetDateAndTime(_projection.Date, (DateTime)horloge.SelectedTime);
-                    await _projectionService.AjouterProjection(new Projection(formatedTime,int.Parse(txtPlace.Text),cboFilm.SelectedItem as Film));
+                    await _projectionService.AjouterProjection(new Projection(formatedTime, int.Parse(txtPlace.Text), cboFilm.SelectedItem as Film));
                     MessageBox.Show(Resource.ajoutReussiProjection, Resource.ajout, MessageBoxButton.OK, MessageBoxImage.Information);
                     DialogResult = true;
                 }
@@ -63,10 +63,8 @@ namespace CineQuebec.Windows.View
 
         private DateTime GetDateAndTime(DateTime date, DateTime time)
         {
-
             DateTime newDate = new(date.Year, date.Month, date.Day, time.Hour, time.Minute, 0);
             return newDate;
-
         }
 
         private void btnAnnuler_Click(object sender, RoutedEventArgs e)

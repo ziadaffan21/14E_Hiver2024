@@ -41,7 +41,6 @@ namespace CineQuebec.Windows.View
             }
         }
 
-
         /// <summary>
         /// Événement lancé lors de lu double click d'un élément dans la liste des films
         /// </summary>

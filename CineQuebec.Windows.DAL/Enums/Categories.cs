@@ -1,6 +1,4 @@
-﻿using System.ComponentModel;
-
-namespace CineQuebec.Windows.DAL.Enums
+﻿namespace CineQuebec.Windows.DAL.Enums
 {
     public enum Categories
     {

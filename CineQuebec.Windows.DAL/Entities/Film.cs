@@ -12,6 +12,7 @@ namespace CineQuebec.Windows.DAL.Data
         public const byte NB_MIN_CARACTERES_USERNAME = 2;
         public const byte NB_MAX_CARACTERES_USERNAME = 100;
         public const byte NB_MIN_DUREE = 30;
+
         #endregion CONSTANTES
 
         #region ATTRIBUTS
@@ -49,7 +50,6 @@ namespace CineQuebec.Windows.DAL.Data
                     throw new ArgumentOutOfRangeException("La durée ne peut pas être négative");
                 }
                 _duree = value;
-
             }
         }
 
@@ -93,7 +93,8 @@ namespace CineQuebec.Windows.DAL.Data
         {
             return $"{Titre} ({DateSortie.Year})";
         }
-        public override bool Equals(object? obj)
+
+        public override bool Equals(object obj)
         {
             if (obj is Film other)
             {
@@ -101,6 +102,7 @@ namespace CineQuebec.Windows.DAL.Data
             }
             return false;
         }
+
         public override int GetHashCode()
         {
             return Id.GetHashCode();

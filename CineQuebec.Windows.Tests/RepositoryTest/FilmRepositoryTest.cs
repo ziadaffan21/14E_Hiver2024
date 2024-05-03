@@ -95,7 +95,5 @@ namespace CineQuebec.Windows.Tests.RepositoryTest
             Assert.NotNull(result);
             Assert.Equal(expectedFilm, result);
         }
-
-
     }
 }

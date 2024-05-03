@@ -1,7 +1,5 @@
 ﻿using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.InterfacesRepositorie;
-using CineQuebec.Windows.Exceptions;
-using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace CineQuebec.Windows.DAL.Repositories
@@ -38,7 +36,6 @@ namespace CineQuebec.Windows.DAL.Repositories
 
         //public Task<List<Projection>> ReadProjectionsById(Object idFilm)
         //{
-
         //    var filter = Builders<Projection>.Filter.And(
         //           //Builders<Projection>.Filter.Gt(p => p.Date, DateTime.Now),
         //           Builders<Projection>.Filter.Eq(p => p.Film.Id, idFilm)
@@ -55,7 +52,7 @@ namespace CineQuebec.Windows.DAL.Repositories
             List<Projection> projections = await Task.Run(() => ReadProjections());
 
             List<Projection> projectionsFiltre = new();
-            
+
             foreach (var projection in projections)
             {
                 if (projection.Film.Id.Equals(idFilm))
@@ -95,6 +92,5 @@ namespace CineQuebec.Windows.DAL.Repositories
 
             return projections;
         }
-
     }
 }

@@ -1,8 +1,5 @@
 ﻿using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.InterfacesRepositorie;
-using CineQuebec.Windows.Exceptions;
-using CineQuebec.Windows.Exceptions.AbonneExceptions;
-using CineQuebec.Windows.Exceptions.EntitysExceptions;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
@@ -46,7 +43,6 @@ namespace CineQuebec.Windows.DAL.Repositories
 
             return abonne;
         }
-
 
         public async Task<Abonne> GetAbonneConnexion(string username, string password)
         {

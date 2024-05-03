@@ -49,12 +49,10 @@ namespace CineQuebec.Windows.DAL.Services
             if (abonne.Acteurs.Count >= 5)
                 throw new NumberActeursOutOfRange("Vous ne pouvez pas ajouter plus que 5 acteurs");
 
-
             abonne.Acteurs.Add(acteur);
             var result = await _abonneRepository.UpdateOne(abonne);
 
             return result;
-
         }
 
         public async Task<Abonne> AddRealisateurInAbonne(Abonne abonne, Realisateur realisateur)
@@ -63,7 +61,6 @@ namespace CineQuebec.Windows.DAL.Services
                 throw new RealisateurAlreadyExistInRealisateursList($"Le réalisateur {realisateur.Prenom} {realisateur.Nom} exite déjà dans la liste réalisateurs");
             if (abonne.Realisateurs.Count >= 5)
                 throw new NumberRealisateursOutOfRange("Vous ne pouvez pas ajouter plus que 5 realisateurs");
-
 
             abonne.Realisateurs.Add(realisateur);
             var result = await _abonneRepository.UpdateOne(abonne);
@@ -78,7 +75,6 @@ namespace CineQuebec.Windows.DAL.Services
             if (abonne.CategoriesPrefere.Count >= 3)
                 throw new NumberCategoriesOutOfRange("Vous pouvez pas ajouter plus que 3 categories");
 
-
             abonne.CategoriesPrefere.Add(categorie);
             var result = await _abonneRepository.UpdateOne(abonne);
 
@@ -87,10 +83,8 @@ namespace CineQuebec.Windows.DAL.Services
 
         public async Task<Abonne> AddFilmInAbonne(Abonne abonne, Film film)
         {
-
             if (abonne.Films.Contains(film))
                 throw new FilmAlreadyExistInFilmsList($"Le film {film.Titre} exite déjà dans la liste films");
-
 
             abonne.Films.Add(film);
             var result = await _abonneRepository.UpdateOne(abonne);
@@ -100,7 +94,6 @@ namespace CineQuebec.Windows.DAL.Services
 
         public async Task<Abonne> RemoveActeurInAbonne(Abonne abonne, Acteur acteur)
         {
-
             if (abonne.Acteurs.Remove(acteur))
                 return await _abonneRepository.UpdateOne(abonne);
 
@@ -109,17 +102,14 @@ namespace CineQuebec.Windows.DAL.Services
 
         public async Task<Abonne> RemoveRealisateurInAbonne(Abonne abonne, Realisateur realisateur)
         {
-
             if (abonne.Realisateurs.Remove(realisateur))
                 return await _abonneRepository.UpdateOne(abonne); ;
-
 
             return abonne;
         }
 
         public async Task<Abonne> RemoveCategorieInAbonne(Abonne abonne, Categories categorie)
         {
-
             if (abonne.CategoriesPrefere.Remove(categorie))
                 return await _abonneRepository.UpdateOne(abonne);
 

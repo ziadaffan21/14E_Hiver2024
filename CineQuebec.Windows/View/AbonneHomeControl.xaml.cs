@@ -1,22 +1,8 @@
 ﻿using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.Interfaces;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
-using MaterialDesignThemes.Wpf;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Unity;
 
 namespace CineQuebec.Windows.View
 {
@@ -40,12 +26,11 @@ namespace CineQuebec.Windows.View
             _acteurRepository = acteurRepository;
             _filmService = filmService;
             _projectionService = projectionService;
-            
         }
 
         private void btnReserverUnePlace_Click(object sender, RoutedEventArgs e)
         {
-            var reservationView = new ReservationView( _filmService, _projectionService, User);
+            var reservationView = new ReservationView(_filmService, _projectionService, User);
             if ((bool)reservationView.ShowDialog())
             {
                 User = reservationView.User;

@@ -1,13 +1,10 @@
 ﻿using CineQuebec.Windows.DAL.Data;
-using CineQuebec.Windows.DAL.Enums;
 using CineQuebec.Windows.DAL.Exceptions.AbonneExceptions;
 using CineQuebec.Windows.DAL.InterfacesRepositorie;
 using CineQuebec.Windows.DAL.Services;
-using CineQuebec.Windows.DAL.ServicesInterfaces;
 using CineQuebec.Windows.Exceptions.AbonneExceptions;
 using MongoDB.Bson;
 using Moq;
-using System.Runtime.Intrinsics.X86;
 
 namespace CineQuebec.Windows.Tests.ServiceTest
 {
@@ -120,6 +117,7 @@ namespace CineQuebec.Windows.Tests.ServiceTest
             // Act & Assert
             await Assert.ThrowsAsync<NumberActeursOutOfRange>(() => service.AddActeurInAbonne(abonne, acteur));
         }
+
         [Fact]
         public async Task AddRealisateurInAbonne_AddsRealisateur_Successfully()
         {

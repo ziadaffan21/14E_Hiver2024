@@ -20,6 +20,7 @@ namespace CineQuebec.Windows.DAL
             _database = _dataBaseUtils.ConnectDatabase(_mongoDBClient);
             _dataBaseUtils = dataBaseUtils;
         }
+
         public async Task Seed()
         {
             await SeedFilms();
@@ -57,15 +58,14 @@ namespace CineQuebec.Windows.DAL
                     new Abonne("admin",PasswodHasher.HashPassword("12345",salt),salt,DateTime.Now)
                     {
                         isAdmin = true,
-
                     },
                     new Abonne("user1",PasswodHasher.HashPassword("12345",salt),salt,DateTime.Now)
                 };
 
             var bsonAbonnes = abonnes.Select(abonne => abonne.ToBsonDocument()).ToList();
             await abonneCollection.InsertManyAsync(bsonAbonnes);
-
         }
+
         private async Task SeedActeur()
         {
             var acteurCollection = _database.GetCollection<BsonDocument>("Acteurs");
@@ -79,8 +79,8 @@ namespace CineQuebec.Windows.DAL
 
             var bsonActeur = acteurs.Select(a => a.ToBsonDocument()).ToList();
             await acteurCollection.InsertManyAsync(bsonActeur);
-
         }
+
         private async Task SeedRealisateur()
         {
             var realisateurCollection = _database.GetCollection<BsonDocument>("Realisateurs");
@@ -94,8 +94,6 @@ namespace CineQuebec.Windows.DAL
 
             var bsonRealisateur = realisateurs.Select(a => a.ToBsonDocument()).ToList();
             await realisateurCollection.InsertManyAsync(bsonRealisateur);
-
         }
-
     }
 }

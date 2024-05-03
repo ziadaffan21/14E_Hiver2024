@@ -14,9 +14,9 @@ namespace CineQuebec.Windows.Tests.ServiceTest
         {
             // Arrange
             var mockRepository = new Mock<IFilmRepository>();
-            var existingFilm = new Film("XXX",DateTime.Now,10,Categories.ANIMATION);
+            var existingFilm = new Film("XXX", DateTime.Now, 10, Categories.ANIMATION);
             mockRepository.Setup(repo => repo.GetFilmByTitre(existingFilm.Titre))
-                          .ReturnsAsync(existingFilm); 
+                          .ReturnsAsync(existingFilm);
 
             var service = new FilmService(mockRepository.Object);
 
@@ -30,7 +30,7 @@ namespace CineQuebec.Windows.Tests.ServiceTest
             // Arrange
             var mockRepository = new Mock<IFilmRepository>();
             mockRepository.Setup(repo => repo.GetFilmByTitre(It.IsAny<string>()))
-                          .ReturnsAsync((Film)null); 
+                          .ReturnsAsync((Film)null);
 
             var service = new FilmService(mockRepository.Object);
             var newFilm = new Film("XXX", DateTime.Now, 10, Categories.ANIMATION);
@@ -77,7 +77,7 @@ namespace CineQuebec.Windows.Tests.ServiceTest
             // Arrange
             var mockRepository = new Mock<IFilmRepository>();
             var service = new FilmService(mockRepository.Object);
-            var film = new Film("XXX", DateTime.Now, 10, Categories.ANIMATION); 
+            var film = new Film("XXX", DateTime.Now, 10, Categories.ANIMATION);
 
             // Act
             await service.ModifierFilm(film);
@@ -85,6 +85,5 @@ namespace CineQuebec.Windows.Tests.ServiceTest
             // Assert
             mockRepository.Verify(repo => repo.ModifierFilm(film)); // Verify that the method ModifierFilm in the repository was called once with the film parameter
         }
-
     }
 }

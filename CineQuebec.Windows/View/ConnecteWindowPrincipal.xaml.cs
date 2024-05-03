@@ -1,5 +1,4 @@
 ﻿using CineQuebec.Windows.DAL.Data;
-using CineQuebec.Windows.DAL.ServicesInterfaces;
 using System.Windows;
 using Unity;
 
@@ -21,12 +20,10 @@ namespace CineQuebec.Windows.View
             }
             else
             {
-
                 var container = (IUnityContainer)Application.Current.Resources["UnityContainer"];
                 var abonneHomeControl = container.Resolve<AbonneHomeControl>();
                 abonneHomeControl.User = abonne;
                 mainContentControl.Content = abonneHomeControl;
-
             }
         }
 

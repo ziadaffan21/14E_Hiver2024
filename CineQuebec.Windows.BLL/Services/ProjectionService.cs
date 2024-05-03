@@ -2,7 +2,6 @@
 using CineQuebec.Windows.DAL.Exceptions.ProjectionException;
 using CineQuebec.Windows.DAL.InterfacesRepositorie;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
-using CineQuebec.Windows.Exceptions;
 using MongoDB.Bson;
 
 namespace CineQuebec.Windows.DAL.Services
@@ -22,7 +21,6 @@ namespace CineQuebec.Windows.DAL.Services
 
             if (existingProjection is not null)
                 throw new ExistingProjectionException($"Un projection avec la date {projection.Date.Year}/{projection.Date.Month}/{projection.Date.Day} pour le film {projection.Film.Titre} existe déjà.");
-
 
             await _projectionRepository.AjouterProjection(projection);
         }

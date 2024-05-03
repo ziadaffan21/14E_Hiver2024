@@ -16,7 +16,6 @@
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
 
-
         <GroupBox Grid.Row="1"  Header="Films à l'affiche" Style="{StaticResource MaterialDesignGroupBox}" Width="400" HorizontalAlignment="Left" Height="250" VerticalAlignment="Top" Margin="5,0,5,0">
             <ListBox x:Name="lstFilms" HorizontalAlignment="Left" VerticalAlignment="Top"
          ItemContainerStyle="{StaticResource MaterialDesignListBoxItem}" Width="376" Height="198" ItemsSource="{Binding Films}" SelectionChanged="lstFilms_SelectionChanged" />
@@ -25,6 +24,6 @@
             <ListBox x:Name="lstProjections" HorizontalAlignment="Left" VerticalAlignment="Center"
          ItemContainerStyle="{StaticResource MaterialDesignListBoxItem}" Width="372" Height="196" SelectionChanged="lstFilms_SelectionChanged" />
         </GroupBox>
-        <Button Content="Réserver" Grid.Column="1" IsEnabled="False" Grid.Row="13"/>
+        <Button Content="Réserver" Grid.Column="1" IsEnabled="False" Grid.Row="13" />
     </Grid>
 </Window>

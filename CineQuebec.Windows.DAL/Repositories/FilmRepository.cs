@@ -1,10 +1,6 @@
-﻿using Amazon.Util.Internal;
-using CineQuebec.Windows.DAL.Data;
+﻿using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.Exceptions.FilmExceptions;
 using CineQuebec.Windows.DAL.InterfacesRepositorie;
-using CineQuebec.Windows.Exceptions;
-using CineQuebec.Windows.Exceptions.EntitysExceptions;
-using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace CineQuebec.Windows.DAL.Repositories
@@ -27,7 +23,6 @@ namespace CineQuebec.Windows.DAL.Repositories
         public async Task<List<Film>> ReadFilms()
         {
             var collection = _mongoDataBase.GetCollection<Film>(FILMS);
-            
 
             return await collection.Aggregate().ToListAsync();
         }
@@ -42,7 +37,6 @@ namespace CineQuebec.Windows.DAL.Repositories
 
             if (duplicateCount > 0)
                 throw new ExistingFilmException($"Un film avec le titre {film.Titre} existe déjà.");
-
 
             await tableFilm.ReplaceOneAsync(filter, film);
         }

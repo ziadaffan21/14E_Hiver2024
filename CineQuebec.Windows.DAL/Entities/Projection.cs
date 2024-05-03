@@ -1,6 +1,4 @@
-﻿using CineQuebec.Windows.Exceptions.EntitysExceptions;
-using CineQuebec.Windows.Exceptions.ProjectionException;
-using MongoDB.Bson;
+﻿using CineQuebec.Windows.Exceptions.ProjectionException;
 
 namespace CineQuebec.Windows.DAL.Data
 {
@@ -19,8 +17,6 @@ namespace CineQuebec.Windows.DAL.Data
         private int _nbPlaces;
 
         private Film _film;
-
-       
 
         #endregion ATTRIBUTS
 
@@ -45,6 +41,7 @@ namespace CineQuebec.Windows.DAL.Data
                 _nbPlaces = value;
             }
         }
+
         public Film Film
         {
             get { return _film; }
@@ -55,7 +52,6 @@ namespace CineQuebec.Windows.DAL.Data
             }
         }
 
-
         #endregion PROPRIÉTÉS ET INDEXEURS
 
         #region CONSTRUCTEURS
@@ -63,7 +59,7 @@ namespace CineQuebec.Windows.DAL.Data
         public Projection()
         {
             Date = DateTime.Today;
-            NbPlaces = NB_PLACE_MIN;    
+            NbPlaces = NB_PLACE_MIN;
         }
 
         public Projection(DateTime date, int placeDisponible, Film film)
@@ -73,7 +69,6 @@ namespace CineQuebec.Windows.DAL.Data
             Film = film;
         }
 
-
         #endregion CONSTRUCTEURS
 
         #region MÉTHODES
@@ -82,7 +77,7 @@ namespace CineQuebec.Windows.DAL.Data
         {
             return $"({Film.Titre}) {Date.Day} {Utils.Utils.GetMoisNom(Date).ToUpper()} {Date.Hour:00}:{Date.Minute:00}";
         }
-        
-        #endregion
+
+        #endregion MÉTHODES
     }
 }

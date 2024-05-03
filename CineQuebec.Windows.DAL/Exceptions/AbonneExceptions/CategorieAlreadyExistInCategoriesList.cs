@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace CineQuebec.Windows.DAL.Services
+﻿namespace CineQuebec.Windows.DAL.Services
 {
     [Serializable]
     public class CategorieAlreadyExistInCategoriesList : Exception
@@ -9,15 +7,11 @@ namespace CineQuebec.Windows.DAL.Services
         {
         }
 
-        public CategorieAlreadyExistInCategoriesList(string? message) : base(message)
+        public CategorieAlreadyExistInCategoriesList(string message) : base(message)
         {
         }
 
-        public CategorieAlreadyExistInCategoriesList(string? message, Exception? innerException) : base(message, innerException)
-        {
-        }
-
-        protected CategorieAlreadyExistInCategoriesList(SerializationInfo info, StreamingContext context) : base(info, context)
+        public CategorieAlreadyExistInCategoriesList(string message, Exception innerException) : base(message, innerException)
         {
         }
     }

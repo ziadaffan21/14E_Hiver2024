@@ -17,15 +17,15 @@ namespace CineQuebec.Windows.DAL.Entities
 
         #region ATTRIBUTS
 
-        private string? _prenom;
-        private string? _nom;
+        private string _prenom;
+        private string _nom;
         private DateTime _naissance;
 
         #endregion ATTRIBUTS
 
         #region PROPRIÉTÉS ET INDEXEURS
 
-        public string? Prenom
+        public string Prenom
         {
             get { return _prenom; }
             set
@@ -36,7 +36,7 @@ namespace CineQuebec.Windows.DAL.Entities
             }
         }
 
-        public string? Nom
+        public string Nom
         {
             get { return _nom; }
             set
@@ -56,11 +56,12 @@ namespace CineQuebec.Windows.DAL.Entities
                 _naissance = value;
             }
         }
+
         public Personne()
         {
-            
         }
-        protected Personne(string? prenom, string? nom, DateTime naissance)
+
+        protected Personne(string prenom, string nom, DateTime naissance)
         {
             Prenom = prenom;
             Nom = nom;
@@ -68,7 +69,5 @@ namespace CineQuebec.Windows.DAL.Entities
         }
 
         #endregion PROPRIÉTÉS ET INDEXEURS
-
-
     }
 }

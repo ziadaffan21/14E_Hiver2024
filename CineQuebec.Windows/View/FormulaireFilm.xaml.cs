@@ -18,8 +18,7 @@ namespace CineQuebec.Windows.View
         private Film _film;
         public Etat Etat;
         private readonly IFilmService _filmService;
-        StringBuilder sb = new();
-
+        private StringBuilder sb = new();
 
         public DetailFilm(IFilmService filmService, Film film = null)
         {
@@ -46,6 +45,7 @@ namespace CineQuebec.Windows.View
                     lblTitre.Text = "Ajouter un film";
                     btnAjouterModifier.Content = "Ajouter";
                     break;
+
                 case Etat.Modifier:
                     txtTitre.Text = _film.Titre;
                     cboCategories.SelectedIndex = (int)_film.Categorie;
@@ -54,6 +54,7 @@ namespace CineQuebec.Windows.View
                     lblTitre.Text = "Modifier un film";
                     btnAjouterModifier.Content = "Modifier";
                     break;
+
                 default:
                     break;
             }
@@ -73,6 +74,7 @@ namespace CineQuebec.Windows.View
                             DialogResult = true;
                             MessageBox.Show(Resource.ajoutReussi, Resource.ajout, MessageBoxButton.OK, MessageBoxImage.Information);
                             break;
+
                         case Etat.Modifier:
                             _film.Titre = txtTitre.Text;
                             _film.Categorie = (Categories)cboCategories.SelectedIndex;
@@ -82,15 +84,15 @@ namespace CineQuebec.Windows.View
                             await _filmService.ModifierFilm(_film);
                             MessageBox.Show(Resource.modificationReussi, Resource.modification, MessageBoxButton.OK, MessageBoxImage.Information);
                             break;
+
                         default:
                             break;
                     }
                 }
                 else
                     MessageBox.Show(sb.ToString(), Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
-
             }
-            catch(ExistingFilmException ex)
+            catch (ExistingFilmException ex)
             {
                 MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
             }
