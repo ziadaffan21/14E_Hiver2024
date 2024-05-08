@@ -1,7 +1,8 @@
-﻿using CineQuebec.Windows.Exceptions.ActeurExceptions.DateNaissance;
+﻿using CineQuebec.Windows.DAL.Data;
+using CineQuebec.Windows.Exceptions.ActeurExceptions.DateNaissance;
 using CineQuebec.Windows.Exceptions.ActeurExceptions.PrenomEtNom;
 
-namespace CineQuebec.Windows.DAL.Data.Personne
+namespace CineQuebec.Windows.DAL.Entities
 {
     public abstract class Personne : Entity
     {
@@ -16,15 +17,15 @@ namespace CineQuebec.Windows.DAL.Data.Personne
 
         #region ATTRIBUTS
 
-        private string? _prenom;
-        private string? _nom;
+        private string _prenom;
+        private string _nom;
         private DateTime _naissance;
 
         #endregion ATTRIBUTS
 
         #region PROPRIÉTÉS ET INDEXEURS
 
-        public string? Prenom
+        public string Prenom
         {
             get { return _prenom; }
             set
@@ -35,7 +36,7 @@ namespace CineQuebec.Windows.DAL.Data.Personne
             }
         }
 
-        public string? Nom
+        public string Nom
         {
             get { return _nom; }
             set
@@ -54,6 +55,17 @@ namespace CineQuebec.Windows.DAL.Data.Personne
                 if (!DateTime.TryParse(value.ToString(), out _)) throw new InvalidDateNaissanceException($"Le date {value} est invalid");
                 _naissance = value;
             }
+        }
+
+        public Personne()
+        {
+        }
+
+        protected Personne(string prenom, string nom, DateTime naissance)
+        {
+            Prenom = prenom;
+            Nom = nom;
+            Naissance = naissance;
         }
 
         #endregion PROPRIÉTÉS ET INDEXEURS

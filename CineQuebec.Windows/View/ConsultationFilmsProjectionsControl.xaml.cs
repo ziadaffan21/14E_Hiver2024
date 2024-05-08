@@ -24,11 +24,11 @@ namespace CineQuebec.Windows.View
             ChargerFilmProjection();
         }
 
-        private void ChargerFilmProjection()
+        private async void ChargerFilmProjection()
         {
             try
             {
-                lstFilms.ItemsSource = _filmService.GetAllFilms();
+                lstFilms.ItemsSource = await _filmService.GetAllFilms();
                 lstProjections.ItemsSource = _projectionService.GetAllProjections();
             }
             catch (MongoDataConnectionException err)
@@ -40,7 +40,6 @@ namespace CineQuebec.Windows.View
                 MessageBox.Show(Resource.erreurGenerique, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-
 
         /// <summary>
         /// Événement lancé lors de lu double click d'un élément dans la liste des films
@@ -64,8 +63,14 @@ namespace CineQuebec.Windows.View
         {
             Film selectedFilm = lstFilms.SelectedItem as Film;
             if (selectedFilm is not null)
-                lstProjections.ItemsSource = _projectionService.ReadProjectionsById(selectedFilm.Id);
+                _ = getprojectionsAsync(selectedFilm);
             gpoProjections.Header = selectedFilm is not null ? $"Projections ({selectedFilm.Titre})" : "Projections";
+        }
+
+        private async Task getprojectionsAsync(Film selectedFilm)
+        {
+            var projections = await _projectionService.GetProjectionsById(selectedFilm.Id);
+            lstProjections.ItemsSource = projections;
         }
 
         private void btnAjoutFilm_Click(object sender, RoutedEventArgs e)

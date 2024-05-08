@@ -12,6 +12,7 @@ namespace CineQuebec.Windows.DAL.Data
         public const byte NB_MIN_CARACTERES_USERNAME = 2;
         public const byte NB_MAX_CARACTERES_USERNAME = 100;
         public const byte NB_MIN_DUREE = 30;
+
         #endregion CONSTANTES
 
         #region ATTRIBUTS
@@ -42,14 +43,13 @@ namespace CineQuebec.Windows.DAL.Data
         public int Duree
         {
             get { return _duree; }
-            set 
+            set
             {
                 if (value <= 0)
                 {
                     throw new ArgumentOutOfRangeException("La durée ne peut pas être négative");
                 }
-                _duree = value; 
-            
+                _duree = value;
             }
         }
 
@@ -76,7 +76,10 @@ namespace CineQuebec.Windows.DAL.Data
         #endregion PROPRIÉTÉS ET INDEXEURS
 
         #region CONSTRUCTEURS
-
+        public Film()
+        {
+            
+        }
         public Film(string titre, DateTime dateSortie, int duree, Categories categorie)
         {
             Titre = titre;
@@ -92,6 +95,20 @@ namespace CineQuebec.Windows.DAL.Data
         public override string ToString()
         {
             return $"{Titre} ({DateSortie.Year})";
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (obj is Film other)
+            {
+                return Id.Equals(other.Id);
+            }
+            return false;
+        }
+
+        public override int GetHashCode()
+        {
+            return Id.GetHashCode();
         }
 
         #endregion MÉTHODES

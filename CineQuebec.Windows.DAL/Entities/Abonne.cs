@@ -1,4 +1,5 @@
-﻿using CineQuebec.Windows.Exceptions.AbonneExceptions.DateAdhesion;
+﻿using CineQuebec.Windows.DAL.Enums;
+using CineQuebec.Windows.Exceptions.AbonneExceptions.DateAdhesion;
 using CineQuebec.Windows.Exceptions.AbonneExceptions.Username;
 
 namespace CineQuebec.Windows.DAL.Data
@@ -34,6 +35,7 @@ namespace CineQuebec.Windows.DAL.Data
                 _username = value.Trim();
             }
         }
+
         public byte[] Password { get; set; }
 
         public DateTime DateAdhesion
@@ -47,10 +49,19 @@ namespace CineQuebec.Windows.DAL.Data
         }
 
         public byte[] Salt { get; set; }
+        public bool isAdmin { get; set; } = false;
+        public List<Acteur> Acteurs { get; set; } = new List<Acteur>();
+        public List<Realisateur> Realisateurs { get; set; } = new List<Realisateur>();
+        public List<Film> Films { get; set; } = new List<Film>();
+        public List<Categories> CategoriesPrefere { get; set; } = new List<Categories>();
 
         #endregion PROPRIÉTÉS ET INDEXEURS
 
         #region CONSTRUCTEURS
+
+        public Abonne()
+        {
+        }
 
         public Abonne(string username, DateTime dateAdhesion)
         {

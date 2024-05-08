@@ -1,4 +1,5 @@
 ﻿using CineQuebec.Windows.DAL;
+using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
 using CineQuebec.Windows.Ressources.i18n;
 using System.Text;
@@ -16,21 +17,23 @@ namespace CineQuebec.Windows.View
         private readonly IAbonneService _abonneService;
         private readonly IDataBaseSeeder _dataBaseSeeder;
         private StringBuilder sb = new();
+        public Abonne User { get; set; }
 
         public ConnexionControl(IAbonneService abonneService, IDataBaseSeeder dataBaseSeeder)
         {
             _abonneService = abonneService;
             _dataBaseSeeder = dataBaseSeeder;
             InitializeComponent();
-            //_dataBaseSeeder.Seed();
+            _dataBaseSeeder.Seed();
         }
 
         private async void Button_Click(object sender, RoutedEventArgs e)
         {
             if (ValiderFomulaire())
             {
-                if (await _abonneService.GetAbonneConnexion(txtUsername.Text.Trim(), txtPassword.Password.ToString()))
-                    ((MainWindow)Application.Current.MainWindow).ConnecterWindow();
+                User = await _abonneService.GetAbonneConnexion(txtUsername.Text.Trim(), txtPassword.Password.ToString());
+                if (User is not null)
+                    ((MainWindow)Application.Current.MainWindow).ConnecterWindow(User);
                 else
                     MessageBox.Show(Resource.errorConnection, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Information);
             }

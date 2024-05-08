@@ -1,4 +1,5 @@
-﻿using CineQuebec.Windows.View;
+﻿using CineQuebec.Windows.DAL.Data;
+using CineQuebec.Windows.View;
 using System.Windows;
 using Unity;
 
@@ -18,9 +19,9 @@ namespace CineQuebec.Windows
             mainContentControl.Content = connexionControl;
         }
 
-        public void ConnecterWindow()
+        public void ConnecterWindow(Abonne abonne)
         {
-            ConnecteWindowPrincipal connecteWindowPrincipal = new ConnecteWindowPrincipal();
+            ConnecteWindowPrincipal connecteWindowPrincipal = new ConnecteWindowPrincipal(abonne);
             Application.Current.MainWindow = connecteWindowPrincipal;
 
             connecteWindowPrincipal.Show();

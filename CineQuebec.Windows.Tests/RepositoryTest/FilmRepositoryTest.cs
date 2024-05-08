@@ -7,21 +7,20 @@ namespace CineQuebec.Windows.Tests.RepositoryTest
     public class FilmRepositoryTest
     {
         [Fact]
-        public void GetAllAbonnes_ShouldReturnListOfAbonnes()
+        public async Task GetAllAbonnes_ShouldReturnListOfAbonnes()
         {
             // Arrange
             var expectedFilms = new List<Film>
-                {
-                    new Film ("Titre",DateTime.Now,120,DAL.Enums.Categories.ACTION),
-                    new Film("Titre1",DateTime.Now,120,DAL.Enums.Categories.ACTION)
-                };
+        {
+            new Film("Titre", DateTime.Now, 120, DAL.Enums.Categories.ACTION),
+            new Film("Titre1", DateTime.Now, 120, DAL.Enums.Categories.ACTION)
+        };
             var mockRepository = new Mock<IFilmRepository>();
             mockRepository.Setup(repo => repo.ReadFilms())
-                          .Returns(expectedFilms);
+                         .ReturnsAsync(expectedFilms);
 
             // Act
-            var result = mockRepository.Object.ReadFilms();
-
+            var result = await mockRepository.Object.ReadFilms();
 
             // Assert
             Assert.NotNull(result);
@@ -60,19 +59,20 @@ namespace CineQuebec.Windows.Tests.RepositoryTest
         }
 
         [Fact]
-        public void GetAllFilms_ShouldReturnListOfFilms()
+        public async Task GetAllFilms_ShouldReturnListOfFilms()
         {
             // Arrange
             var expectedFilms = new List<Film>
-                {
-                    new Film("Titre", DateTime.Now, 120, DAL.Enums.Categories.ACTION),
-                    new Film("Titre1", DateTime.Now, 120, DAL.Enums.Categories.ACTION)
-                };
+        {
+            new Film("Titre", DateTime.Now, 120, DAL.Enums.Categories.ACTION),
+            new Film("Titre1", DateTime.Now, 120, DAL.Enums.Categories.ACTION)
+        };
             var mockRepository = new Mock<IFilmRepository>();
-            mockRepository.Setup(repo => repo.ReadFilms()).Returns(expectedFilms);
+            mockRepository.Setup(repo => repo.ReadFilms())
+                        .ReturnsAsync(expectedFilms);
 
             // Act
-            var result = mockRepository.Object.ReadFilms();
+            var result = await mockRepository.Object.ReadFilms();
 
             // Assert
             Assert.NotNull(result);
@@ -95,7 +95,5 @@ namespace CineQuebec.Windows.Tests.RepositoryTest
             Assert.NotNull(result);
             Assert.Equal(expectedFilm, result);
         }
-
-
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using CineQuebec.Windows.DAL.Data;
+using System.Windows;
 using Unity;
 
 namespace CineQuebec.Windows.View
@@ -8,10 +9,22 @@ namespace CineQuebec.Windows.View
     /// </summary>
     public partial class ConnecteWindowPrincipal : Window
     {
-        public ConnecteWindowPrincipal()
+        public ConnecteWindowPrincipal(Abonne abonne = null)
         {
             InitializeComponent();
-            mainContentControl.Content = new AdminHomeControl();
+            if ((bool)abonne.isAdmin)
+            {
+                var container = (IUnityContainer)Application.Current.Resources["UnityContainer"];
+                var adminHomeControl = container.Resolve<AdminHomeControl>();
+                mainContentControl.Content = adminHomeControl;
+            }
+            else
+            {
+                var container = (IUnityContainer)Application.Current.Resources["UnityContainer"];
+                var abonneHomeControl = container.Resolve<AbonneHomeControl>();
+                abonneHomeControl.User = abonne;
+                mainContentControl.Content = abonneHomeControl;
+            }
         }
 
         public void ConsultationUtilisateursControl()

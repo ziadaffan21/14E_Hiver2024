@@ -4,7 +4,7 @@ namespace CineQuebec.Windows.DAL.ServicesInterfaces
 {
     public interface IFilmService
     {
-        List<Film> GetAllFilms();
+        Task<List<Film>> GetAllFilms();
 
         Task AjouterFilm(Film film);
 

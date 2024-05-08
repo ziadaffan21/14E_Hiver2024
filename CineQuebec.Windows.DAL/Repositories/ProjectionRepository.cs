@@ -1,7 +1,5 @@
 ﻿using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.InterfacesRepositorie;
-using CineQuebec.Windows.Exceptions;
-using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace CineQuebec.Windows.DAL.Repositories
@@ -36,9 +34,23 @@ namespace CineQuebec.Windows.DAL.Repositories
             await tableProjection.InsertOneAsync(projection);
         }
 
-        public List<Projection> ReadProjectionsById(Object idFilm)
+        //public Task<List<Projection>> ReadProjectionsById(Object idFilm)
+        //{
+        //    var filter = Builders<Projection>.Filter.And(
+        //           //Builders<Projection>.Filter.Gt(p => p.Date, DateTime.Now),
+        //           Builders<Projection>.Filter.Eq(p => p.Film.Id, idFilm)
+        //       );
+
+        //    var collection = _mongoDatabase.GetCollection<Projection>(PROJECTION);
+        //    var projections = collection.Find(filter).ToListAsync();
+
+        //    return projections;
+        //}
+
+        public async Task<List<Projection>> ReadProjectionsById(Object idFilm)
         {
-            List<Projection> projections = ReadProjections();
+            List<Projection> projections = await Task.Run(() => ReadProjections());
+
             List<Projection> projectionsFiltre = new();
 
             foreach (var projection in projections)
@@ -48,6 +60,7 @@ namespace CineQuebec.Windows.DAL.Repositories
                     projectionsFiltre.Add(projection);
                 }
             }
+
             return projectionsFiltre;
         }
 
@@ -67,5 +80,17 @@ namespace CineQuebec.Windows.DAL.Repositories
             return projectionList.FirstOrDefault();
         }
 
+        public async Task<List<Projection>> ReadProjectionsByName(string name)
+        {
+            var collection = _mongoDatabase.GetCollection<Projection>(PROJECTION);
+
+            // Construct a filter to find projections whose associated film's name matches the provided name
+            var filter = Builders<Projection>.Filter.Eq(p => p.Film.Titre, name);
+
+            // Retrieve projections from the database that match the filter
+            var projections = await collection.Find(filter).ToListAsync();
+
+            return projections;
+        }
     }
 }

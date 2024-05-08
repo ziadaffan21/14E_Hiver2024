@@ -1,8 +1,5 @@
 ﻿using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.InterfacesRepositorie;
-using CineQuebec.Windows.Exceptions;
-using CineQuebec.Windows.Exceptions.AbonneExceptions;
-using CineQuebec.Windows.Exceptions.EntitysExceptions;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
@@ -46,17 +43,16 @@ namespace CineQuebec.Windows.DAL.Repositories
 
             return abonne;
         }
-        
 
-        public async Task<bool> GetAbonneConnexion(string username, string password)
+        public async Task<Abonne> GetAbonneConnexion(string username, string password)
         {
             var collection = _database.GetCollection<Abonne>(ABONNE);
             Abonne abonne = await collection.Find(x => x.Username == username).FirstOrDefaultAsync();
 
-            if (abonne is null)
-                return false;
-
-            return PasswodHasher.VerifyHash(password, abonne.Salt, abonne.Password);
+            var result = PasswodHasher.VerifyHash(password, abonne.Salt, abonne.Password);
+            if (!result)
+                return null;
+            return abonne;
         }
 
         public async Task<Abonne> GetAbonne(ObjectId id)
@@ -65,6 +61,15 @@ namespace CineQuebec.Windows.DAL.Repositories
             Abonne abonne = await collection.Find(x => x.Id == id).FirstOrDefaultAsync();
 
             return abonne;
+        }
+
+        public async Task<Abonne> UpdateOne(Abonne abonne)
+        {
+            var collection = _database.GetCollection<Abonne>(ABONNE);
+            var replace = await collection.ReplaceOneAsync(filter: g => g.Id == abonne.Id, replacement: abonne);
+            if (replace.IsAcknowledged)
+                return abonne;
+            return null;
         }
     }
 }

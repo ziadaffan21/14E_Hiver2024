@@ -177,4 +177,28 @@
   <data name="modificationReussi" xml:space="preserve">
     <value>Le film a été bien modifié</value>
   </data>
+  <data name="selection_un_acteur_ajout" xml:space="preserve">
+    <value>Veuillez selectionner un acteur pour ajouter</value>
+  </data>
+  <data name="selection_un_acteur_supression" xml:space="preserve">
+    <value>Veuillez selectionner un acteur pour supprimer</value>
+  </data>
+  <data name="selection_un_categorie_supression" xml:space="preserve">
+    <value>Veuillez selectionner une catégorie pour supprimer</value>
+  </data>
+  <data name="selection_un_cat_ajout" xml:space="preserve">
+    <value>Veuillez selectionner une catégorie pour ajouter</value>
+  </data>
+  <data name="selection_un_film_ajout" xml:space="preserve">
+    <value>Veuillez selectionner un film pour ajouter</value>
+  </data>
+  <data name="selection_un_film_supression" xml:space="preserve">
+    <value>Veuillez selectionner un film pour supprimer</value>
+  </data>
+  <data name="selection_un_realisateur_ajout" xml:space="preserve">
+    <value>Veuillez selectionner un réalisateur pour ajouter</value>
+  </data>
+  <data name="selection_un_realisateur_supression" xml:space="preserve">
+    <value>Veuillez selectionner un réalisateur pour supprimer</value>
+  </data>
 </root>

@@ -9,6 +9,8 @@ namespace CineQuebec.Windows.DAL.ServicesInterfaces
 
         Task AjouterProjection(Projection projection);
 
-        List<Projection> ReadProjectionsById(ObjectId idFilm);
+        Task<List<Projection>> GetProjectionsById(ObjectId idFilm);
+
+        Task<List<Projection>> GetProjectionByName(string titre);
     }
 }

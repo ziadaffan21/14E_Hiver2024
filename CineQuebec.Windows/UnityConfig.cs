@@ -1,4 +1,5 @@
 ﻿using CineQuebec.Windows.DAL;
+using CineQuebec.Windows.DAL.Interfaces;
 using CineQuebec.Windows.DAL.InterfacesRepositorie;
 using CineQuebec.Windows.DAL.Repositories;
 using CineQuebec.Windows.DAL.Services;
@@ -14,13 +15,15 @@ namespace CineQuebec.Windows
         {
             var container = new UnityContainer();
 
-            // Enregistrement des services
+            // Enregistrement des services.
             container.RegisterSingleton<IFilmService, FilmService>();
             container.RegisterSingleton<IFilmRepository, FilmRepository­>();
             container.RegisterSingleton<IProjectionService, ProjectionService>();
             container.RegisterSingleton<IProjectionRepository, ProjectionRepository>();
             container.RegisterSingleton<IAbonneService, AbonneService>();
             container.RegisterSingleton<IAbonneRepository, AbonneRepository>();
+            container.RegisterSingleton<IRealisateurRepository, RealisateurRepository>();
+            container.RegisterSingleton<IActeurRepository, ActeurRepository>();
             container.RegisterSingleton<IDataBaseUtils, DataBaseUtils>();
             container.RegisterSingleton<IDataBaseSeeder, DataBaseSeeder>();
 
