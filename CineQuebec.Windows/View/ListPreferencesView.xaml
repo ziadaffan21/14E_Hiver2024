@@ -29,6 +29,9 @@
             <ListBox.ItemsSource>
                 <Binding Path="RealisateursPreferee"/>
             </ListBox.ItemsSource>
+            <ListBox.SelectedItem>
+                <Binding Path="DeleteSelectedRealisateur"/>
+            </ListBox.SelectedItem>
         </ListBox>
         <ComboBox x:Name="cbRealisateurs" Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" Margin="0,10,0,0" Width="200">
             <ComboBox.ItemsSource>
@@ -38,47 +41,65 @@
                 <Binding Path="SelectedRealisateur" Mode="TwoWay"/>
             </ComboBox.SelectedItem>
         </ComboBox>
-        <Button x:Name="btnRemoveRealisateur" Content="Supprimer un Realisateur" Grid.Row="3" Grid.Column="0" Width="200" VerticalAlignment="Bottom" Margin="0,0,0,15" Click="btnRemoveRealisateur_Click" />
+        <Button x:Name="btnRemoveRealisateur" Content="Supprimer un Realisateur" Grid.Row="3" Grid.Column="0" Width="200" VerticalAlignment="Bottom" Margin="0,0,0,15" Command="{Binding DeleteRealisateurCommand}" />
         <Button x:Name="btnAddRealisateur" Content="Ajouter un Realisateur" Grid.Row="3" Grid.Column="0" Width="200" VerticalAlignment="Bottom" Margin="0,0,0,55" Command="{Binding AddRealisateurCommand}" />
 
         <ListBox x:Name="lstActeurs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="150">
             <ListBox.ItemsSource>
                 <Binding Path="ActeursPreferee"/>
             </ListBox.ItemsSource>
+            <ListBox.SelectedItem>
+                <Binding Path="DeleteSelectedActeur"/>
+            </ListBox.SelectedItem>
         </ListBox>
         <ComboBox x:Name="cbActeurs" Grid.Row="2" Grid.Column="1" VerticalAlignment="Top" Margin="0,10,0,0" Width="200">
             <ComboBox.ItemsSource>
                 <Binding Path="Acteurs"/>
             </ComboBox.ItemsSource>
+            <ComboBox.SelectedItem>
+                <Binding Path="SelectedActeur" Mode="TwoWay"/>
+            </ComboBox.SelectedItem>
         </ComboBox>
-        <Button x:Name="btnAddActeur" Content="Ajouter un Acteur" Grid.Row="3" Grid.Column="1" Width="200" VerticalAlignment="Bottom" Margin="0,0,0,55" Click="btnAddActeur_Click" />
-        <Button x:Name="btnRemoveActeur" Content="Supprimer un Acteur" Grid.Row="3" Grid.Column="1" Width="200" VerticalAlignment="Bottom" Margin="0,0,0,15" Click="btnRemoveActeur_Click" />
+        <Button x:Name="btnAddActeur" Content="Ajouter un Acteur" Grid.Row="3" Grid.Column="1" Width="200" VerticalAlignment="Bottom" Margin="0,0,0,55" Command="{Binding AddActeurCommand}" />
+        <Button x:Name="btnRemoveActeur" Content="Supprimer un Acteur" Grid.Row="3" Grid.Column="1" Width="200" VerticalAlignment="Bottom" Margin="0,0,0,15" Command="{Binding DeleteActeurCommand}" />
 
         <ListBox x:Name="lstFilms" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="150">
             <ListBox.ItemsSource>
                 <Binding Path="FilmsPreferee"/>
             </ListBox.ItemsSource>
+            <ListBox.SelectedItem>
+                <Binding Path="DeleteSelectedFilm"/>
+            </ListBox.SelectedItem>
         </ListBox>
         <ComboBox x:Name="cbFilms" Grid.Row="2" Grid.Column="2" VerticalAlignment="Top" Margin="0,10,0,0" Width="200">
             <ComboBox.ItemsSource>
                 <Binding Path="Films"/>
             </ComboBox.ItemsSource>
+            <ComboBox.SelectedItem>
+                <Binding Path="SelectedFilm" Mode="TwoWay"/>
+            </ComboBox.SelectedItem>
         </ComboBox>
-        <Button x:Name="btnAddFilms" Content="Ajouter un Film" Grid.Row="3" Grid.Column="2" Width="200" VerticalAlignment="Bottom" Margin="0,0,0,55" Click="btnAddFilms_Click" />
-        <Button x:Name="btnRemoveFilms" Content="Supprimer un Film" Grid.Row="3" Grid.Column="2" Width="200" VerticalAlignment="Bottom" Margin="0,0,0,15" Click="btnRemoveFilms_Click" />
+        <Button x:Name="btnAddFilms" Content="Ajouter un Film" Grid.Row="3" Grid.Column="2" Width="200" VerticalAlignment="Bottom" Margin="0,0,0,55" Command="{Binding AddFilmCommand}" />
+        <Button x:Name="btnRemoveFilms" Content="Supprimer un Film" Grid.Row="3" Grid.Column="2" Width="200" VerticalAlignment="Bottom" Margin="0,0,0,15" Command="{Binding DeleteFilmCommand}" />
 
         <ListBox x:Name="lstCategories" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="150">
             <ListBox.ItemsSource>
                 <Binding Path="CategoriesPreferee"/>
             </ListBox.ItemsSource>
+            <ListBox.SelectedItem>
+                <Binding Path="DeleteSelectedCategorie"/>
+            </ListBox.SelectedItem>
         </ListBox>
         <ComboBox x:Name="cbCategorie" Grid.Row="2" Grid.Column="3" VerticalAlignment="Top" Margin="0,10,0,0" Width="200">
             <ComboBox.ItemsSource>
                 <Binding Path="Categories"/>
             </ComboBox.ItemsSource>
+            <ComboBox.SelectedItem>
+                <Binding Path="SelectedCategorie" Mode="TwoWay"/>
+            </ComboBox.SelectedItem>
         </ComboBox>
-        <Button x:Name="btnAddCategorie" Content="Ajouter une Catégorie" Grid.Row="3" Grid.Column="3" Width="200" VerticalAlignment="Bottom" Margin="0,0,0,55" Click="btnAddCategorie_Click" />
-        <Button x:Name="btnRemoveCategorie" Content="Supprimer une Catégorie" Grid.Row="3" Grid.Column="3" Width="200" VerticalAlignment="Bottom" Margin="0,0,0,15" Click="btnRemoveCategorie_Click" />
+        <Button x:Name="btnAddCategorie" Content="Ajouter une Catégorie" Grid.Row="3" Grid.Column="3" Width="200" VerticalAlignment="Bottom" Margin="0,0,0,55"  Command="{Binding AddCategorieCommand}" />
+        <Button x:Name="btnRemoveCategorie" Content="Supprimer une Catégorie" Grid.Row="3" Grid.Column="3" Width="200" VerticalAlignment="Bottom" Margin="0,0,0,15" Command="{Binding DeleteCategorieCommand}" />
 
         <Button x:Name="btnOK" Content="OK" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="100" Margin="164,0,0,-48" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Click="btnOK_Click" />
     </Grid>
