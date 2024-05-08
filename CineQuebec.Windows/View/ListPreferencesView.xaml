@@ -20,30 +20,63 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <!-- Example of placing controls in the grid -->
-        <!-- Row 1, Column 1 -->
         <Label Content="Preferred Realizers" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Margin="10,5,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" />
         <Label Content="Preferred Acteurs" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Margin="10,5,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" />
         <Label Content="Preferred Films" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" Margin="10,5,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" />
         <Label Content="Preferred Categories" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" Margin="10,5,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" />
 
-        <ListBox x:Name="lstRealisateurs" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="150" />
-        <ComboBox x:Name="cbRealisateurs" Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" Margin="0,10,0,0" Width="200" />
+        <ListBox x:Name="lstRealisateurs" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="150">
+            <ListBox.ItemsSource>
+                <Binding Path="RealisateursPreferee"/>
+            </ListBox.ItemsSource>
+        </ListBox>
+        <ComboBox x:Name="cbRealisateurs" Grid.Row="2" Grid.Column="0" VerticalAlignment="Top" Margin="0,10,0,0" Width="200">
+            <ComboBox.ItemsSource>
+                <Binding Path="Realisateurs"/>
+            </ComboBox.ItemsSource>
+            <ComboBox.SelectedItem>
+                <Binding Path="SelectedRealisateur" Mode="TwoWay"/>
+            </ComboBox.SelectedItem>
+        </ComboBox>
         <Button x:Name="btnRemoveRealisateur" Content="Supprimer un Realisateur" Grid.Row="3" Grid.Column="0" Width="200" VerticalAlignment="Bottom" Margin="0,0,0,15" Click="btnRemoveRealisateur_Click" />
-        <Button x:Name="btnAddRealisateur" Content="Ajouter un Realisateur" Grid.Row="3" Grid.Column="0" Width="200" VerticalAlignment="Bottom" Margin="0,0,0,55" Click="btnAddRealisateur_Click" />
+        <Button x:Name="btnAddRealisateur" Content="Ajouter un Realisateur" Grid.Row="3" Grid.Column="0" Width="200" VerticalAlignment="Bottom" Margin="0,0,0,55" Command="{Binding AddRealisateurCommand}" />
 
-        <ListBox x:Name="lstActeurs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="150" />
-        <ComboBox x:Name="cbActeurs" Grid.Row="2" Grid.Column="1" VerticalAlignment="Top" Margin="0,10,0,0" Width="200" />
+        <ListBox x:Name="lstActeurs" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="150">
+            <ListBox.ItemsSource>
+                <Binding Path="ActeursPreferee"/>
+            </ListBox.ItemsSource>
+        </ListBox>
+        <ComboBox x:Name="cbActeurs" Grid.Row="2" Grid.Column="1" VerticalAlignment="Top" Margin="0,10,0,0" Width="200">
+            <ComboBox.ItemsSource>
+                <Binding Path="Acteurs"/>
+            </ComboBox.ItemsSource>
+        </ComboBox>
         <Button x:Name="btnAddActeur" Content="Ajouter un Acteur" Grid.Row="3" Grid.Column="1" Width="200" VerticalAlignment="Bottom" Margin="0,0,0,55" Click="btnAddActeur_Click" />
         <Button x:Name="btnRemoveActeur" Content="Supprimer un Acteur" Grid.Row="3" Grid.Column="1" Width="200" VerticalAlignment="Bottom" Margin="0,0,0,15" Click="btnRemoveActeur_Click" />
 
-        <ListBox x:Name="lstFilms" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="150" />
-        <ComboBox x:Name="cbFilms" Grid.Row="2" Grid.Column="2" VerticalAlignment="Top" Margin="0,10,0,0" Width="200" />
+        <ListBox x:Name="lstFilms" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="150">
+            <ListBox.ItemsSource>
+                <Binding Path="FilmsPreferee"/>
+            </ListBox.ItemsSource>
+        </ListBox>
+        <ComboBox x:Name="cbFilms" Grid.Row="2" Grid.Column="2" VerticalAlignment="Top" Margin="0,10,0,0" Width="200">
+            <ComboBox.ItemsSource>
+                <Binding Path="Films"/>
+            </ComboBox.ItemsSource>
+        </ComboBox>
         <Button x:Name="btnAddFilms" Content="Ajouter un Film" Grid.Row="3" Grid.Column="2" Width="200" VerticalAlignment="Bottom" Margin="0,0,0,55" Click="btnAddFilms_Click" />
         <Button x:Name="btnRemoveFilms" Content="Supprimer un Film" Grid.Row="3" Grid.Column="2" Width="200" VerticalAlignment="Bottom" Margin="0,0,0,15" Click="btnRemoveFilms_Click" />
 
-        <ListBox x:Name="lstCategories" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="150" />
-        <ComboBox x:Name="cbCategorie" Grid.Row="2" Grid.Column="3" VerticalAlignment="Top" Margin="0,10,0,0" Width="200" />
+        <ListBox x:Name="lstCategories" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" VerticalAlignment="Center" Width="200" Height="150">
+            <ListBox.ItemsSource>
+                <Binding Path="CategoriesPreferee"/>
+            </ListBox.ItemsSource>
+        </ListBox>
+        <ComboBox x:Name="cbCategorie" Grid.Row="2" Grid.Column="3" VerticalAlignment="Top" Margin="0,10,0,0" Width="200">
+            <ComboBox.ItemsSource>
+                <Binding Path="Categories"/>
+            </ComboBox.ItemsSource>
+        </ComboBox>
         <Button x:Name="btnAddCategorie" Content="Ajouter une Catégorie" Grid.Row="3" Grid.Column="3" Width="200" VerticalAlignment="Bottom" Margin="0,0,0,55" Click="btnAddCategorie_Click" />
         <Button x:Name="btnRemoveCategorie" Content="Supprimer une Catégorie" Grid.Row="3" Grid.Column="3" Width="200" VerticalAlignment="Bottom" Margin="0,0,0,15" Click="btnRemoveCategorie_Click" />
 

@@ -1,11 +1,11 @@
 ﻿using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.Enums;
-using CineQuebec.Windows.DAL.Exceptions.AbonneExceptions;
 using CineQuebec.Windows.DAL.Interfaces;
 using CineQuebec.Windows.DAL.Services;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
 using CineQuebec.Windows.Exceptions.AbonneExceptions;
 using CineQuebec.Windows.Ressources.i18n;
+using CineQuebec.Windows.ViewModel;
 using System.Windows;
 
 namespace CineQuebec.Windows.View
@@ -19,6 +19,7 @@ namespace CineQuebec.Windows.View
         private readonly IRealisateurRepository _realisateurRepository;
         private readonly IActeurRepository _acteurRepository;
         private readonly IFilmService _filmService;
+        private readonly ListPreferencesViewModel _viewModel;
 
         public Abonne User { get; set; }
 
@@ -29,86 +30,35 @@ namespace CineQuebec.Windows.View
             _realisateurRepository = realisateurRepository;
             _acteurRepository = acteurRepository;
             _filmService = filmService;
+            _viewModel = new ListPreferencesViewModel(_abonneService, _realisateurRepository, _acteurRepository, _filmService, abonne);
+            DataContext = _viewModel;
             User = abonne;
-            Loaded += ListPreferencesView_Loaded;
+            Loaded += _viewModel.Loaded;
+            ((ListPreferencesViewModel)this.DataContext).ErrorOccurred += HandleError;
+            this.Unloaded += ListPreferencesView_Unloaded;
+        }
+
+        private void ListPreferencesView_Unloaded(object sender, RoutedEventArgs e)
+        {
+            ((ListPreferencesViewModel)this.DataContext).ErrorOccurred -= HandleError;
+        }
+
+        private void HandleError(string errorMessage)
+        {
+            MessageBox.Show(errorMessage, "Erreur", MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         private async void ListPreferencesView_Loaded(object sender, RoutedEventArgs e)
         {
             User = await _abonneService.GetAbonne(User.Id);
-            cbActeurs.ItemsSource = await ChargerActeurs();
-            cbRealisateurs.ItemsSource = await ChargerRealisateurs();
-            cbFilms.ItemsSource = await ChargerFilms();
-            cbCategorie.ItemsSource = ChargerCategorie();
-            lstRealisateurs.ItemsSource = User.Realisateurs;
-            lstActeurs.ItemsSource = User.Acteurs;
-            lstCategories.ItemsSource = User.CategoriesPrefere;
-            lstFilms.ItemsSource = User.Films;
         }
 
         private async void InitializeListsAndComboBoxes()
         {
             User = await _abonneService.GetAbonne(User.Id);
-            lstRealisateurs.ItemsSource = User.Realisateurs;
             lstActeurs.ItemsSource = User.Acteurs;
             lstFilms.ItemsSource = User.Films;
             lstCategories.ItemsSource = User.CategoriesPrefere;
-        }
-
-        private static IEnumerable<Categories> ChargerCategorie()
-        {
-            return Enum.GetValues(typeof(Categories)).Cast<Categories>();
-        }
-
-        private async Task<IEnumerable<Film>> ChargerFilms()
-        {
-            return await _filmService.GetAllFilms();
-        }
-
-        private async Task<IEnumerable<Realisateur>> ChargerRealisateurs()
-        {
-            return await _realisateurRepository.GetAll();
-        }
-
-        private async Task<IEnumerable<Acteur>> ChargerActeurs()
-        {
-            return await _acteurRepository.GetAll();
-        }
-
-        private async void btnAddRealisateur_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                var selectedRealisateur = cbRealisateurs.SelectedItem as Realisateur;
-                if (selectedRealisateur != null)
-                {
-                    var result = await _abonneService.AddRealisateurInAbonne(User, selectedRealisateur);
-                    if (result is not null)
-                    {
-                        User = result;
-                        cbRealisateurs.SelectedIndex = -1;
-                        InitializeListsAndComboBoxes();
-                    }
-                }
-                else
-                {
-                    MessageBox.Show(Resource.selection_un_realisateur_ajout, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-            }
-            catch (NumberRealisateursOutOfRange ex)
-            {
-                MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Warning);
-                cbRealisateurs.SelectedIndex = -1;
-            }
-            catch (RealisateurAlreadyExistInRealisateursList ex)
-            {
-                MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Warning);
-                cbRealisateurs.SelectedIndex = -1;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
         }
 
         private async void btnAddActeur_Click(object sender, RoutedEventArgs e)
