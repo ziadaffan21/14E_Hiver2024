@@ -17,8 +17,6 @@ namespace CineQuebec.Windows.View
     {
         private readonly ListPreferencesViewModel _viewModel;
 
-        //public Abonne User { get; set; }
-
         public ListPreferencesView(IAbonneService abonneService, IRealisateurRepository realisateurRepository, IActeurRepository acteurRepository, IFilmService filmService, Abonne abonne = null)
         {
             InitializeComponent();

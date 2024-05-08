@@ -41,7 +41,6 @@ namespace CineQuebec.Windows.View
         {
             var listPreferanceView = new ListPreferencesView(_abonneService, _realisateurRepository, _acteurRepository, _filmService, User);
             _ = (bool)listPreferanceView.ShowDialog();
-                //User = listPreferanceView.User;
         }
 
         private void btnNoteUnFilm_Click(object sender, RoutedEventArgs e)
