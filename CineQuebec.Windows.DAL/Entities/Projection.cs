@@ -85,6 +85,16 @@ namespace CineQuebec.Windows.DAL.Data
             return $"({Film.Titre}) {Date.Day} {Utils.Utils.GetMoisNom(Date).ToUpper()} {Date.Hour:00}:{Date.Minute:00}";
         }
 
+        public bool PlaceDisponible()
+        {
+            return Reservations.Count > NbPlaces;
+        }
+
+        public bool DejaReserve(ObjectId userId)
+        {
+            return Reservations.Contains(userId);
+        }
+
         #endregion MÉTHODES
     }
 }

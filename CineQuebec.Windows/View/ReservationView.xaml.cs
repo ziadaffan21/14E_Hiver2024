@@ -32,7 +32,24 @@ namespace CineQuebec.Windows.View
         private async Task ChargerFilmsAsync()
         {
             Films = await _filmService.GetAllFilms();
+
+            for (int i = 0; i < Films.Count; i++) 
+            {
+                var film = Films[i];
+                if (!film.EstAffiche)
+                {
+                    Films.Remove(film);
+                }
+            }
+
+            if (Films.Count > 0)
+            {
             lstFilms.ItemsSource = Films;
+            }
+            else
+            {
+                gpoFilms.Header = "Aucun Films à l'affiche";
+            }
         }
 
         private void lstFilms_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -51,17 +68,45 @@ namespace CineQuebec.Windows.View
 
         private async Task ChargerProjectionsAsync(Film film)
         {
-            var projections = await _projectionService.GetProjectionByName(film.Titre);
-            Projections = projections;
-            lstProjections.ItemsSource = Projections;
+            var projectionsCharge = await _projectionService.GetProjectionByName(film.Titre);
+            Projections = projectionsCharge;
+
+
+            //Filtrage des projections déja réservé
+            for (int i = 0; i < Projections.Count; i++)
+            {
+                var projection = Projections[i];
+                if (projection.DejaReserve(User.Id))
+                {
+                    Projections.Remove(projection);
+                }
+            }
+
+            if (Projections.Count > 0)
+            {
+                lstProjections.ItemsSource = Projections;
+
+            }
+            else
+            {
+                gpoProjections.Header = $"Aucune projections pour {film.Titre}";
+            }
         }
 
         private void btConfirmer_Click(object sender, RoutedEventArgs e)
         {
+            Film film = (Film)lstFilms.SelectedItem;
+            MessageBoxResult reponse = MessageBox.Show($"Voulez vous réserver une place pour {film}", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+            if (reponse != MessageBoxResult.Yes)
+            {
+                return;
+            }
+
             if (lstProjections.SelectedIndex >= 0)
             {
                 var projection = lstProjections.SelectedItem as Projection;
                 _ = EnvoyerReservation(projection);
+                Close();
             }
             else
             {

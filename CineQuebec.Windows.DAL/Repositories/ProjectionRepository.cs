@@ -43,7 +43,7 @@ namespace CineQuebec.Windows.DAL.Repositories
 
 
             //Si les places sont remplie, la fonction est annulé
-            if (projection.Reservations.Count >= projection.NbPlaces)
+            if (projection.PlaceDisponible())
             {
                 return;
             }
