@@ -22,8 +22,8 @@
         </GroupBox>
         <GroupBox Name="gpoProjections" Grid.Row="1" Grid.Column="1"  Header="Projections" Style="{StaticResource MaterialDesignGroupBox}" Width="400" HorizontalAlignment="Left" Height="250" VerticalAlignment="Top" Margin="5,0,5,0">
             <ListBox x:Name="lstProjections" HorizontalAlignment="Left" VerticalAlignment="Center"
-         ItemContainerStyle="{StaticResource MaterialDesignListBoxItem}" Width="372" Height="196" SelectionChanged="lstFilms_SelectionChanged" />
+         ItemContainerStyle="{StaticResource MaterialDesignListBoxItem}"  Width="372" Height="196" SelectionChanged="lstProjections_SelectionChanged" />
         </GroupBox>
-        <Button Content="Réserver" Grid.Column="1" IsEnabled="False" Grid.Row="13" />
+        <Button Content="Réserver" Name="btConfirmer" Grid.Column="1" IsEnabled="False" Grid.Row="13" Click="btConfirmer_Click" />
     </Grid>
 </Window>

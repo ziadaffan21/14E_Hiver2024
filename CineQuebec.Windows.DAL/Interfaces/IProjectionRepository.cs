@@ -1,4 +1,5 @@
 ﻿using CineQuebec.Windows.DAL.Data;
+using MongoDB.Bson;
 
 namespace CineQuebec.Windows.DAL.InterfacesRepositorie
 {
@@ -10,8 +11,9 @@ namespace CineQuebec.Windows.DAL.InterfacesRepositorie
 
         Task<List<Projection>> ReadProjectionsById(object idFilm);
 
-        Task<List<Projection>> ReadProjectionsByName(string Name);
+        Task<List<Projection>> GetProjectionsByName(string Name);
 
         Task<Projection> GetProjectionByDateAndFilmId(DateTime dateProjection, string titreFilm);
+        Task AjouterReservation(ObjectId pojectionId, ObjectId userId);
     }
 }

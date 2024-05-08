@@ -1,5 +1,6 @@
 ﻿using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.InterfacesRepositorie;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace CineQuebec.Windows.DAL.Repositories
@@ -30,27 +31,29 @@ namespace CineQuebec.Windows.DAL.Repositories
         public async Task AjouterProjection(Projection projection)
         {
             var tableProjection = _mongoDatabase.GetCollection<Projection>(PROJECTION);
-
             await tableProjection.InsertOneAsync(projection);
         }
 
-        //public Task<List<Projection>> ReadProjectionsById(Object idFilm)
-        //{
-        //    var filter = Builders<Projection>.Filter.And(
-        //           //Builders<Projection>.Filter.Gt(p => p.Date, DateTime.Now),
-        //           Builders<Projection>.Filter.Eq(p => p.Film.Id, idFilm)
-        //       );
+        public async Task AjouterReservation(ObjectId projectionId, ObjectId userId)
+        {
+            var tableProjection = _mongoDatabase.GetCollection<Projection>(PROJECTION);
+            var filter = Builders<Projection>.Filter.Eq(p => p.Id, projectionId); // Assurez-vous d'ajuster la propriété Id selon votre modèle de données
+            var update = Builders<Projection>.Update.AddToSet(p => p.Reservations, userId);
+            var projection = await GetProjectionById(projectionId);
 
-        //    var collection = _mongoDatabase.GetCollection<Projection>(PROJECTION);
-        //    var projections = collection.Find(filter).ToListAsync();
 
-        //    return projections;
-        //}
+            //Si les places sont remplie, la fonction est annulé
+            if (projection.Reservations.Count >= projection.NbPlaces)
+            {
+                return;
+            }
+
+            var reponse = await tableProjection.UpdateOneAsync(filter, update);           
+        }
 
         public async Task<List<Projection>> ReadProjectionsById(Object idFilm)
         {
             List<Projection> projections = await Task.Run(() => ReadProjections());
-
             List<Projection> projectionsFiltre = new();
 
             foreach (var projection in projections)
@@ -73,24 +76,31 @@ namespace CineQuebec.Windows.DAL.Repositories
                 Builders<Projection>.Filter.Eq(p => p.Film.Titre, titreFilm)
             );
 
-            var projection = await projectionCollection.FindAsync(filter);
+            var projection = await projectionCollection.Find(filter).FirstOrDefaultAsync();
 
-            var projectionList = await projection.ToListAsync();
 
-            return projectionList.FirstOrDefault();
+            return projection;
         }
 
-        public async Task<List<Projection>> ReadProjectionsByName(string name)
+        public async Task<Projection> GetProjectionById(ObjectId projectionId)
+        {
+            var projectionCollection = _mongoDatabase.GetCollection<Projection>(PROJECTION);
+            var filter = Builders<Projection>.Filter.Eq(p => p.Id, projectionId); 
+            var projection = await projectionCollection.Find(filter).FirstOrDefaultAsync();
+
+            return projection;
+        }
+
+        public async Task<List<Projection>> GetProjectionsByName(string name)
         {
             var collection = _mongoDatabase.GetCollection<Projection>(PROJECTION);
-
-            // Construct a filter to find projections whose associated film's name matches the provided name
             var filter = Builders<Projection>.Filter.Eq(p => p.Film.Titre, name);
 
-            // Retrieve projections from the database that match the filter
             var projections = await collection.Find(filter).ToListAsync();
 
             return projections;
         }
+
+      
     }
 }

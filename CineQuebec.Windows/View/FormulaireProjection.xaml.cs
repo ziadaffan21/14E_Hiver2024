@@ -38,7 +38,8 @@ namespace CineQuebec.Windows.View
                 if (ValiderForm())
                 {
                     DateTime formatedTime = GetDateAndTime(_projection.Date, (DateTime)horloge.SelectedTime);
-                    await _projectionService.AjouterProjection(new Projection(formatedTime, int.Parse(txtPlace.Text), cboFilm.SelectedItem as Film));
+                    Projection projection = new Projection(formatedTime, int.Parse(txtPlace.Text), cboFilm.SelectedItem as Film);
+                    await _projectionService.AjouterProjection(projection);
                     MessageBox.Show(Resource.ajoutReussiProjection, Resource.ajout, MessageBoxButton.OK, MessageBoxImage.Information);
                     DialogResult = true;
                 }

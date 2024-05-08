@@ -37,7 +37,14 @@ namespace CineQuebec.Windows.DAL.Services
 
         public async Task<List<Projection>> GetProjectionByName(string name)
         {
-            return await _projectionRepository.ReadProjectionsByName(name);
+            return await _projectionRepository.GetProjectionsByName(name);
         }
+
+        public async Task AjouterReservation(ObjectId pojectionId, ObjectId userId)
+        {
+             await _projectionRepository.AjouterReservation(pojectionId,userId);
+        }
+
+        
     }
 }

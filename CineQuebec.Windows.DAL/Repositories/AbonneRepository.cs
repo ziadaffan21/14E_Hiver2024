@@ -47,7 +47,7 @@ namespace CineQuebec.Windows.DAL.Repositories
         public async Task<Abonne> GetAbonneConnexion(string username, string password)
         {
             var collection = _database.GetCollection<Abonne>(ABONNE);
-            Abonne abonne = await collection.Find(x => x.Username == username).FirstOrDefaultAsync();
+            Abonne abonne = collection.Find(x => x.Username == username).FirstOrDefault();
 
             var result = PasswodHasher.VerifyHash(password, abonne.Salt, abonne.Password);
             if (!result)
