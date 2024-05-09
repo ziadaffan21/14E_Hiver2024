@@ -40,7 +40,8 @@ namespace CineQuebec.Windows.View
         private void btnVoirPreferance_Click(object sender, RoutedEventArgs e)
         {
             var listPreferanceView = new ListPreferencesView(_abonneService, _realisateurRepository, _acteurRepository, _filmService, User);
-            _ = (bool)listPreferanceView.ShowDialog();
+            if ((bool)listPreferanceView.ShowDialog())
+                MessageBox.Show("Votre préférence ont été mis à jour avec succès.", "Préférence", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void btnNoteUnFilm_Click(object sender, RoutedEventArgs e)
