@@ -190,7 +190,7 @@ namespace CineQuebec.Windows.ViewModel
             ChargerCategoriesPreferee();
         }
 
-        private void ChargerCategoriesPreferee()
+        public void ChargerCategoriesPreferee()
         {
             CategoriesPreferee.Clear();
             foreach (var categorie in _abonne.CategoriesPrefere)
@@ -199,7 +199,7 @@ namespace CineQuebec.Windows.ViewModel
             }
         }
 
-        private void ChargerFilmsPreferee()
+        public void ChargerFilmsPreferee()
         {
             FilmsPreferee.Clear();
             foreach (var film in _abonne.Films)
@@ -208,7 +208,7 @@ namespace CineQuebec.Windows.ViewModel
             }
         }
 
-        private void ChargerActeursPreferee()
+        public void ChargerActeursPreferee()
         {
             ActeursPreferee.Clear();
             foreach (var acteur in _abonne.Acteurs)
@@ -217,7 +217,7 @@ namespace CineQuebec.Windows.ViewModel
             }
         }
 
-        private void ChargerRealisateursPreferee()
+        public void ChargerRealisateursPreferee()
         {
             RealisateursPreferee.Clear();
             foreach (var realisateur in _abonne.Realisateurs)
@@ -235,7 +235,7 @@ namespace CineQuebec.Windows.ViewModel
             }
         }
 
-        private async void ChargerFilms()
+        public async void ChargerFilms()
         {
             Films.Clear();
             foreach (var film in await _filmService.GetAllFilms())
@@ -278,7 +278,7 @@ namespace CineQuebec.Windows.ViewModel
                 ErrorOccurred?.Invoke(ex.Message);
             }
         }
-        private async void AddActeur()
+        public async void AddActeur()
         {
             try
             {
@@ -295,7 +295,7 @@ namespace CineQuebec.Windows.ViewModel
                 ErrorOccurred?.Invoke(ex.Message);
             }
         }
-        private async void AddFilm()
+        public async void AddFilm()
         {
             try
             {
@@ -312,7 +312,7 @@ namespace CineQuebec.Windows.ViewModel
                 ErrorOccurred?.Invoke(ex.Message);
             }
         }
-        private async void AddCategorie()
+        public async void AddCategorie()
         {
             try
             {
@@ -326,7 +326,7 @@ namespace CineQuebec.Windows.ViewModel
                 ErrorOccurred?.Invoke(ex.Message);
             }
         }
-        private async void DeleteRealisateur()
+        public async void DeleteRealisateur()
         {
             try
             {
@@ -339,7 +339,7 @@ namespace CineQuebec.Windows.ViewModel
                 ErrorOccurred?.Invoke(ex.Message);
             }
         }
-        private async void DeleteActeur()
+        public async void DeleteActeur()
         {
             try
             {
@@ -353,7 +353,7 @@ namespace CineQuebec.Windows.ViewModel
             }
         }
 
-        private async void DeleteFilm()
+        public async void DeleteFilm()
         {
             try
             {
@@ -366,7 +366,7 @@ namespace CineQuebec.Windows.ViewModel
                 ErrorOccurred?.Invoke(ex.Message);
             }
         }
-        private async void DeleteCategorie()
+        public async void DeleteCategorie()
         {
             try
             {
