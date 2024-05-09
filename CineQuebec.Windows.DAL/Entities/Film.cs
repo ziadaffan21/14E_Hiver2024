@@ -76,7 +76,10 @@ namespace CineQuebec.Windows.DAL.Data
         #endregion PROPRIÉTÉS ET INDEXEURS
 
         #region CONSTRUCTEURS
-
+        public Film()
+        {
+            
+        }
         public Film(string titre, DateTime dateSortie, int duree, Categories categorie)
         {
             Titre = titre;
