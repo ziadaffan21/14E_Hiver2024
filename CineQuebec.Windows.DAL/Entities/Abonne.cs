@@ -51,7 +51,7 @@ namespace CineQuebec.Windows.DAL.Data
         public byte[] Salt { get; set; }
         public bool isAdmin { get; set; } = false;
         public List<Acteur> Acteurs { get; set; } = new List<Acteur>();
-        public List<Realisateur> Realisateurs { get; set; } = new List<Realisateur>();
+        public List<Realisateur> Realisateurs { get; init; } = new List<Realisateur>();
         public List<Film> Films { get; set; } = new List<Film>();
         public List<Categories> CategoriesPrefere { get; set; } = new List<Categories>();
 
