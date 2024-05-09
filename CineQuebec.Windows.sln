@@ -7,9 +7,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CineQuebec.Windows", "CineQ
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CineQuebec.Windows.Tests", "CineQuebec.Windows.Tests\CineQuebec.Windows.Tests.csproj", "{83716A17-4C9D-4A63-8BF1-8CC8B1494E1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CineQuebec.Windows.DAL", "CineQuebec.Windows.DAL\CineQuebec.Windows.DAL.csproj", "{96685A26-12C9-47D2-A5A1-29B2AFF7EC1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CineQuebec.Windows.DAL", "CineQuebec.Windows.DAL\CineQuebec.Windows.DAL.csproj", "{96685A26-12C9-47D2-A5A1-29B2AFF7EC1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CineQuebec.Windows.BLL", "CineQuebec.Windows.BLL\CineQuebec.Windows.BLL.csproj", "{1AD10973-2BF3-4BFC-AEF5-07AB9CCEEF36}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CineQuebec.Windows.BLL", "CineQuebec.Windows.BLL\CineQuebec.Windows.BLL.csproj", "{1AD10973-2BF3-4BFC-AEF5-07AB9CCEEF36}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CineQuebec.Windows.Tests.UI", "CineQuebec.Windows.Tests.UI\CineQuebec.Windows.Tests.UI.csproj", "{30A02D2E-DC5B-4573-949C-BBFD55BEC1E2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{1AD10973-2BF3-4BFC-AEF5-07AB9CCEEF36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1AD10973-2BF3-4BFC-AEF5-07AB9CCEEF36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1AD10973-2BF3-4BFC-AEF5-07AB9CCEEF36}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30A02D2E-DC5B-4573-949C-BBFD55BEC1E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30A02D2E-DC5B-4573-949C-BBFD55BEC1E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30A02D2E-DC5B-4573-949C-BBFD55BEC1E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30A02D2E-DC5B-4573-949C-BBFD55BEC1E2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
