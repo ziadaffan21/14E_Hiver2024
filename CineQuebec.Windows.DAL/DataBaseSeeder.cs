@@ -88,8 +88,14 @@ namespace CineQuebec.Windows.DAL
 
             var realisateurs = new List<Realisateur>
             {
-                new Realisateur("Martin","Scorsese",DateTime.Now),
-                new Realisateur("Steven","Spielberg",DateTime.Now),
+                new Realisateur("Martin", "Scorsese", DateTime.Now),
+                new Realisateur("Steven", "Spielberg", DateTime.Now),
+                new Realisateur("Quentin", "Tarantino", DateTime.Now),
+                new Realisateur("Christopher", "Nolan", DateTime.Now),
+                new Realisateur("James", "Cameron", DateTime.Now),
+                new Realisateur("George", "Lucas", DateTime.Now),
+                new Realisateur("Peter", "Jackson", DateTime.Now),
+                new Realisateur("James", "Marshall", DateTime.Now)
             };
 
             var bsonRealisateur = realisateurs.Select(a => a.ToBsonDocument()).ToList();
