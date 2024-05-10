@@ -2,14 +2,13 @@
 using CineQuebec.Windows.DAL.Interfaces;
 using CineQuebec.Windows.DAL.Repositories;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
-using CineQuebec.Windows.ViewModel;
 using MongoDB.Bson;
 using Prism.Commands;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 
-namespace CineQuebec.Windows.View
+namespace CineQuebec.Windows.ViewModel
 {
     internal class UserControlActeursViewModel : PropertyNotifier
     {
@@ -54,9 +53,9 @@ namespace CineQuebec.Windows.View
 
         public UserControlActeursViewModel(IAbonneService abonneService, IActeurRepository acteurRepository, Abonne abonne)
         {
-            this._abonneService = abonneService;
-            this._acteurRepository = acteurRepository;
-            this._abonne = abonne;
+            _abonneService = abonneService;
+            _acteurRepository = acteurRepository;
+            _abonne = abonne;
             AddActeurCommand = new DelegateCommand(AddActeur);
             DeleteActeurCommand = new DelegateCommand(DeleteActeur);
 
