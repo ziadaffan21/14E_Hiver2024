@@ -6,12 +6,9 @@
       xmlns:local="clr-namespace:CineQuebec.Windows.View"
         Width="880" Height="500">
 
-    <Grid Background="White" Height="350" Width="850">
-        <!-- Row and Column Definitions for 3 rows and 4 columns -->
+    <Grid Background="White" Height="400" Width="850">
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.5*" />
-            <RowDefinition Height="2*" />
-            <RowDefinition Height="2*" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -20,7 +17,8 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Label Content="Preferred Realizers" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Margin="10,5,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" />
+        <ContentControl x:Name="UserControlRealisateurContent" Grid.Row="0" Grid.Column="0"/>
+        <!--<Label Content="Preferred Realizers" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Margin="10,5,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" />
         <Label Content="Preferred Acteurs" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Margin="10,5,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" />
         <Label Content="Preferred Films" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" Margin="10,5,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" />
         <Label Content="Preferred Categories" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center" Margin="10,5,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" />
@@ -101,6 +99,6 @@
         <Button x:Name="btnAddCategorie" Content="Ajouter une Catégorie" Grid.Row="3" Grid.Column="3" Width="200" VerticalAlignment="Bottom" Margin="0,0,0,55"  Command="{Binding AddCategorieCommand}" />
         <Button x:Name="btnRemoveCategorie" Content="Supprimer une Catégorie" Grid.Row="3" Grid.Column="3" Width="200" VerticalAlignment="Bottom" Margin="0,0,0,15" Command="{Binding DeleteCategorieCommand}" />
 
-        <Button x:Name="btnOK" Content="OK" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="100" Margin="164,0,0,-48" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Click="btnOK_Click" />
+        <Button x:Name="btnOK" Content="OK" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="100" Margin="164,0,0,-48" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="2" Click="btnOK_Click" />-->
     </Grid>
 </Window>

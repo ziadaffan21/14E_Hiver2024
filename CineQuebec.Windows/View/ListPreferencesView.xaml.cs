@@ -25,6 +25,7 @@ namespace CineQuebec.Windows.View
             Loaded += _viewModel.Loaded;
             ((ListPreferencesViewModel)this.DataContext).ErrorOccurred += HandleError;
             this.Unloaded += ListPreferencesView_Unloaded;
+            UserControlRealisateurContent.Content = new UserControlRealisateursView(abonneService, realisateurRepository, abonne);
         }
 
         private void ListPreferencesView_Unloaded(object sender, RoutedEventArgs e)
