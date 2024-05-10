@@ -105,7 +105,7 @@ namespace CineQuebec.Windows.ViewModel
         {
             try
             {
-                if (SelectedRealisateur is null || SelectedRealisateur.Id == ObjectId.Empty)
+                if (DeleteSelectedRealisateur is null || DeleteSelectedRealisateur.Id == ObjectId.Empty)
                     throw new SelectedRealisateurNullException("Veuillez selectionner un réalisateur pour enlever de la liste");
 
                 await _abonneService.RemoveRealisateurInAbonne(_abonne, DeleteSelectedRealisateur);

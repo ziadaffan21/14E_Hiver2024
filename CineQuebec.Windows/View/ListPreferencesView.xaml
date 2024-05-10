@@ -18,6 +18,7 @@
         </Grid.ColumnDefinitions>
 
         <ContentControl x:Name="UserControlRealisateurContent" Grid.Row="0" Grid.Column="0"/>
+        <ContentControl x:Name="UserControlActeurContent" Grid.Row="0" Grid.Column="1"/>
         <!--<Label Content="Preferred Realizers" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" Margin="10,5,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" />
         <Label Content="Preferred Acteurs" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" Margin="10,5,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" />
         <Label Content="Preferred Films" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center" Margin="10,5,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" />
