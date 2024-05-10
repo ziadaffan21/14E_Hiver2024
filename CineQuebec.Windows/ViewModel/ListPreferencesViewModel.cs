@@ -31,6 +31,7 @@ namespace CineQuebec.Windows.ViewModel
         private Categories _selectedCategorie = new();
         private Categories _deleteSelectedCategorie = new();
 
+
         public ICommand AddRealisateurCommand { get; init; }
         public ICommand DeleteRealisateurCommand { get; init; }
         public ICommand AddActeurCommand { get; init; }
