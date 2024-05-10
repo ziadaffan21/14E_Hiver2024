@@ -17,7 +17,6 @@ namespace CineQuebec.Windows.DAL.Repositories
             _dataBaseUtils = dataBaseUtils;
             _mongoDBClient = mongoDBClient ?? _dataBaseUtils.OuvrirConnexion();
             _database = _dataBaseUtils.ConnectDatabase(_mongoDBClient);
-            _dataBaseUtils = dataBaseUtils;
         }
 
         public List<Abonne> ReadAbonnes()
