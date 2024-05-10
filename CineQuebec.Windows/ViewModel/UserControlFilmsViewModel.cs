@@ -1,13 +1,12 @@
 ﻿using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
-using CineQuebec.Windows.ViewModel;
 using MongoDB.Bson;
 using Prism.Commands;
 using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Input;
 
-namespace CineQuebec.Windows.View
+namespace CineQuebec.Windows.ViewModel
 {
     internal class UserControlFilmsViewModel : PropertyNotifier
     {
@@ -52,9 +51,9 @@ namespace CineQuebec.Windows.View
 
         public UserControlFilmsViewModel(IAbonneService abonneService, IFilmService filmService, Abonne abonne)
         {
-            this._abonneService = abonneService;
-            this._filmService = filmService;
-            this._abonne = abonne;
+            _abonneService = abonneService;
+            _filmService = filmService;
+            _abonne = abonne;
             AddFilmCommand = new DelegateCommand(AddFilm);
             DeleteFilmCommand = new DelegateCommand(DeleteFilm);
 
