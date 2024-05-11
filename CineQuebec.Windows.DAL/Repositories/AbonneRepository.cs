@@ -47,7 +47,8 @@ namespace CineQuebec.Windows.DAL.Repositories
         {
             var collection = _database.GetCollection<Abonne>(ABONNE);
             Abonne abonne = await collection.Find(x => x.Username == username).FirstOrDefaultAsync();
-
+            if(abonne is null)
+                return null;
             var result = PasswodHasher.VerifyHash(password, abonne.Salt, abonne.Password);
             if (!result)
                 return null;
