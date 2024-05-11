@@ -50,11 +50,11 @@
                     </TransformGroup>
                 </DatePicker.RenderTransform>
             </DatePicker>
-            <materialDesign:TimePicker Style="{StaticResource MaterialDesignTimePicker}" x:Name="horloge" ContextMenuClosing="horloge_ContextMenuClosing" Width="72" Height="29" FontSize="14" />
+            <materialDesign:TimePicker Style="{StaticResource MaterialDesignTimePicker}" x:Name="horloge" Width="72" Height="29" FontSize="14" />
         </StackPanel>
 
         <Label Grid.Row="2" Style="{StaticResource MaterialDesignLabel}" Content="Film" VerticalAlignment="Center" Margin="5" />
-        <ComboBox ItemsSource="{Binding Films}" SelectedValue="{Binding Projection.Film}" Style="{StaticResource MaterialDesignOutlinedComboBox }" x:Name="cboFilm" Grid.Row="2" Grid.Column="1" Width="191" HorizontalAlignment="Left"  Cursor="Hand"/>
+        <ComboBox ItemsSource="{Binding Films}" SelectedValue="{Binding Projection.Film, UpdateSourceTrigger=PropertyChanged}" Style="{StaticResource MaterialDesignOutlinedComboBox }" x:Name="cboFilm" Grid.Row="2" Grid.Column="1" Width="191" HorizontalAlignment="Left"  Cursor="Hand"/>
         <Label Grid.Row="3" Style="{StaticResource MaterialDesignLabel}" Grid.Column="0" Content="Places disponibles" VerticalAlignment="Bottom" Margin="5" />
         <TextBox Grid.Row="3" Grid.Column="1" Width="40" HorizontalAlignment="Left" x:Name="txtPlace" Margin="5,6,0,4" Text="{Binding Projection.PlaceDisponible, UpdateSourceTrigger=Default, ValidatesOnExceptions=True}" />
         <TextBlock Visibility="Hidden" Text="{Binding SelectedTime, ElementName=horloge, Mode=OneWay, StringFormat=HH:mm}" Grid.Column="1" Margin="151,5,51,5" FontSize="16" VerticalAlignment="Center" />
