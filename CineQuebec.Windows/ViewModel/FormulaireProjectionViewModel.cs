@@ -1,8 +1,10 @@
 ﻿using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
+using CineQuebec.Windows.ObservableClass;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,11 +14,11 @@ namespace CineQuebec.Windows.ViewModel
 {
     public class FormulaireProjectionViewModel:PropertyNotifier
     {
-        private Projection _projection;
+        private ObservableProjection _projection;
         private List<Film> _films;
         public ICommand SaveCommand { get; init; }
 
-        public Projection Projection {
+        public ObservableProjection Projection {
             get { return _projection; } 
             set { _projection = value;
                 OnPropertyChanged();
@@ -36,11 +38,15 @@ namespace CineQuebec.Windows.ViewModel
             _projectionService = projectionService;
             _filmService = filmService;
             Projection = new();
+            Projection.PropertyChanged += ReEvaluateButtonState;
             SaveCommand = new DelegateCommand(Save, CanSave);            
             GetAllFIlm();
         }
 
-        
+        private void ReEvaluateButtonState(object sender, PropertyChangedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
 
         public async void GetAllFIlm()
         {
@@ -49,12 +55,12 @@ namespace CineQuebec.Windows.ViewModel
 
         private bool CanSave()
         {
-            return false;
+            return Projection.IsValid();
         }
 
         private void Save()
         {
-            _projectionService.AjouterProjection(Projection);
+            _projectionService.AjouterProjection(Projection.value());
         }
     }
 }

@@ -37,7 +37,7 @@ namespace CineQuebec.Windows.DAL.Data
             get { return _placeDisponible; }
             set
             {
-                if (!int.TryParse(value.ToString(), out _)) throw new PlaceDisponibleException($"Le nombre de place doit être plus grand que {NB_PLACE_MIN}");
+                if (!int.TryParse(value.ToString(), out _) || value<NB_PLACE_MIN) throw new PlaceDisponibleException($"Le nombre de place doit être plus grand que {NB_PLACE_MIN}");
                 _placeDisponible = value;
             }
         }
@@ -78,6 +78,10 @@ namespace CineQuebec.Windows.DAL.Data
             return $"({Film.Titre}) {Date.Day} {Utils.Utils.GetMoisNom(Date).ToUpper()} {Date.Hour:00}:{Date.Minute:00}";
         }
 
+        public bool IsValid()
+        {
+            return Film is not null && PlaceDisponible>=NB_PLACE_MIN && Date>=DateTime.Now;
+        }
         #endregion MÉTHODES
     }
 }

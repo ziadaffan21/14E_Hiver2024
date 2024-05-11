@@ -50,22 +50,8 @@
                     </TransformGroup>
                 </DatePicker.RenderTransform>
             </DatePicker>
-            <materialDesign:TimePicker Style="{StaticResource MaterialDesignTimePicker}"  x:Name="horloge" ContextMenuClosing="horloge_ContextMenuClosing" Width="72" Height="29" FontSize="14" />
+            <materialDesign:TimePicker Style="{StaticResource MaterialDesignTimePicker}" x:Name="horloge" ContextMenuClosing="horloge_ContextMenuClosing" Width="72" Height="29" FontSize="14" />
         </StackPanel>
-        <!--<StackPanel HorizontalAlignment="Left"  Grid.Row="0" Grid.Column="1"  Margin="5">
-
-                -->
-        <!--<Button x:Name="AfficherMasquerCalendrier" Width="150" Click="AfficherMasquerCalendrier_Click" HorizontalAlignment="Center">Afficher Calendrier</Button>-->
-        <!--
-                <DatePicker x:Name="calendrier" Margin="0" />
-            </StackPanel>-->
-        <!--<Calendar  x:Name="calendrier"  Width="175" HorizontalAlignment="Left" Margin="5" />-->
-
-        <!--<TextBlock Grid.Row="1" Grid.Column="0" Text="C" VerticalAlignment="Bottom" Margin="5" />
-        <TextBox x:Name="txtNom" Grid.Row="1" Grid.Column="1" Width="275" HorizontalAlignment="Left" Margin="5,5,0,5" />
-
-        <TextBlock Grid.Row="2" Grid.Column="0" Text="Prix" VerticalAlignment="Bottom" Margin="5" />
-        <TextBox x:Name="txtPrix" Grid.Row="2" Grid.Column="1" Width="125" HorizontalAlignment="Left" Margin="5" />-->
 
         <Label Grid.Row="2" Style="{StaticResource MaterialDesignLabel}" Content="Film" VerticalAlignment="Center" Margin="5" />
         <ComboBox ItemsSource="{Binding Films}" SelectedValue="{Binding Projection.Film}" Style="{StaticResource MaterialDesignOutlinedComboBox }" x:Name="cboFilm" Grid.Row="2" Grid.Column="1" Width="191" HorizontalAlignment="Left"  Cursor="Hand"/>
