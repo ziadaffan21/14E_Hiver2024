@@ -3,6 +3,7 @@ using CineQuebec.Windows.DAL.Exceptions.ProjectionException;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
 using CineQuebec.Windows.Exceptions;
 using CineQuebec.Windows.Ressources.i18n;
+using CineQuebec.Windows.ViewModel;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -17,6 +18,8 @@ namespace CineQuebec.Windows.View
         private Projection _projection;
         private StringBuilder sb = new();
 
+        private readonly FormulaireProjectionViewModel _viewModel;
+
         private readonly IProjectionService _projectionService;
 
         private readonly IFilmService _filmService;
@@ -24,10 +27,12 @@ namespace CineQuebec.Windows.View
         public AjoutDetailProjection(IProjectionService projectionService, IFilmService filmService)
         {
             InitializeComponent();
-            _projection = new Projection();
-            _projectionService = projectionService;
-            _filmService = filmService;
-            DataContext = _projection;
+            _viewModel=new FormulaireProjectionViewModel(projectionService, filmService);
+            //_projection = new Projection();
+            //_projectionService = projectionService;
+            //_filmService = filmService;
+            // DataContext = _projection;
+            DataContext = _viewModel;
             calendrier.DisplayDateStart = DateTime.Now;
         }
 
@@ -70,6 +75,7 @@ namespace CineQuebec.Windows.View
 
         private void btnAnnuler_Click(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show(_viewModel.)
             DialogResult = false;
         }
 
@@ -97,23 +103,24 @@ namespace CineQuebec.Windows.View
             InitialiserFormulaireAjout();
         }
 
-        private async void InitialiserFormulaireAjout()
+        private void InitialiserFormulaireAjout()
         {
-            cboFilm.ItemsSource = await _filmService.GetAllFilms();
+           // cboFilm.ItemsSource = await _filmService.GetAllFilms();
             cboFilm.Focus();
             txtPlace.Focus();
         }
 
         private void cboFilm_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (cboFilm.SelectedIndex != -1)
-            {
-                Film film = cboFilm.SelectedItem as Film;
-                if (film != null)
-                {
-                    _projection.Film = film;
-                }
-            }
+            //if (cboFilm.SelectedIndex != -1)
+            //{
+            //    Film film = cboFilm.SelectedItem as Film;
+            //    if (film != null)
+            //    {
+            //        _projection.Film = film;
+            //    }
+            //}
+            MessageBox.Show(_viewModel.Projection.Film.ToString());
         }
 
         private void horloge_ContextMenuClosing(object sender, ContextMenuEventArgs e)

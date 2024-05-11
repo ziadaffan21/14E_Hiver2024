@@ -16,7 +16,7 @@ namespace CineQuebec.Windows.DAL.Data
 
         private DateTime _date;
 
-        private int _nbPlaces;
+        private int _placeDisponible;
 
         private Film _film;
 
@@ -34,13 +34,13 @@ namespace CineQuebec.Windows.DAL.Data
             }
         }
 
-        public int NbPlaces
+        public int PlaceDisponible
         {
-            get { return _nbPlaces; }
+            get { return _placeDisponible; }
             set
             {
-                if (!int.TryParse(value.ToString(), out _) || value < NB_PLACE_MIN) throw new PlaceDisponibleException($"Le nombre de place doit être plus grand que {NB_PLACE_MIN}");
-                _nbPlaces = value;
+                if (!int.TryParse(value.ToString(), out _)) throw new PlaceDisponibleException($"Le nombre de place doit être plus grand que {NB_PLACE_MIN}");
+                _placeDisponible = value;
             }
         }
 
@@ -70,7 +70,7 @@ namespace CineQuebec.Windows.DAL.Data
         public Projection(DateTime date, int placeDisponible, Film film)
         {
             Date = date;
-            NbPlaces = placeDisponible;
+            PlaceDisponible = placeDisponible;
             Film = film;
             Reservations = new();
         }
