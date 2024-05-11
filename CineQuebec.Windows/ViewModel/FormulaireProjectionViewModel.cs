@@ -1,6 +1,8 @@
 ﻿using CineQuebec.Windows.DAL.Data;
+using CineQuebec.Windows.DAL.Exceptions.ProjectionException;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
 using CineQuebec.Windows.ObservableClass;
+using CineQuebec.Windows.Ressources.i18n;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
@@ -8,6 +10,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 
 namespace CineQuebec.Windows.ViewModel
@@ -45,7 +48,7 @@ namespace CineQuebec.Windows.ViewModel
 
         private void ReEvaluateButtonState(object sender, PropertyChangedEventArgs e)
         {
-            throw new NotImplementedException();
+            ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
         }
 
         public async void GetAllFIlm()
@@ -60,7 +63,17 @@ namespace CineQuebec.Windows.ViewModel
 
         private void Save()
         {
-            _projectionService.AjouterProjection(Projection.value());
+            try
+            {
+                _projectionService.AjouterProjection(Projection.value());
+                MessageBox.Show(Resource.ajoutReussiProjection, Resource.ajout, MessageBoxButton.OK, MessageBoxImage.Information);
+
+            }
+            catch (ExistingProjectionException ex)
+            {
+                MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            
         }
     }
 }

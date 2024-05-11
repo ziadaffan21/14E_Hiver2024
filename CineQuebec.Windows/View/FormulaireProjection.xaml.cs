@@ -36,36 +36,15 @@ namespace CineQuebec.Windows.View
             calendrier.DisplayDateStart = DateTime.Now;
         }
 
-        private async void btnCreer_Click(object sender, RoutedEventArgs e)
+        private void btnCreer_Click(object sender, RoutedEventArgs e)
         {
-            
-            try
+            if (ValiderForm())
             {
-                throw new Exception("TTT");
-                if (ValiderForm())
-                {
-                    DateTime formatedTime = GetDateAndTime(_projection.Date, (DateTime)horloge.SelectedTime);
-                    Projection projection = new Projection(formatedTime, int.Parse(txtPlace.Text), cboFilm.SelectedItem as Film);
-                    await _projectionService.AjouterProjection(projection);
-                    MessageBox.Show(Resource.ajoutReussiProjection, Resource.ajout, MessageBoxButton.OK, MessageBoxImage.Information);
-                    DialogResult = true;
-                }
-                else
-                {
-                    MessageBox.Show(sb.ToString(), Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                DialogResult = true;
             }
-            catch (ExistingProjectionException ex)
+            else
             {
-                MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            catch (MongoDataConnectionException ex)
-            {
-                MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            catch (Exception)
-            {
-                MessageBox.Show(Resource.erreurGenerique, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(sb.ToString(), Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -77,6 +56,8 @@ namespace CineQuebec.Windows.View
 
         private void btnAnnuler_Click(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show(_viewModel.Projection.PlaceDisponible.ToString());
+            MessageBox.Show(_viewModel.Projection.Date.ToString());
             DialogResult = false;
         }
 
@@ -86,8 +67,8 @@ namespace CineQuebec.Windows.View
 
             if (calendrier.SelectedDate is null || calendrier.SelectedDate < DateTime.Today)
                 sb.AppendLine($"La date sélectionnée doit être plus grande ou égale à {DateTime.Today}.");
-            if (horloge.SelectedTime is null)
-                sb.AppendLine($"Il faut sélectionner une heure pour la projection.");
+            //if (horloge.SelectedTime is null)
+            //    sb.AppendLine($"Il faut sélectionner une heure pour la projection.");
             if (cboFilm.SelectedIndex == -1)
                 sb.AppendLine($"Vous devez assigner un film");
             if (string.IsNullOrWhiteSpace(txtPlace.Text) || int.Parse(txtPlace.Text) < Projection.NB_PLACE_MIN)
@@ -111,32 +92,8 @@ namespace CineQuebec.Windows.View
             txtPlace.Focus();
         }
 
-        private void cboFilm_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            //if (cboFilm.SelectedIndex != -1)
-            //{
-            //    Film film = cboFilm.SelectedItem as Film;
-            //    if (film != null)
-            //    {
-            //        _projection.Film = film;
-            //    }
-            //}
-            MessageBox.Show(_viewModel.Projection.Film.ToString());
-        }
-
         private void horloge_ContextMenuClosing(object sender, ContextMenuEventArgs e)
         {
-            MessageBox.Show("OK");
-        }
-
-        private void horloge_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
-        {
-            
-            //if (horloge.SelectedTime is not  null) 
-            //{ 
-            //    _viewModel.Projection.Date.TimeOfDay = horloge.SelectedTime;
-            
-            //}
             MessageBox.Show("OK");
         }
     }
