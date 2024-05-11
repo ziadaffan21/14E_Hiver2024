@@ -38,8 +38,10 @@ namespace CineQuebec.Windows.View
 
         private async void btnCreer_Click(object sender, RoutedEventArgs e)
         {
+            
             try
             {
+                throw new Exception("TTT");
                 if (ValiderForm())
                 {
                     DateTime formatedTime = GetDateAndTime(_projection.Date, (DateTime)horloge.SelectedTime);
@@ -75,7 +77,6 @@ namespace CineQuebec.Windows.View
 
         private void btnAnnuler_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show(_viewModel.)
             DialogResult = false;
         }
 
@@ -125,6 +126,17 @@ namespace CineQuebec.Windows.View
 
         private void horloge_ContextMenuClosing(object sender, ContextMenuEventArgs e)
         {
+            MessageBox.Show("OK");
+        }
+
+        private void horloge_SelectedTimeChanged(object sender, RoutedPropertyChangedEventArgs<DateTime?> e)
+        {
+            
+            //if (horloge.SelectedTime is not  null) 
+            //{ 
+            //    _viewModel.Projection.Date.TimeOfDay = horloge.SelectedTime;
+            
+            //}
             MessageBox.Show("OK");
         }
     }
