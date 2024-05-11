@@ -12,7 +12,7 @@ namespace CineQuebec.Windows.ObservableClass
 {
     public class ObservableProjection:PropertyNotifier
     {
-        private Projection _projection;
+        private Projection _projection=new();
         
 
         #region PROPRIÉTÉS ET INDEXEURS
@@ -37,7 +37,8 @@ namespace CineQuebec.Windows.ObservableClass
             {
                 if (_projection.PlaceDisponible != value)
                 {
-                    _projection.PlaceDisponible = value; OnPropertyChanged();
+                    _projection.PlaceDisponible = value; 
+                    OnPropertyChanged();
                 }
             }
         }
@@ -49,7 +50,8 @@ namespace CineQuebec.Windows.ObservableClass
             {
                 if(_projection.Film != value)
                 {
-                    _projection.Film = value; OnPropertyChanged();
+                    _projection.Film = value;
+                    OnPropertyChanged();
                 }
             }
         }
