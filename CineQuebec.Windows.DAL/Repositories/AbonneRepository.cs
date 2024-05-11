@@ -52,6 +52,7 @@ namespace CineQuebec.Windows.DAL.Repositories
             var result = PasswodHasher.VerifyHash(password, abonne.Salt, abonne.Password);
             if (!result)
                 return null;
+
             return abonne;
         }
 
