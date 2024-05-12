@@ -1,4 +1,5 @@
 ﻿using CineQuebec.Windows.DAL.Data;
+using CineQuebec.Windows.DAL.Enums;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
 using CineQuebec.Windows.Exceptions;
 using CineQuebec.Windows.Ressources.i18n;
@@ -51,8 +52,7 @@ namespace CineQuebec.Windows.View
             if (lstFilms.SelectedItem != null)
             {
                 Film film = lstFilms.SelectedItem as Film;
-                DetailFilm detailFilm = new DetailFilm(_filmService, film);
-                detailFilm.Etat = DAL.Enums.Etat.Modifier;
+                DetailFilm detailFilm = new DetailFilm(Etat.Modifier,_filmService, film);
 
                 if ((bool)detailFilm.ShowDialog())
                     ChargerFilmProjection();
@@ -75,8 +75,7 @@ namespace CineQuebec.Windows.View
 
         private void btnAjoutFilm_Click(object sender, RoutedEventArgs e)
         {
-            DetailFilm detailFilm = new DetailFilm(_filmService);
-            detailFilm.Etat = DAL.Enums.Etat.Ajouter;
+            DetailFilm detailFilm = new DetailFilm(Etat.Ajouter,_filmService);
             if ((bool)detailFilm.ShowDialog())
                 ChargerFilmProjection();
         }

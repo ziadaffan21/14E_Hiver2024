@@ -5,6 +5,7 @@ using CineQuebec.Windows.DAL.ServicesInterfaces;
 using CineQuebec.Windows.DAL.Utils;
 using CineQuebec.Windows.Exceptions;
 using CineQuebec.Windows.Ressources.i18n;
+using CineQuebec.Windows.ViewModel;
 using System.Text;
 using System.Windows;
 
@@ -15,21 +16,24 @@ namespace CineQuebec.Windows.View
     /// </summary>
     public partial class DetailFilm : Window
     {
-        private Film _film;
-        public Etat Etat;
-        private readonly IFilmService _filmService;
+        //private Film _film;
+        private Etat Etat;
+        //private readonly IFilmService _filmService;
         private StringBuilder sb = new();
 
-        public DetailFilm(IFilmService filmService, Film film = null)
+        private readonly FormulaireFilmViewModel _viewModel;
+
+        public DetailFilm(Etat etat,IFilmService filmService, Film film = null)
         {
             InitializeComponent();
-            _filmService = filmService;
-            _film = film;
+            _viewModel = new FormulaireFilmViewModel(filmService, film);
+            DataContext = _viewModel;
+            Etat = etat;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            cboCategories.ItemsSource = UtilEnum.GetAllDescriptions<Categories>();
+            dateSortie.DisplayDate = DateTime.Now;
             InitialiserFormulaire();
         }
 
@@ -38,19 +42,11 @@ namespace CineQuebec.Windows.View
             switch (Etat)
             {
                 case Etat.Ajouter:
-                    txtTitre.Text = "";
-                    cboCategories.SelectedIndex = -1;
-                    dateSortie.SelectedDate = DateTime.Now;
-                    txtDuree.Text = "";
                     lblTitre.Text = "Ajouter un film";
                     btnAjouterModifier.Content = "Ajouter";
                     break;
 
                 case Etat.Modifier:
-                    txtTitre.Text = _film.Titre;
-                    cboCategories.SelectedIndex = (int)_film.Categorie;
-                    dateSortie.SelectedDate = _film.DateSortie;
-                    txtDuree.Text = _film.Duree.ToString();
                     lblTitre.Text = "Modifier un film";
                     btnAjouterModifier.Content = "Modifier";
                     break;
@@ -61,34 +57,13 @@ namespace CineQuebec.Windows.View
             }
         }
 
-        private async void btnAjouterModifier_Click(object sender, RoutedEventArgs e)
+        private void btnAjouterModifier_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (ValiderForm())
                 {
-                    switch (Etat)
-                    {
-                        case Etat.Ajouter:
-                            _film = new Film(txtTitre.Text, (DateTime)dateSortie.SelectedDate, int.Parse(txtDuree.Text), (Categories)cboCategories.SelectedIndex);
-                            await _filmService.AjouterFilm(_film);
-                            DialogResult = true;
-                            MessageBox.Show(Resource.ajoutReussi, Resource.ajout, MessageBoxButton.OK, MessageBoxImage.Information);
-                            break;
-
-                        case Etat.Modifier:
-                            _film.Titre = txtTitre.Text;
-                            _film.Categorie = (Categories)cboCategories.SelectedIndex;
-                            _film.DateSortie = (DateTime)dateSortie.SelectedDate;
-                            _film.Duree = int.Parse(txtDuree.Text);
-                            DialogResult = true;
-                            await _filmService.ModifierFilm(_film);
-                            MessageBox.Show(Resource.modificationReussi, Resource.modification, MessageBoxButton.OK, MessageBoxImage.Information);
-                            break;
-
-                        default:
-                            break;
-                    }
+                    DialogResult = true;
                 }
                 else
                     MessageBox.Show(sb.ToString(), Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);

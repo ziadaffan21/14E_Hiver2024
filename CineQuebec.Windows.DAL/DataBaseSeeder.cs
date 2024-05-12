@@ -27,6 +27,7 @@ namespace CineQuebec.Windows.DAL
             await SeedAbonnes();
             await SeedActeur();
             await SeedRealisateur();
+            await SeedProjection();
         }
 
         private async Task SeedFilms()
@@ -79,6 +80,12 @@ namespace CineQuebec.Windows.DAL
 
             var bsonActeur = acteurs.Select(a => a.ToBsonDocument()).ToList();
             await acteurCollection.InsertManyAsync(bsonActeur);
+        }
+
+        private async Task SeedProjection()
+        {
+            var projectionCollection = _database.GetCollection<BsonDocument>("Projections");
+            await projectionCollection.DeleteManyAsync(new BsonDocument());
         }
 
         private async Task SeedRealisateur()
