@@ -21,15 +21,19 @@ namespace CineQuebec.Windows.View
     public partial class FilmDetailsView : Window
     {
 
-        public Film Film { get; set; }
+        private Film _film;
 
-        public FilmDetailsView()
+        public Film Film
         {
-            InitializeComponent();
+            get { return _film; }
+            set { _film = value; }
         }
-        public FilmDetailsView(FilmDetailsView Film)
-        {
 
+
+        public FilmDetailsView(Film film)
+        {
+            Film = film;
+            InitializeComponent();
         }
 
         private void NoteButton_Click(object sender, RoutedEventArgs e)
@@ -39,7 +43,8 @@ namespace CineQuebec.Windows.View
 
         private void OuvrirFormNoter()
         {
-            
+            NoterView noterView = new NoterView(Film);
+            noterView.Show();
         }
     }
 }
