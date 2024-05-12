@@ -105,6 +105,11 @@ namespace CineQuebec.Windows.ViewModel.ObservableClass
             return Enum.IsDefined(Categorie) && Duree > 30 && !string.IsNullOrWhiteSpace(Titre) && Titre.Length < Film.NB_MAX_CARACTERES_USERNAME && Titre.Length > Film.NB_MIN_CARACTERES_USERNAME;
         }
 
+        public override string ToString()
+        {
+            return _film.ToString();
+        }
+
         #endregion MÉTHODES
     }
 }

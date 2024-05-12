@@ -1,7 +1,9 @@
 ﻿using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
+using CineQuebec.Windows.Exceptions.EntitysExceptions;
 using CineQuebec.Windows.ViewModel.Event;
 using CineQuebec.Windows.ViewModel.ObservableClass;
+using MongoDB.Bson;
 using Prism.Events;
 using System;
 using System.Collections.Generic;
@@ -45,6 +47,16 @@ namespace CineQuebec.Windows.ViewModel
                 Projections.Add(projection);
             }
 
+        }
+
+        internal async void LoadProjectionFilm(ObjectId id)
+        {
+            if (!ObjectId.TryParse(id.ToString(), out _)) throw new InvalidGuidException($"L'id {id} est invalid");
+            Projections.Clear();
+            foreach (Projection projection in await _projectionService.GetProjectionsById(id))
+            {
+                Projections.Add(projection);
+            }
         }
     }
 }

@@ -31,26 +31,8 @@ namespace CineQuebec.Windows.View
             _viewModel = new ConsultationFilmsProjectionsModel(filmService, projectionService, eventAggregator);
             _eventAggregator = eventAggregator;
             DataContext = _viewModel;
-
+            Loaded += _viewModel.Load;
             InitializeComponent();
-            ChargerFilmProjection();
-        }
-
-        private async void ChargerFilmProjection()
-        {
-            try
-            {
-                lstFilms.ItemsSource = await _filmService.GetAllFilms();
-                lstProjections.ItemsSource = _projectionService.GetAllProjections();
-            }
-            catch (MongoDataConnectionException err)
-            {
-                MessageBox.Show(err.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            catch (Exception)
-            {
-                MessageBox.Show(Resource.erreurGenerique, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
         }
 
         /// <summary>
@@ -65,8 +47,7 @@ namespace CineQuebec.Windows.View
                 Film film = lstFilms.SelectedItem as Film;
                 DetailFilm detailFilm = new DetailFilm(_filmService,_eventAggregator, film);
 
-                if ((bool)detailFilm.ShowDialog())
-                    ChargerFilmProjection();
+                detailFilm.ShowDialog();
             }
         }
 
@@ -74,28 +55,22 @@ namespace CineQuebec.Windows.View
         {
             Film selectedFilm = lstFilms.SelectedItem as Film;
             if (selectedFilm is not null)
-                _ = getprojectionsAsync(selectedFilm);
+                _viewModel.LoadProjectionFilm(selectedFilm.Id);
             gpoProjections.Header = selectedFilm is not null ? $"Projections ({selectedFilm.Titre})" : "Projections";
-        }
-
-        private async Task getprojectionsAsync(Film selectedFilm)
-        {
-            var projections = await _projectionService.GetProjectionsById(selectedFilm.Id);
-            lstProjections.ItemsSource = projections;
         }
 
         private void btnAjoutFilm_Click(object sender, RoutedEventArgs e)
         {
             DetailFilm detailFilm = new DetailFilm(_filmService,_eventAggregator);
-            if ((bool)detailFilm.ShowDialog())
-                ChargerFilmProjection();
+            detailFilm.ShowDialog();
+            
         }
 
         private void btnAjoutProjection_Click(object sender, RoutedEventArgs e)
         {
             AjoutDetailProjection detailProjection = new AjoutDetailProjection(_projectionService, _filmService,_eventAggregator);
-            if ((bool)detailProjection.ShowDialog())
-                ChargerFilmProjection();
+            detailProjection.ShowDialog();
+            lstFilms.SelectedIndex = -1;
         }
     }
 }
