@@ -2,6 +2,7 @@
 using CineQuebec.Windows.Exceptions.AbonneExceptions.DateAdhesion;
 using CineQuebec.Windows.Exceptions.FilmExceptions.CategorieExceptions;
 using CineQuebec.Windows.Exceptions.FilmExceptions.TitreExceptions;
+using MongoDB.Bson;
 
 namespace CineQuebec.Windows.DAL.Data
 {
@@ -21,6 +22,8 @@ namespace CineQuebec.Windows.DAL.Data
         private Categories _categorie;
         private DateTime _dateSortie;
         private int _duree;
+        private bool _estAffiche;
+
 
         #endregion ATTRIBUTS
 
@@ -73,19 +76,40 @@ namespace CineQuebec.Windows.DAL.Data
             }
         }
 
+
+        public bool EstAffiche
+        {
+            get { return _estAffiche; }
+            set { _estAffiche = value; }
+        }
+
+
+
         #endregion PROPRIÉTÉS ET INDEXEURS
 
         #region CONSTRUCTEURS
-        public Film()
-        {
-            
-        }
-        public Film(string titre, DateTime dateSortie, int duree, Categories categorie)
+
+        public Film(string titre, DateTime dateSortie, int duree, Categories categorie, bool estAffiche = false)
         {
             Titre = titre;
             DateSortie = dateSortie;
             Duree = duree;
             Categorie = categorie;
+            EstAffiche = estAffiche;
+        }
+
+        public Film(string titre, DateTime dateSortie, int duree, Categories categorie, ObjectId id, bool estAffiche = false)
+        {
+            Id = id;
+            Titre = titre;
+            DateSortie = dateSortie;
+            Duree = duree;
+            Categorie = categorie;
+            EstAffiche = estAffiche;
+        }
+
+        public Film()
+        {
         }
 
         #endregion CONSTRUCTEURS
@@ -104,6 +128,14 @@ namespace CineQuebec.Windows.DAL.Data
                 return Id.Equals(other.Id);
             }
             return false;
+        }
+
+        public string DureeToString()
+        {
+            int heures = Duree / 60;
+            int minutesRestantes = Duree % 60;
+
+            return $"{heures:00}h {minutesRestantes:00}";
         }
 
         public override int GetHashCode()

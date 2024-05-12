@@ -6,25 +6,34 @@
              xmlns:local="clr-namespace:CineQuebec.Windows.View"
 
              xmlns:rs="clr-namespace:CineQuebec.Windows.Ressources.i18n">
-    <Grid Background="White">
+    <Grid Background="White" Width="500" Height="250">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition  Height="*"/>
+            <RowDefinition  Height="*"/>
+            <RowDefinition  Height="2.5*"/>
+        </Grid.RowDefinitions>
 
-        <StackPanel VerticalAlignment="Center">
-            <Label Content="{x:Static rs:Resource.connexion_username}"
-                   Style="{StaticResource MaterialDesignLabel}" />
-            <TextBox Width="200"
-                     Margin="0 0 0 10"
-                     x:Name="txtUsername" />
+        <Label Content="{x:Static rs:Resource.connexion_username}"
+                   Style="{StaticResource MaterialDesignLabel}" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Center" FontSize="20"  VerticalAlignment="Center"/>
+        <TextBox Width="200"
+                     x:Name="txtUsername" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
-            <Label Content="{x:Static rs:Resource.connexion_password}"
-                   Style="{StaticResource MaterialDesignLabel}" />
-            <PasswordBox Width="200"
+        <Label Content="{x:Static rs:Resource.connexion_password}"
+                   Style="{StaticResource MaterialDesignLabel}" Grid.Row="1" VerticalAlignment="Center"  HorizontalAlignment="Center" FontSize="20"/>
+        <PasswordBox Width="200"
                      x:Name="txtPassword"
-                     Margin="0 0 0 20" />
+                     Grid.Row="1"
+                     Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
-            <Button Content="{x:Static rs:Resource.connexion_connect}"
-                     Width="100" Click="Button_Click" />
-            <Button Content="{x:Static rs:Resource.connexion_creer}"
-                    Width="141" Margin="0,10,0,5" Click="Button_Creer_Compte" />
-        </StackPanel>
+
+        <Button Content="{x:Static rs:Resource.connexion_connect}"
+                        Width="200" Click="Button_Click" Grid.Column="0" Grid.Row="2"/>
+        <Button Content="{x:Static rs:Resource.connexion_creer}"
+                        Width="200" Click="Button_Creer_Compte"  Grid.Row="2" Grid.Column="1"/>
+
     </Grid>
 </UserControl>

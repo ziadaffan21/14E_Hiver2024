@@ -1,4 +1,6 @@
 ﻿using CineQuebec.Windows.Exceptions.ProjectionException;
+using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace CineQuebec.Windows.DAL.Data
 {
@@ -52,6 +54,8 @@ namespace CineQuebec.Windows.DAL.Data
             }
         }
 
+        public List<ObjectId> Reservations { get; set; }
+
         #endregion PROPRIÉTÉS ET INDEXEURS
 
         #region CONSTRUCTEURS
@@ -60,6 +64,7 @@ namespace CineQuebec.Windows.DAL.Data
         {
             Date = DateTime.Today;
             NbPlaces = NB_PLACE_MIN;
+            Reservations = new();
         }
 
         public Projection(DateTime date, int placeDisponible, Film film)
@@ -67,7 +72,9 @@ namespace CineQuebec.Windows.DAL.Data
             Date = date;
             NbPlaces = placeDisponible;
             Film = film;
+            Reservations = new();
         }
+
 
         #endregion CONSTRUCTEURS
 
@@ -76,6 +83,16 @@ namespace CineQuebec.Windows.DAL.Data
         public override string ToString()
         {
             return $"({Film.Titre}) {Date.Day} {Utils.Utils.GetMoisNom(Date).ToUpper()} {Date.Hour:00}:{Date.Minute:00}";
+        }
+
+        public bool PlaceDisponible()
+        {
+            return Reservations.Count > NbPlaces;
+        }
+
+        public bool DejaReserve(ObjectId userId)
+        {
+            return Reservations.Contains(userId);
         }
 
         #endregion MÉTHODES

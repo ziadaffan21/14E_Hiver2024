@@ -1,6 +1,8 @@
 ﻿using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.Interfaces;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
+using CineQuebec.Windows.ViewModel;
+using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -18,6 +20,8 @@ namespace CineQuebec.Windows.View
         private readonly IFilmService _filmService;
         private readonly IProjectionService _projectionService;
 
+        private AbonneHomeViewModel _viewModel;
+
         public AbonneHomeControl(IAbonneService abonneService, IRealisateurRepository realisateurRepository, IActeurRepository acteurRepository, IFilmService filmService, IProjectionService projectionService)
         {
             InitializeComponent();
@@ -26,7 +30,13 @@ namespace CineQuebec.Windows.View
             _acteurRepository = acteurRepository;
             _filmService = filmService;
             _projectionService = projectionService;
+
+
+            _viewModel = new(filmService);
+            DataContext = _viewModel;
         }
+
+      
 
         private void btnReserverUnePlace_Click(object sender, RoutedEventArgs e)
         {

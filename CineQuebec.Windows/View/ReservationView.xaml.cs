@@ -1,5 +1,6 @@
 ﻿using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
+using CineQuebec.Windows.ViewModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -15,33 +16,30 @@ namespace CineQuebec.Windows.View
 
         public Abonne User { get; set; }
 
-        public List<Film> Films { get; set; }
 
-        public List<Projection> Projections { get; set; }
+
+        private ReservationViewModel _viewmodel { get; set; }
 
         public ReservationView(IFilmService filmService, IProjectionService projectionService, Abonne user)
         {
+            _viewmodel = new(projectionService, filmService, user);
+            DataContext = _viewmodel;
             InitializeComponent();
-            _projectionService = projectionService;
-            _filmService = filmService;
-            User = user;
-            _ = ChargerFilmsAsync();
-            DataContext = this;
+
+            Loaded += _viewmodel.Loaded;
+            Unloaded += _viewmodel.Unloaded;
+            lstFilms.SelectionChanged += _viewmodel.ChargerProjection;
+            lstFilms.ItemsSource = _viewmodel.Films;
         }
 
-        private async Task ChargerFilmsAsync()
-        {
-            Films = await _filmService.GetAllFilms();
-            lstFilms.ItemsSource = Films;
-        }
+
 
         private void lstFilms_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var film = (Film)lstFilms.SelectedItem;
-            if (film != null)
+            if (lstFilms.SelectedIndex >= 0)
             {
                 gpoProjections.Header = $"Projections ({film.Titre})";
-                _ = ChargerProjectionsAsync(film);
             }
             else
             {
@@ -49,11 +47,23 @@ namespace CineQuebec.Windows.View
             }
         }
 
-        private async Task ChargerProjectionsAsync(Film film)
+
+        private void btConfirmer_Click(object sender, RoutedEventArgs e)
         {
-            var projections = await _projectionService.GetProjectionByName(film.Titre);
-            Projections = projections;
-            lstProjections.ItemsSource = Projections;
+            DialogResult = true;
+            //Close();
+        }
+
+        private async Task EnvoyerReservation(Projection projection)
+        {
+
+            await _projectionService.AjouterReservation(projection.Id, User.Id);
+            MessageBox.Show("Réservation completée avec succées.", "Réservation");
+        }
+
+        private void lstProjections_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            btConfirmer.IsEnabled = lstProjections.SelectedIndex >= 0;
         }
     }
 }

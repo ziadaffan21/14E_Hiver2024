@@ -151,7 +151,7 @@
     <value>Mot de passe :</value>
   </data>
   <data name="connexion.username" xml:space="preserve">
-    <value>Utilisateur :</value>
+    <value>Username :</value>
   </data>
   <data name="erreur" xml:space="preserve">
     <value>Erreur</value>

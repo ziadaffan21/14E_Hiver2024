@@ -6,15 +6,15 @@
              xmlns:local="clr-namespace:CineQuebec.Windows.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="300">
-    <Grid Background="White">
+    <Grid Background="#F5F5F5">
         <Grid.RowDefinitions>
             <RowDefinition Height="0.2*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="0.4*" />
             <RowDefinition Height="0.5*" />
         </Grid.RowDefinitions>
-        <Label Content="Preferred Acteurs" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" />
-        <ListBox x:Name="lstActeurs" Grid.Row="1" HorizontalAlignment="Center" BorderBrush="Black" BorderThickness="2" VerticalAlignment="Center" Width="200" Height="180">
+        <Label Content="Preferred Acteurs" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="18" FontWeight="Bold" Foreground="DarkBlue" />
+        <ListBox x:Name="lstActeurs" Grid.Row="1" HorizontalAlignment="Center" BorderBrush="DarkGray" BorderThickness="2" VerticalAlignment="Center" Width="200" Height="180" Background="#FFFFFF" Foreground="Black">
             <ListBox.ItemsSource>
                 <Binding Path="ActeursPreferee"/>
             </ListBox.ItemsSource>
@@ -22,7 +22,7 @@
                 <Binding Path="DeleteSelectedActeur"/>
             </ListBox.SelectedItem>
         </ListBox>
-        <ComboBox x:Name="cbActeurs" Grid.Row="2" Width="200" VerticalAlignment="Center">
+        <ComboBox x:Name="cbActeurs" Grid.Row="2" Width="200" VerticalAlignment="Center" Background="#FFFFFF" Foreground="Black">
             <ComboBox.ItemsSource>
                 <Binding Path="Acteurs"/>
             </ComboBox.ItemsSource>
@@ -30,8 +30,8 @@
                 <Binding Path="SelectedActeur" Mode="TwoWay"/>
             </ComboBox.SelectedItem>
         </ComboBox>
-        <Button x:Name="btnAddActeur" Content="Ajouter un Acteur" Grid.Row="3" Width="200" VerticalAlignment="Bottom" Margin="0,0,0,55" Command="{Binding AddActeurCommand}" />
-        <Button x:Name="btnRemoveActeur" Content="Supprimer un Acteur" Grid.Row="3" Width="200" VerticalAlignment="Bottom" Margin="0,0,0,15" Command="{Binding DeleteActeurCommand}" />
+        <Button x:Name="btnAddActeur" Content="Ajouter un Acteur" Grid.Row="3" Width="200" Background="#007ACC" Foreground="White" VerticalAlignment="Bottom" Margin="0,0,0,55" Command="{Binding AddActeurCommand}" />
+        <Button x:Name="btnRemoveActeur" Content="Supprimer un Acteur" Grid.Row="3" Width="200" VerticalAlignment="Bottom" Background="#FF0000" Foreground="White" Margin="0,0,0,15" Command="{Binding DeleteActeurCommand}" />
 
     </Grid>
 </UserControl>
