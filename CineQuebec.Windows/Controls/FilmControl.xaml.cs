@@ -1,4 +1,5 @@
 ﻿using CineQuebec.Windows.DAL.Data;
+using CineQuebec.Windows.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -49,7 +50,8 @@ namespace CineQuebec.Windows.Controls
 
         private void OuvrirDetails()
         {
-
+            FilmDetailsView filmDetailsView = new(Film);
+            filmDetailsView.Show();
         }
     }
 }

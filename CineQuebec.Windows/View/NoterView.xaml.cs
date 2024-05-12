@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CineQuebec.Windows.DAL.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -19,10 +20,21 @@ namespace CineQuebec.Windows.View
     /// </summary>
     public partial class NoterView : Window
     {
-        public NoterView()
+        private Film _film;
+
+        public Film Film
         {
+            get { return _film; }
+            set { _film = value; }
+        }
+
+
+        public NoterView(Film film)
+        {
+            Film = film;
             InitializeComponent();
         }
+
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
