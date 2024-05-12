@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="CineQuebec.Windows.Controls.FilmControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CineQuebec.Windows.Controls"
+             mc:Ignorable="d" 
+             d:DesignHeight="100" d:DesignWidth="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <Border Background="White" CornerRadius="10" Padding="10" Margin="5" Grid.Column="0" Grid.ColumnSpan="2" MouseDown="Border_MouseDown">
+            <Border.Effect>
+                <DropShadowEffect  Color="Gray" Direction="0" BlurRadius="5" ShadowDepth="1"/>
+            </Border.Effect>
+            <StackPanel Orientation="Horizontal" Margin="5">
+                <Image x:Name="Img" Width="100" Height="100" Margin="5"/>
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock x:Name="Titre" Text="{Binding Titre}" FontWeight="Bold"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock x:Name="Duree" Text="{Binding Duree}"/>
+                        <TextBlock Text="mins" Margin="10,0,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </Border>
+    </Grid>
+</UserControl>

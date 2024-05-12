@@ -18,12 +18,26 @@
 
         <GroupBox Grid.Row="1" Name="gpoFilms" Header="Films à l'affiche" Style="{StaticResource MaterialDesignGroupBox}" Width="400" HorizontalAlignment="Left" Height="250" VerticalAlignment="Top" Margin="5,0,5,0">
             <ListBox x:Name="lstFilms" HorizontalAlignment="Left" VerticalAlignment="Top"
-         ItemContainerStyle="{StaticResource MaterialDesignListBoxItem}" Width="376" Height="198" ItemsSource="{Binding Films}" SelectionChanged="lstFilms_SelectionChanged" />
+         ItemContainerStyle="{StaticResource MaterialDesignListBoxItem}" Width="376" Height="198" SelectionChanged="lstFilms_SelectionChanged">
+                <ListBox.ItemsSource>
+                    <Binding Mode="TwoWay" UpdateSourceTrigger="PropertyChanged" Path="Films"/>
+                </ListBox.ItemsSource>
+                <ListBox.SelectedItem>
+                    <Binding Path="SelectedFilm"/>
+                </ListBox.SelectedItem>
+            </ListBox>
         </GroupBox>
         <GroupBox Name="gpoProjections" Grid.Row="1" Grid.Column="1"  Header="Projections" Style="{StaticResource MaterialDesignGroupBox}" Width="400" HorizontalAlignment="Left" Height="250" VerticalAlignment="Top" Margin="5,0,5,0">
             <ListBox x:Name="lstProjections" HorizontalAlignment="Left" VerticalAlignment="Center"
-         ItemContainerStyle="{StaticResource MaterialDesignListBoxItem}"  Width="372" Height="196" SelectionChanged="lstProjections_SelectionChanged" />
+         ItemContainerStyle="{StaticResource MaterialDesignListBoxItem}"  Width="372" Height="196" SelectionChanged="lstProjections_SelectionChanged" >
+                <ListBox.ItemsSource>
+                    <Binding Path="Projections"/>
+                </ListBox.ItemsSource>
+                <ListBox.SelectedItem>
+                    <Binding Path="SelectedProjection"/>
+                </ListBox.SelectedItem>
+            </ListBox>
         </GroupBox>
-        <Button Content="Réserver" Name="btConfirmer" Grid.Column="1" IsEnabled="False" Grid.Row="13" Click="btConfirmer_Click" />
+        <Button Content="Réserver" Name="btConfirmer" Grid.Column="1" Grid.Row="13" Click="btConfirmer_Click" />
     </Grid>
 </Window>

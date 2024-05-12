@@ -1,10 +1,6 @@
 ﻿using CineQuebec.Windows.DAL.Data;
-using CineQuebec.Windows.DAL.Enums;
 using CineQuebec.Windows.DAL.Interfaces;
-using CineQuebec.Windows.DAL.Services;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
-using CineQuebec.Windows.Exceptions.AbonneExceptions;
-using CineQuebec.Windows.Ressources.i18n;
 using CineQuebec.Windows.ViewModel;
 using System.Windows;
 
@@ -24,7 +20,7 @@ namespace CineQuebec.Windows.View
             DataContext = _viewModel;
             Loaded += _viewModel.Loaded;
             ((ListPreferencesViewModel)this.DataContext).ErrorOccurred += HandleError;
-            this.Unloaded += ListPreferencesView_Unloaded;
+            Unloaded += ListPreferencesView_Unloaded;
         }
 
         private void ListPreferencesView_Unloaded(object sender, RoutedEventArgs e)

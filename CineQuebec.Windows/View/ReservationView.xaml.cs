@@ -1,5 +1,6 @@
 ﻿using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
+using CineQuebec.Windows.ViewModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -15,50 +16,30 @@ namespace CineQuebec.Windows.View
 
         public Abonne User { get; set; }
 
-        public List<Film> Films { get; set; }
 
-        public List<Projection> Projections { get; set; }
+
+        private ReservationViewModel _viewmodel { get; set; }
 
         public ReservationView(IFilmService filmService, IProjectionService projectionService, Abonne user)
         {
+            _viewmodel = new(projectionService, filmService, user);
+            DataContext = _viewmodel;
             InitializeComponent();
-            _projectionService = projectionService;
-            _filmService = filmService;
-            User = user;
-            _ = ChargerFilmsAsync();
-            DataContext = this;
+
+            Loaded += _viewmodel.Loaded;
+            Unloaded += _viewmodel.Unloaded;
+            lstFilms.SelectionChanged += _viewmodel.ChargerProjection;
+            lstFilms.ItemsSource = _viewmodel.Films;
         }
 
-        private async Task ChargerFilmsAsync()
-        {
-            Films = await _filmService.GetAllFilms();
 
-            for (int i = 0; i < Films.Count; i++) 
-            {
-                var film = Films[i];
-                if (!film.EstAffiche)
-                {
-                    Films.Remove(film);
-                }
-            }
-
-            if (Films.Count > 0)
-            {
-            lstFilms.ItemsSource = Films;
-            }
-            else
-            {
-                gpoFilms.Header = "Aucun Films à l'affiche";
-            }
-        }
 
         private void lstFilms_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             var film = (Film)lstFilms.SelectedItem;
-            if (film != null)
+            if (lstFilms.SelectedIndex >= 0)
             {
                 gpoProjections.Header = $"Projections ({film.Titre})";
-                _ = ChargerProjectionsAsync(film);
             }
             else
             {
@@ -66,58 +47,17 @@ namespace CineQuebec.Windows.View
             }
         }
 
-        private async Task ChargerProjectionsAsync(Film film)
-        {
-            var projectionsCharge = await _projectionService.GetProjectionByName(film.Titre);
-            Projections = projectionsCharge;
-
-
-            //Filtrage des projections déja réservé
-            for (int i = 0; i < Projections.Count; i++)
-            {
-                var projection = Projections[i];
-                if (projection.DejaReserve(User.Id))
-                {
-                    Projections.Remove(projection);
-                }
-            }
-
-            if (Projections.Count > 0)
-            {
-                lstProjections.ItemsSource = Projections;
-
-            }
-            else
-            {
-                gpoProjections.Header = $"Aucune projections pour {film.Titre}";
-            }
-        }
 
         private void btConfirmer_Click(object sender, RoutedEventArgs e)
         {
-            Film film = (Film)lstFilms.SelectedItem;
-            MessageBoxResult reponse = MessageBox.Show($"Voulez vous réserver une place pour {film}", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
-            if (reponse != MessageBoxResult.Yes)
-            {
-                return;
-            }
-
-            if (lstProjections.SelectedIndex >= 0)
-            {
-                var projection = lstProjections.SelectedItem as Projection;
-                _ = EnvoyerReservation(projection);
-                Close();
-            }
-            else
-            {
-                MessageBox.Show("Veuillez choisir une projection valide");
-            }
+            DialogResult = true;
+            //Close();
         }
 
         private async Task EnvoyerReservation(Projection projection)
         {
-            
-            await _projectionService.AjouterReservation(projection.Id,User.Id);
+
+            await _projectionService.AjouterReservation(projection.Id, User.Id);
             MessageBox.Show("Réservation completée avec succées.", "Réservation");
         }
 

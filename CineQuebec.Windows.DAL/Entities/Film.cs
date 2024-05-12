@@ -108,6 +108,10 @@ namespace CineQuebec.Windows.DAL.Data
             EstAffiche = estAffiche;
         }
 
+        public Film()
+        {
+        }
+
         #endregion CONSTRUCTEURS
 
         #region MÉTHODES
@@ -124,6 +128,14 @@ namespace CineQuebec.Windows.DAL.Data
                 return Id.Equals(other.Id);
             }
             return false;
+        }
+
+        public string DureeToString()
+        {
+            int heures = Duree / 60;
+            int minutesRestantes = Duree % 60;
+
+            return $"{heures:00}h {minutesRestantes:00}";
         }
 
         public override int GetHashCode()
