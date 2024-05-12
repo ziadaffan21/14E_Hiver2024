@@ -17,7 +17,6 @@ namespace CineQuebec.Windows.DAL.Repositories
             _dataBaseUtils = dataBaseUtils;
             _mongoDBClient = mongoDBClient ?? _dataBaseUtils.OuvrirConnexion();
             _database = _dataBaseUtils.ConnectDatabase(_mongoDBClient);
-            _dataBaseUtils = dataBaseUtils;
         }
 
         public List<Abonne> ReadAbonnes()
@@ -47,8 +46,9 @@ namespace CineQuebec.Windows.DAL.Repositories
         public async Task<Abonne> GetAbonneConnexion(string username, string password)
         {
             var collection = _database.GetCollection<Abonne>(ABONNE);
-            Abonne abonne = collection.Find(x => x.Username == username).FirstOrDefault();
-
+            Abonne abonne = await collection.Find(x => x.Username == username).FirstOrDefaultAsync();
+            if(abonne is null)
+                return null;
             var result = PasswodHasher.VerifyHash(password, abonne.Salt, abonne.Password);
             if (!result)
                 return null;

@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="CineQuebec.Windows.View.CategoriePrefereeUserControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CineQuebec.Windows.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="300">
+    <Grid Background="White">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.2*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="0.4*" />
+            <RowDefinition Height="0.5*" />
+        </Grid.RowDefinitions>
+        <Label Content="Preferred Categories" Margin="0,0,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" />
+        <ListBox x:Name="lstCategories" Grid.Row="1" HorizontalAlignment="Center" BorderBrush="Black" BorderThickness="2" VerticalAlignment="Center" Width="200" Height="180">
+            <ListBox.ItemsSource>
+                <Binding Path="CategoriesPreferee"/>
+            </ListBox.ItemsSource>
+            <ListBox.SelectedItem>
+                <Binding Path="DeleteSelectedCategorie"/>
+            </ListBox.SelectedItem>
+        </ListBox>
+        <ComboBox x:Name="cbCategorie" Grid.Row="2" Width="200" VerticalAlignment="Center">
+            <ComboBox.ItemsSource>
+                <Binding Path="Categories"/>
+            </ComboBox.ItemsSource>
+            <ComboBox.SelectedItem>
+                <Binding Path="SelectedCategorie" Mode="TwoWay"/>
+            </ComboBox.SelectedItem>
+        </ComboBox>
+        <Button x:Name="btnRemoveCategorie" Content="Supprimer un Catégorie" Grid.Row="3" Width="200" VerticalAlignment="Bottom" Margin="0,0,0,15" Command="{Binding DeleteCategorieCommand}" />
+        <Button x:Name="btnAddCategorie" Content="Ajouter un Catégorie" Grid.Row="3" Width="200" VerticalAlignment="Bottom" Margin="0,0,0,55" Command="{Binding AddCategorieCommand}" />
+    </Grid>
+</UserControl>
