@@ -48,7 +48,7 @@ namespace CineQuebec.Windows.ViewModel
         private readonly IFilmService _filmService;
 
 
-        public FormulaireFilmViewModel(IFilmService filmService, Film film = null, IEventAggregator eventAggregator)
+        public FormulaireFilmViewModel(IFilmService filmService, IEventAggregator eventAggregator,Film film = null)
         {
             _filmService = filmService;
             Film = new(film);

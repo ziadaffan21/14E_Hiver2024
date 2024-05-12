@@ -6,6 +6,7 @@ using CineQuebec.Windows.DAL.Utils;
 using CineQuebec.Windows.Exceptions;
 using CineQuebec.Windows.Ressources.i18n;
 using CineQuebec.Windows.ViewModel;
+using Prism.Events;
 using System.Text;
 using System.Windows;
 
@@ -21,10 +22,10 @@ namespace CineQuebec.Windows.View
 
         private readonly FormulaireFilmViewModel _viewModel;
 
-        public DetailFilm(IFilmService filmService, Film film = null)
+        public DetailFilm(IFilmService filmService,IEventAggregator eventAggregator, Film film = null)
         {
             InitializeComponent();
-            _viewModel = new FormulaireFilmViewModel(filmService, film);
+            _viewModel = new FormulaireFilmViewModel(filmService,eventAggregator, film);
             DataContext = _viewModel;
             Etat = film is null? Etat.Ajouter:Etat.Modifier;
         }

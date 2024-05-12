@@ -4,6 +4,7 @@ using CineQuebec.Windows.DAL.ServicesInterfaces;
 using CineQuebec.Windows.Exceptions;
 using CineQuebec.Windows.Ressources.i18n;
 using CineQuebec.Windows.ViewModel;
+using Prism.Events;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -19,10 +20,10 @@ namespace CineQuebec.Windows.View
 
         private readonly FormulaireProjectionViewModel _viewModel;
 
-        public AjoutDetailProjection(IProjectionService projectionService, IFilmService filmService)
+        public AjoutDetailProjection(IProjectionService projectionService, IFilmService filmService,IEventAggregator eventAggregator)
         {
             InitializeComponent();
-            _viewModel=new FormulaireProjectionViewModel(projectionService, filmService);
+            _viewModel=new FormulaireProjectionViewModel(projectionService, filmService, eventAggregator);
             DataContext = _viewModel;
             calendrier.DisplayDateStart = DateTime.Now;
         }

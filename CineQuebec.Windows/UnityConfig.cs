@@ -4,6 +4,7 @@ using CineQuebec.Windows.DAL.InterfacesRepositorie;
 using CineQuebec.Windows.DAL.Repositories;
 using CineQuebec.Windows.DAL.Services;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
+using Prism.Events;
 using System.Windows;
 using Unity;
 
@@ -26,6 +27,7 @@ namespace CineQuebec.Windows
             container.RegisterSingleton<IActeurRepository, ActeurRepository>();
             container.RegisterSingleton<IDataBaseUtils, DataBaseUtils>();
             container.RegisterSingleton<IDataBaseSeeder, DataBaseSeeder>();
+            container.RegisterSingleton<IEventAggregator, EventAggregator>();
 
             // Enregistrement du conteneur dans le conteneur lui-même
             container.RegisterInstance<IUnityContainer>(container);
