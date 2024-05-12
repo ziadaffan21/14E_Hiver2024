@@ -1,7 +1,6 @@
 ﻿using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.Exceptions.ProjectionException;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
-using CineQuebec.Windows.ObservableClass;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -14,18 +13,20 @@ using Prism.Commands;
 using CineQuebec.Windows.DAL.Utils;
 using CineQuebec.Windows.DAL.Enums;
 using CineQuebec.Windows.Ressources.i18n;
+using CineQuebec.Windows.DAL.Exceptions.FilmExceptions;
+using CineQuebec.Windows.Exceptions;
+using CineQuebec.Windows.ViewModel.ObservableClass;
+using Prism.Events;
+using CineQuebec.Windows.ViewModel.Event;
 
 namespace CineQuebec.Windows.ViewModel
 {
     public class FormulaireFilmViewModel : PropertyNotifier
     {
         private OberservableFilm _film;
-
+        private IEventAggregator _eventAggregator;
         private string[] _descriptions;
         public ICommand SaveCommand { get; init; }
-
-
-
         public OberservableFilm Film
         {
             get { return _film; }
@@ -47,19 +48,33 @@ namespace CineQuebec.Windows.ViewModel
         private readonly IFilmService _filmService;
 
 
-        public FormulaireFilmViewModel(IFilmService filmService, Film film = null)
+        public FormulaireFilmViewModel(IFilmService filmService, Film film = null, IEventAggregator eventAggregator)
         {
             _filmService = filmService;
             Film = new(film);
+            _eventAggregator = eventAggregator;
             Film.PropertyChanged += ReEvaluateButtonState;
             Descriptions = UtilEnum.GetAllDescriptions<Categories>();
-            SaveCommand = film is null?new DelegateCommand(Ajout, CanSave):new DelegateCommand(Save,CanSave);
+            SaveCommand = film is null ? new DelegateCommand(Ajout, CanSave) : new DelegateCommand(Save, CanSave);
         }
 
         private async void Ajout()
         {
-            await _filmService.AjouterFilm(Film.value());
-            MessageBox.Show(Resource.ajoutReussi, Resource.ajout, MessageBoxButton.OK, MessageBoxImage.Information);
+            try
+            {
+                await _filmService.AjouterFilm(Film.value());
+                MessageBox.Show(Resource.ajoutReussi, Resource.ajout, MessageBoxButton.OK, MessageBoxImage.Information);
+                _eventAggregator.GetEvent<AddModifierFilmEvent>().Publish(Film.value());
+
+            }
+            catch (ExistingFilmException ex)
+            {
+                MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (MongoDataConnectionException ex)
+            {
+                MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
         }
 
@@ -70,15 +85,27 @@ namespace CineQuebec.Windows.ViewModel
 
         private bool CanSave()
         {
-            
+
             return Film.IsValid();
 
         }
 
         private async void Save()
         {
-            await _filmService.ModifierFilm(Film.value());
-            MessageBox.Show(Resource.modificationReussi, Resource.modification, MessageBoxButton.OK, MessageBoxImage.Information);
+            try
+            {
+                await _filmService.ModifierFilm(Film.value());
+                MessageBox.Show(Resource.modificationReussi, Resource.modification, MessageBoxButton.OK, MessageBoxImage.Information);
+
+            }
+            catch (ExistingFilmException ex)
+            {
+                MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+            catch (MongoDataConnectionException ex)
+            {
+                MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
 
 
         }
