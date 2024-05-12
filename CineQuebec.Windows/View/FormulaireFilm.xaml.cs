@@ -56,6 +56,7 @@ namespace CineQuebec.Windows.View
                     break;
 
                 default:
+                    DialogResult=false;
                     break;
             }
         }
