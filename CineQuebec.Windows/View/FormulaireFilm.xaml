@@ -31,13 +31,13 @@
                 <!-- Ajout d'une nouvelle ligne pour le champ Durée -->
             </Grid.RowDefinitions>
             <Label Style="{StaticResource MaterialDesignLabel}" Grid.Row="0" Grid.Column="0" Content="Nom" VerticalAlignment="Bottom" Margin="5" />
-            <TextBox x:Name="txtTitre" Grid.Row="0" Grid.Column="1" Width="170" HorizontalAlignment="Left" Margin="5,5,0,5" FontSize="14" />
+            <TextBox x:Name="txtTitre" Grid.Row="0" Text="{Binding Film.Titre, UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" Width="170" HorizontalAlignment="Left" Margin="5,5,0,5" FontSize="14" />
 
             <Label Style="{StaticResource MaterialDesignLabel}" Grid.Row="1" Grid.Column="0" Content="Catégorie" VerticalAlignment="Center" Margin="5" />
-            <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}" x:Name="cboCategories" Grid.Row="1" Grid.Column="1" Width="170" HorizontalAlignment="Left" Margin="5,0,0,0" Cursor="Hand" />
+            <ComboBox Style="{StaticResource MaterialDesignOutlinedComboBox}" ItemsSource="{Binding Descriptions}" SelectedIndex="{Binding Film.IndexCategorie , UpdateSourceTrigger=PropertyChanged}" x:Name="cboCategories" Grid.Row="1" Grid.Column="1" Width="170" HorizontalAlignment="Left" Margin="5,0,0,0" Cursor="Hand" />
 
             <Label Style="{StaticResource MaterialDesignLabel}" Grid.Row="2" Grid.Column="0" Content="Date Sortie" VerticalAlignment="Center" Margin="5" />
-            <DatePicker x:Name="dateSortie" Grid.Row="2" Grid.Column="1" Width="170" HorizontalAlignment="Left" Style="{StaticResource MaterialDesignDatePicker}" RenderTransformOrigin="0.5,0.5" HorizontalContentAlignment="Center" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0">
+            <DatePicker x:Name="dateSortie" SelectedDate="{Binding Film.DateSortie , UpdateSourceTrigger=PropertyChanged}" Grid.Row="2" Grid.Column="1" Width="170" HorizontalAlignment="Left" Style="{StaticResource MaterialDesignDatePicker}" RenderTransformOrigin="0.5,0.5" HorizontalContentAlignment="Center" FontSize="14" VerticalAlignment="Center" Margin="5,0,0,0">
                 <DatePicker.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform />
@@ -50,7 +50,7 @@
 
             <!-- Ajout du champ Durée -->
             <Label Style="{StaticResource MaterialDesignLabel}" Grid.Row="3" Grid.Column="0" Content="Durée" VerticalAlignment="Center" Margin="5" />
-            <TextBox x:Name="txtDuree" Grid.Row="3" Grid.Column="1" Width="170" HorizontalAlignment="Left" Margin="5,5,0,5" FontSize="14" />
+            <TextBox x:Name="txtDuree" Text="{Binding Film.Duree , UpdateSourceTrigger=PropertyChanged}" Grid.Row="3" Grid.Column="1" Width="170" HorizontalAlignment="Left" Margin="5,5,0,5" FontSize="14" />
         </Grid>
 
         <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Orientation="Horizontal">
