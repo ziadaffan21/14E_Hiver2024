@@ -1,7 +1,11 @@
 ﻿using CineQuebec.Windows.DAL.Data;
+using CineQuebec.Windows.DAL.Enums;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
 using CineQuebec.Windows.Exceptions;
 using CineQuebec.Windows.Ressources.i18n;
+using CineQuebec.Windows.ViewModel.Event;
+using Prism.Events;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
@@ -15,11 +19,16 @@ namespace CineQuebec.Windows.View
     {
         private readonly IFilmService _filmService;
         private readonly IProjectionService _projectionService;
+        private readonly IEventAggregator _eventAggregator;
 
-        public ConsultationFilmsProjectionsControl(IFilmService filmService, IProjectionService projectionService)
+        public ConsultationFilmsProjectionsControl(IFilmService filmService, IProjectionService projectionService,IEventAggregator eventAggregator)
         {
             _filmService = filmService;
             _projectionService = projectionService;
+            _eventAggregator = eventAggregator;
+            eventAggregator.GetEvent<AddModifierFilmEvent>().Subscribe(film => { lstFilms.ItemsSource = new List<Film>() { film }; });
+            eventAggregator.GetEvent<AddModifierProjectionEvent>().Subscribe(projection => { lstProjections.ItemsSource = new List<Projection>() { projection }; });
+
             InitializeComponent();
             ChargerFilmProjection();
         }
@@ -51,8 +60,7 @@ namespace CineQuebec.Windows.View
             if (lstFilms.SelectedItem != null)
             {
                 Film film = lstFilms.SelectedItem as Film;
-                DetailFilm detailFilm = new DetailFilm(_filmService, film);
-                detailFilm.Etat = DAL.Enums.Etat.Modifier;
+                DetailFilm detailFilm = new DetailFilm(_filmService,_eventAggregator, film);
 
                 if ((bool)detailFilm.ShowDialog())
                     ChargerFilmProjection();
@@ -75,15 +83,14 @@ namespace CineQuebec.Windows.View
 
         private void btnAjoutFilm_Click(object sender, RoutedEventArgs e)
         {
-            DetailFilm detailFilm = new DetailFilm(_filmService);
-            detailFilm.Etat = DAL.Enums.Etat.Ajouter;
+            DetailFilm detailFilm = new DetailFilm(_filmService,_eventAggregator);
             if ((bool)detailFilm.ShowDialog())
                 ChargerFilmProjection();
         }
 
         private void btnAjoutProjection_Click(object sender, RoutedEventArgs e)
         {
-            AjoutDetailProjection detailProjection = new AjoutDetailProjection(_projectionService, _filmService);
+            AjoutDetailProjection detailProjection = new AjoutDetailProjection(_projectionService, _filmService,_eventAggregator);
             if ((bool)detailProjection.ShowDialog())
                 ChargerFilmProjection();
         }

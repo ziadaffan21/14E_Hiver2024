@@ -35,7 +35,7 @@ namespace CineQuebec.Windows.DAL.Data
             set
             {
                 if (string.IsNullOrWhiteSpace(value)) throw new TitreNullException("Le titre ne peut pas etre vide ou null");
-                if (value.Trim().Length < NB_MIN_CARACTERES_USERNAME || value.Trim().Length > NB_MAX_CARACTERES_USERNAME) throw new TitreLengthException($"Le titre doit etre entre {NB_MIN_CARACTERES_USERNAME} et {NB_MAX_CARACTERES_USERNAME} caractères.");
+               // if (value.Trim().Length < NB_MIN_CARACTERES_USERNAME || value.Trim().Length > NB_MAX_CARACTERES_USERNAME) throw new TitreLengthException($"Le titre doit etre entre {NB_MIN_CARACTERES_USERNAME} et {NB_MAX_CARACTERES_USERNAME} caractères.");
                 _titre = value;
             }
         }
@@ -48,10 +48,10 @@ namespace CineQuebec.Windows.DAL.Data
             get { return _duree; }
             set
             {
-                if (value <= 0)
-                {
-                    throw new ArgumentOutOfRangeException("La durée ne peut pas être négative");
-                }
+                //if (value <= 0)
+                //{
+                //    throw new ArgumentOutOfRangeException("La durée ne peut pas être négative");
+                //}
                 _duree = value;
             }
         }
