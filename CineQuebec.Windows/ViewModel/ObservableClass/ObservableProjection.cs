@@ -8,12 +8,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CineQuebec.Windows.ObservableClass
+namespace CineQuebec.Windows.ViewModel.ObservableClass
 {
-    public class ObservableProjection:PropertyNotifier
+    public class ObservableProjection : PropertyNotifier
     {
-        private Projection _projection=new();
-        
+        private Projection _projection = new();
+
 
         #region PROPRIÉTÉS ET INDEXEURS
 
@@ -22,7 +22,7 @@ namespace CineQuebec.Windows.ObservableClass
             get { return _projection.Date; }
             set
             {
-                if(_projection.Date != value)
+                if (_projection.Date != value)
                 {
                     _projection.Date = value;
                     OnPropertyChanged();
@@ -37,7 +37,7 @@ namespace CineQuebec.Windows.ObservableClass
             {
                 if (_projection.PlaceDisponible != value)
                 {
-                    _projection.PlaceDisponible = value; 
+                    _projection.PlaceDisponible = value;
                     OnPropertyChanged();
                 }
             }
@@ -48,7 +48,7 @@ namespace CineQuebec.Windows.ObservableClass
             get { return _projection.Film; }
             set
             {
-                if(_projection.Film != value)
+                if (_projection.Film != value)
                 {
                     _projection.Film = value;
                     OnPropertyChanged();

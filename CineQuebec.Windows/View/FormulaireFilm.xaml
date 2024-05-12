@@ -54,7 +54,7 @@
         </Grid>
 
         <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" Orientation="Horizontal">
-            <Button x:Name="btnAjouterModifier" Content="Modifier" Width="150" Margin="5" Cursor="Hand" Click="btnAjouterModifier_Click" />
+            <Button x:Name="btnAjouterModifier" Command="{Binding SaveCommand}" Content="Modifier" Width="150" Margin="5" Cursor="Hand" Click="btnAjouterModifier_Click" />
             <Button x:Name="btnAnnuler" Content="Annuler" Width="150" Margin="5" Cursor="Hand" Click="btnAnnuler_Click" />
         </StackPanel>
     </Grid>

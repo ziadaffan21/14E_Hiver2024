@@ -1,9 +1,11 @@
 ﻿using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.Exceptions.ProjectionException;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
-using CineQuebec.Windows.ObservableClass;
 using CineQuebec.Windows.Ressources.i18n;
+using CineQuebec.Windows.ViewModel.Event;
+using CineQuebec.Windows.ViewModel.ObservableClass;
 using Prism.Commands;
+using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -19,6 +21,7 @@ namespace CineQuebec.Windows.ViewModel
     {
         private ObservableProjection _projection;
         private List<Film> _films;
+        private IEventAggregator _eventAggregator;
         public ICommand SaveCommand { get; init; }
 
         public ObservableProjection Projection {
@@ -36,10 +39,11 @@ namespace CineQuebec.Windows.ViewModel
         private readonly IFilmService _filmService;
 
 
-        public FormulaireProjectionViewModel(IProjectionService projectionService, IFilmService filmService)
+        public FormulaireProjectionViewModel(IProjectionService projectionService, IFilmService filmService,IEventAggregator eventAggregator)
         {
             _projectionService = projectionService;
             _filmService = filmService;
+            _eventAggregator = eventAggregator;
             Projection = new();
             Projection.PropertyChanged += ReEvaluateButtonState;
             SaveCommand = new DelegateCommand(Save, CanSave);            
@@ -67,6 +71,7 @@ namespace CineQuebec.Windows.ViewModel
             {
                 _projectionService.AjouterProjection(Projection.value());
                 MessageBox.Show(Resource.ajoutReussiProjection, Resource.ajout, MessageBoxButton.OK, MessageBoxImage.Information);
+                _eventAggregator.GetEvent<AddModifierProjectionEvent>().Publish(Projection.value());
 
             }
             catch (ExistingProjectionException ex)

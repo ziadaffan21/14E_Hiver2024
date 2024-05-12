@@ -16,19 +16,17 @@ namespace CineQuebec.Windows.View
     /// </summary>
     public partial class DetailFilm : Window
     {
-        //private Film _film;
         private Etat Etat;
-        //private readonly IFilmService _filmService;
         private StringBuilder sb = new();
 
         private readonly FormulaireFilmViewModel _viewModel;
 
-        public DetailFilm(Etat etat,IFilmService filmService, Film film = null)
+        public DetailFilm(IFilmService filmService, Film film = null)
         {
             InitializeComponent();
             _viewModel = new FormulaireFilmViewModel(filmService, film);
             DataContext = _viewModel;
-            Etat = etat;
+            Etat = film is null? Etat.Ajouter:Etat.Modifier;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -67,14 +65,6 @@ namespace CineQuebec.Windows.View
                 }
                 else
                     MessageBox.Show(sb.ToString(), Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            catch (ExistingFilmException ex)
-            {
-                MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            catch (MongoDataConnectionException ex)
-            {
-                MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
             }
             catch (Exception)
             {
