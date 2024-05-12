@@ -32,12 +32,12 @@ namespace CineQuebec.Windows.ViewModel.ObservableClass
 
         public int PlaceDisponible
         {
-            get { return _projection.PlaceDisponible; }
+            get { return _projection.NbPlaces; }
             set
             {
-                if (_projection.PlaceDisponible != value)
+                if (_projection.NbPlaces != value)
                 {
-                    _projection.PlaceDisponible = value;
+                    _projection.NbPlaces = value;
                     OnPropertyChanged();
                 }
             }
