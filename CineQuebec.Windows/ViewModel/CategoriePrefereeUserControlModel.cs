@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace CineQuebec.Windows.ViewModel
 {
-    internal class CategoriePrefereeUserControlModel : PropertyNotifier
+    public class CategoriePrefereeUserControlModel : PropertyNotifier
     {
         private IAbonneService _abonneService;
         private Abonne _abonne { get; set; } = new();

@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace CineQuebec.Windows.ViewModel
 {
-    internal class FilmsPrefereeUserControlModel : PropertyNotifier
+    public class FilmsPrefereeUserControlModel : PropertyNotifier
     {
         private IAbonneService _abonneService;
         private IFilmService _filmService;
