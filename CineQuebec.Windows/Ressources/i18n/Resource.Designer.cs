@@ -160,7 +160,7 @@ namespace CineQuebec.Windows.Ressources.i18n {
         }
         
         /// <summary>
-        ///   Recherche une chaîne localisée semblable à Utilisateur :.
+        ///   Recherche une chaîne localisée semblable à Username :.
         /// </summary>
         public static string connexion_username {
             get {
