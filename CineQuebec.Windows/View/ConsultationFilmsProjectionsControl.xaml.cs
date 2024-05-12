@@ -3,6 +3,7 @@ using CineQuebec.Windows.DAL.Enums;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
 using CineQuebec.Windows.Exceptions;
 using CineQuebec.Windows.Ressources.i18n;
+using CineQuebec.Windows.ViewModel;
 using CineQuebec.Windows.ViewModel.Event;
 using Prism.Events;
 using System.Runtime.CompilerServices;
@@ -20,14 +21,16 @@ namespace CineQuebec.Windows.View
         private readonly IFilmService _filmService;
         private readonly IProjectionService _projectionService;
         private readonly IEventAggregator _eventAggregator;
+        private readonly ConsultationFilmsProjectionsModel _viewModel;
 
         public ConsultationFilmsProjectionsControl(IFilmService filmService, IProjectionService projectionService,IEventAggregator eventAggregator)
         {
             _filmService = filmService;
             _projectionService = projectionService;
             _eventAggregator = eventAggregator;
-            eventAggregator.GetEvent<AddModifierFilmEvent>().Subscribe(film => { lstFilms.ItemsSource = new List<Film>() { film }; });
-            eventAggregator.GetEvent<AddModifierProjectionEvent>().Subscribe(projection => { lstProjections.ItemsSource = new List<Projection>() { projection }; });
+            _viewModel = new ConsultationFilmsProjectionsModel(filmService, projectionService, eventAggregator);
+            _eventAggregator = eventAggregator;
+            DataContext = _viewModel;
 
             InitializeComponent();
             ChargerFilmProjection();
