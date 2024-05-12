@@ -2,6 +2,9 @@
 using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
 using CineQuebec.Windows.Ressources.i18n;
+using CineQuebec.Windows.ViewModel;
+using System.Runtime.InteropServices;
+using System.Security;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,34 +17,57 @@ namespace CineQuebec.Windows.View
     /// </summary>
     public partial class ConnexionControl : UserControl
     {
-        private readonly IAbonneService _abonneService;
-        private readonly IDataBaseSeeder _dataBaseSeeder;
+//        public static readonly DependencyProperty SecurePasswordProperty = DependencyProperty.Register(
+//"SecurePassword", typeof(SecureString), typeof(MainWindow), new PropertyMetadata(default(SecureString)));
+        //private readonly IAbonneService _abonneService;
+        //private readonly IDataBaseSeeder _dataBaseSeeder;
+        private readonly ConnexionModelView _viewModel;
         private StringBuilder sb = new();
         public Abonne User { get; set; }
 
+
+
+        //public SecureString SecurePassword
+        //{
+        //    get => (SecureString)GetValue(SecurePasswordProperty);
+        //    set => SetValue(SecurePasswordProperty, value);
+        //}
+
+        private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
+        {
+            //SecurePassword = txtPassword.SecurePassword;
+            //_viewModel.ObservableUsersignInLogIn.Password=SecurePassword.ToString();
+        }
+
+
         public ConnexionControl(IAbonneService abonneService, IDataBaseSeeder dataBaseSeeder)
         {
-            _abonneService = abonneService;
-            _dataBaseSeeder = dataBaseSeeder;
+            //_abonneService = abonneService;
+            _viewModel = new ConnexionModelView(abonneService);
+            DataContext = _viewModel;
+            dataBaseSeeder.Seed();
+            //_dataBaseSeeder = dataBaseSeeder;
             InitializeComponent();
-            _dataBaseSeeder.Seed();
+            //_dataBaseSeeder.Seed();
         }
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e)
         {
-            if (ValiderFomulaire())
+
+            if (!ValiderFomulaire())
             {
-                User = await _abonneService.GetAbonneConnexion(txtUsername.Text.Trim(), txtPassword.Password.ToString());
-                if (User is not null)
-                    ((MainWindow)Application.Current.MainWindow).ConnecterWindow(User);
-                else
-                    MessageBox.Show(Resource.errorConnection, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Information);
-            }
-            else
+                MessageBox.Show(SecurePassword.Length.ToString());
                 MessageBox.Show(sb.ToString(), Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+                //    User = await _abonneService.GetAbonneConnexion(txtUsername.Text.Trim(), txtPassword.Password.ToString());
+                //    if (User is not null)
+                //        ((MainWindow)Application.Current.MainWindow).ConnecterWindow(User);
+                //    else
+                //        MessageBox.Show(Resource.errorConnection, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Information);
+                //}
         }
 
-        private void Button_Creer_Compte(object sender, RoutedEventArgs e)
+            private void Button_Creer_Compte(object sender, RoutedEventArgs e)
         {
             var container = (IUnityContainer)Application.Current.Resources["UnityContainer"];
             var ajoutUser = container.Resolve<AjoutUser>();
