@@ -22,25 +22,25 @@ using System.Windows.Shapes;
 namespace CineQuebec.Windows.View
 {
     /// <summary>
-    /// Logique d'interaction pour UserControlActeursView.xaml
+    /// Logique d'interaction pour UserControlFilmsView.xaml
     /// </summary>
-    public partial class UserControlActeursView : UserControl
+    public partial class FilmsPrefereeUserControl : UserControl
     {
-        private UserControlActeursViewModel _viewModel;
+        private FilmsPrefereeUserControlModel _viewModel;
 
-        public UserControlActeursView(IAbonneService abonneService, IActeurRepository acteurRepository, Abonne abonne = null)
+        public FilmsPrefereeUserControl(IAbonneService abonneService, IFilmService filmService, Abonne abonne = null)
         {
             InitializeComponent();
-            _viewModel = new UserControlActeursViewModel(abonneService, acteurRepository, abonne);
+            _viewModel = new FilmsPrefereeUserControlModel(abonneService, filmService, abonne);
             DataContext = _viewModel;
             Loaded += _viewModel.Loaded;
-            ((UserControlActeursViewModel)this.DataContext).ErrorOccurred += HandleError;
-            this.Unloaded += UserControlActeurs_Unloaded;
+            ((FilmsPrefereeUserControlModel)this.DataContext).ErrorOccurred += HandleError;
+            this.Unloaded += UserControlFilms_Unloaded;
         }
 
-        private void UserControlActeurs_Unloaded(object sender, RoutedEventArgs e)
+        private void UserControlFilms_Unloaded(object sender, RoutedEventArgs e)
         {
-            ((UserControlRealisateursViewModel)this.DataContext).ErrorOccurred -= HandleError;
+            ((FilmsPrefereeUserControlModel)this.DataContext).ErrorOccurred -= HandleError;
         }
 
         private void HandleError(string errorMessage)

@@ -11,7 +11,7 @@ using Unity.Processors;
 
 namespace CineQuebec.Windows.ViewModel
 {
-    internal class UserControlRealisateursViewModel : PropertyNotifier
+    internal class RealisateursPrefereeUserControlModel : PropertyNotifier
     {
         private IAbonneService _abonneService;
         private IRealisateurRepository _realisateurRepository;
@@ -53,7 +53,7 @@ namespace CineQuebec.Windows.ViewModel
             }
         }
 
-        public UserControlRealisateursViewModel(IAbonneService abonneService, IRealisateurRepository realisateurRepository, Abonne abonne = null)
+        public RealisateursPrefereeUserControlModel(IAbonneService abonneService, IRealisateurRepository realisateurRepository, Abonne abonne = null)
         {
             _abonne = abonne;
             _abonneService = abonneService;

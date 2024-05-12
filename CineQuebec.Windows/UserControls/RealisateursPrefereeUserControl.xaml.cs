@@ -22,17 +22,17 @@ namespace CineQuebec.Windows.View
     /// <summary>
     /// Logique d'interaction pour UserControlRealisateurs.xaml
     /// </summary>
-    public partial class UserControlRealisateursView : UserControl
+    public partial class RealisateursPrefereeUserControl : UserControl
     {
-        private UserControlRealisateursViewModel _viewModel;
+        private RealisateursPrefereeUserControlModel _viewModel;
 
-        public UserControlRealisateursView(IAbonneService abonneService, IRealisateurRepository realisateurRepository, Abonne abonne = null)
+        public RealisateursPrefereeUserControl(IAbonneService abonneService, IRealisateurRepository realisateurRepository, Abonne abonne = null)
         {
             InitializeComponent();
-            _viewModel = new UserControlRealisateursViewModel(abonneService, realisateurRepository, abonne);
+            _viewModel = new RealisateursPrefereeUserControlModel(abonneService, realisateurRepository, abonne);
             DataContext = _viewModel;
             Loaded += _viewModel.Loaded;
-            ((UserControlRealisateursViewModel)this.DataContext).ErrorOccurred += HandleError;
+            ((RealisateursPrefereeUserControlModel)this.DataContext).ErrorOccurred += HandleError;
             this.Unloaded += UserControlRealisateurs_Unloaded;
         }
 
@@ -43,7 +43,7 @@ namespace CineQuebec.Windows.View
 
         private void UserControlRealisateurs_Unloaded(object sender, RoutedEventArgs e)
         {
-            ((UserControlRealisateursViewModel)this.DataContext).ErrorOccurred -= HandleError;
+            ((RealisateursPrefereeUserControlModel)this.DataContext).ErrorOccurred -= HandleError;
         }
     }
 }
