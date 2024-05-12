@@ -39,7 +39,7 @@ namespace CineQuebec.Windows.DAL.Data
             get { return _nbPlaces; }
             set
             {
-                if (!int.TryParse(value.ToString(), out _) || value < NB_PLACE_MIN) throw new PlaceDisponibleException($"Le nombre de place doit être plus grand que {NB_PLACE_MIN}");
+                if (!int.TryParse(value.ToString(), out _)) throw new PlaceDisponibleException($"Le nombre de place doit être plus grand que {NB_PLACE_MIN}");
                 _nbPlaces = value;
             }
         }

@@ -29,7 +29,7 @@
             <ColumnDefinition />
             <ColumnDefinition />
         </Grid.ColumnDefinitions>
-        <StackPanel Orientation="Horizontal" Grid.Row="0">
+        <StackPanel Orientation="Horizontal" x:Name="stckFilm" Grid.Row="0">
             <Button x:Name="btnAjoutFilm" Content="Ajouter un film" Width="auto" Height="50" Click="btnAjoutFilm_Click" Margin="0,10,0,10" />
         </StackPanel>
         <StackPanel Grid.Column="1" Orientation="Horizontal">
@@ -37,12 +37,12 @@
         </StackPanel>
 
         <GroupBox Grid.Row="1"  Header="Films" Style="{StaticResource MaterialDesignGroupBox}" Width="400" HorizontalAlignment="Left" Height="250" VerticalAlignment="Top" Margin="5,0,5,0">
-            <ListBox x:Name="lstFilms" HorizontalAlignment="Left" VerticalAlignment="Top"
-                 ItemContainerStyle="{StaticResource MaterialDesignListBoxItem}" Width="385" Height="212" MouseDoubleClick="lstFilm_DoubleClick" SelectionChanged="lstFilms_SelectionChanged" />
+            <ListBox x:Name="lstFilms" HorizontalAlignment="Left" VerticalAlignment="Top" ItemsSource="{Binding Films}"
+                 ItemContainerStyle="{StaticResource MaterialDesignListBoxItem}" Width="385" Height="212" MouseDoubleClick="lstFilm_DoubleClick" SelectionChanged="lstFilms_SelectionChanged"  />
         </GroupBox>
         <GroupBox Grid.Row="1" Grid.Column="1" Name="gpoProjections"  Header="Projections" Style="{StaticResource MaterialDesignGroupBox}" Width="400" HorizontalAlignment="Left" Height="250" VerticalAlignment="Top" Margin="5,0,5,0">
-            <ListBox x:Name="lstProjections" HorizontalAlignment="Left" VerticalAlignment="Top"
-          ItemContainerStyle="{StaticResource MaterialDesignListBoxItem}" Width="385" Height="212" MouseDoubleClick="lstFilm_DoubleClick" />
+            <ListBox x:Name="lstProjections" ItemsSource="{Binding Projections}" HorizontalAlignment="Left" VerticalAlignment="Top"
+          ItemContainerStyle="{StaticResource MaterialDesignListBoxItem}" Width="385" Height="212" />
         </GroupBox>
     </Grid>
 </UserControl>

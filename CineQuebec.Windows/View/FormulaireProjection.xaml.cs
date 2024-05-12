@@ -3,6 +3,8 @@ using CineQuebec.Windows.DAL.Exceptions.ProjectionException;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
 using CineQuebec.Windows.Exceptions;
 using CineQuebec.Windows.Ressources.i18n;
+using CineQuebec.Windows.ViewModel;
+using Prism.Events;
 using System.Text;
 using System.Windows;
 using System.Windows.Controls;
@@ -14,51 +16,27 @@ namespace CineQuebec.Windows.View
     /// </summary>
     public partial class AjoutDetailProjection : Window
     {
-        private Projection _projection;
         private StringBuilder sb = new();
 
-        private readonly IProjectionService _projectionService;
+        private readonly FormulaireProjectionViewModel _viewModel;
 
-        private readonly IFilmService _filmService;
-
-        public AjoutDetailProjection(IProjectionService projectionService, IFilmService filmService)
+        public AjoutDetailProjection(IProjectionService projectionService, IFilmService filmService,IEventAggregator eventAggregator)
         {
             InitializeComponent();
-            _projection = new Projection();
-            _projectionService = projectionService;
-            _filmService = filmService;
-            DataContext = _projection;
+            _viewModel=new FormulaireProjectionViewModel(projectionService, filmService, eventAggregator);
+            DataContext = _viewModel;
             calendrier.DisplayDateStart = DateTime.Now;
         }
 
-        private async void btnCreer_Click(object sender, RoutedEventArgs e)
+        private void btnCreer_Click(object sender, RoutedEventArgs e)
         {
-            try
+            if (ValiderForm())
             {
-                if (ValiderForm())
-                {
-                    DateTime formatedTime = GetDateAndTime(_projection.Date, (DateTime)horloge.SelectedTime);
-                    Projection projection = new Projection(formatedTime, int.Parse(txtPlace.Text), cboFilm.SelectedItem as Film);
-                    await _projectionService.AjouterProjection(projection);
-                    MessageBox.Show(Resource.ajoutReussiProjection, Resource.ajout, MessageBoxButton.OK, MessageBoxImage.Information);
-                    DialogResult = true;
-                }
-                else
-                {
-                    MessageBox.Show(sb.ToString(), Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
-                }
+                DialogResult = true;
             }
-            catch (ExistingProjectionException ex)
+            else
             {
-                MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            catch (MongoDataConnectionException ex)
-            {
-                MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            catch (Exception)
-            {
-                MessageBox.Show(Resource.erreurGenerique, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show(sb.ToString(), Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
@@ -70,6 +48,8 @@ namespace CineQuebec.Windows.View
 
         private void btnAnnuler_Click(object sender, RoutedEventArgs e)
         {
+            MessageBox.Show(_viewModel.Projection.PlaceDisponible.ToString());
+            MessageBox.Show(_viewModel.Projection.Date.ToString());
             DialogResult = false;
         }
 
@@ -79,8 +59,8 @@ namespace CineQuebec.Windows.View
 
             if (calendrier.SelectedDate is null || calendrier.SelectedDate < DateTime.Today)
                 sb.AppendLine($"La date sélectionnée doit être plus grande ou égale à {DateTime.Today}.");
-            if (horloge.SelectedTime is null)
-                sb.AppendLine($"Il faut sélectionner une heure pour la projection.");
+            //if (horloge.SelectedTime is null)
+            //    sb.AppendLine($"Il faut sélectionner une heure pour la projection.");
             if (cboFilm.SelectedIndex == -1)
                 sb.AppendLine($"Vous devez assigner un film");
             if (string.IsNullOrWhiteSpace(txtPlace.Text) || int.Parse(txtPlace.Text) < Projection.NB_PLACE_MIN)
@@ -97,23 +77,10 @@ namespace CineQuebec.Windows.View
             InitialiserFormulaireAjout();
         }
 
-        private async void InitialiserFormulaireAjout()
+        private void InitialiserFormulaireAjout()
         {
-            cboFilm.ItemsSource = await _filmService.GetAllFilms();
             cboFilm.Focus();
             txtPlace.Focus();
-        }
-
-        private void cboFilm_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (cboFilm.SelectedIndex != -1)
-            {
-                Film film = cboFilm.SelectedItem as Film;
-                if (film != null)
-                {
-                    _projection.Film = film;
-                }
-            }
         }
 
         private void horloge_ContextMenuClosing(object sender, ContextMenuEventArgs e)

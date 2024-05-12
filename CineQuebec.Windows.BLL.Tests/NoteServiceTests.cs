@@ -17,6 +17,7 @@ namespace CineQuebec.Windows.BLL.Tests
                 new Note(new MongoDB.Bson.ObjectId(),new MongoDB.Bson.ObjectId(),4)
             };
         }
+
         [Fact]
         public async Task GetAll_Should_Return_all_Notes()
         {

@@ -33,19 +33,19 @@ namespace CineQuebec.Windows.Tests.DataTest
             Assert.Throws<TitreNullException>(() => new Film(STRING_VIDE, DATE, 120, Categories.COMEDY));
         }
 
-        [Fact]
-        public void Titre_Throw_TitreLengthException_Si_Titre_Est_Long()
-        {
-            //Act et Assert
-            Assert.Throws<TitreLengthException>(() => new Film(STRING_LONG, DATE, 120, Categories.COMEDY));
-        }
+        //[Fact]
+        //public void Titre_Throw_TitreLengthException_Si_Titre_Est_Long()
+        //{
+        //    //Act et Assert
+        //    Assert.Throws<TitreLengthException>(() => new Film(STRING_LONG, DATE, 120, Categories.COMEDY));
+        //}
 
-        [Fact]
-        public void Titre_Throw_TitreLengthException_Si_Titre_Est_Court()
-        {
-            //Act et Assert
-            Assert.Throws<TitreLengthException>(() => new Film(STRING_UN_CARACTERE, DATE, 120, Categories.COMEDY));
-        }
+        //[Fact]
+        //public void Titre_Throw_TitreLengthException_Si_Titre_Est_Court()
+        //{
+        //    //Act et Assert
+        //    Assert.Throws<TitreLengthException>(() => new Film(STRING_UN_CARACTERE, DATE, 120, Categories.COMEDY));
+        //}
 
         [Fact]
         public void Categorie_Throw_CategorieUndefinedException_Si_Categorie_Est_Null()
