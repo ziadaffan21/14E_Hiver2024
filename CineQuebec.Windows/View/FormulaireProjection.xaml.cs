@@ -15,23 +15,14 @@ namespace CineQuebec.Windows.View
     /// </summary>
     public partial class AjoutDetailProjection : Window
     {
-        private Projection _projection;
         private StringBuilder sb = new();
 
         private readonly FormulaireProjectionViewModel _viewModel;
-
-        private readonly IProjectionService _projectionService;
-
-        private readonly IFilmService _filmService;
 
         public AjoutDetailProjection(IProjectionService projectionService, IFilmService filmService)
         {
             InitializeComponent();
             _viewModel=new FormulaireProjectionViewModel(projectionService, filmService);
-            //_projection = new Projection();
-            //_projectionService = projectionService;
-            //_filmService = filmService;
-            // DataContext = _projection;
             DataContext = _viewModel;
             calendrier.DisplayDateStart = DateTime.Now;
         }
@@ -87,7 +78,6 @@ namespace CineQuebec.Windows.View
 
         private void InitialiserFormulaireAjout()
         {
-           // cboFilm.ItemsSource = await _filmService.GetAllFilms();
             cboFilm.Focus();
             txtPlace.Focus();
         }
