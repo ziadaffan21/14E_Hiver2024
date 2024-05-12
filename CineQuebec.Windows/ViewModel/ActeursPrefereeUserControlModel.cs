@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace CineQuebec.Windows.ViewModel
 {
-    internal class ActeursPrefereeUserControlModel : PropertyNotifier
+    public class ActeursPrefereeUserControlModel : PropertyNotifier
     {
         private IAbonneService _abonneService;
         private IActeurRepository _acteurRepository;
