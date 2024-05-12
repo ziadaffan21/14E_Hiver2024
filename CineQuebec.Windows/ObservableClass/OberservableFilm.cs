@@ -12,9 +12,9 @@ using System.Threading.Tasks;
 
 namespace CineQuebec.Windows.ObservableClass
 {
-    public class OberservableFilm:PropertyNotifier
+    public class OberservableFilm : PropertyNotifier
     {
-        private Film _film = new();
+        private Film _film;
 
 
         #region PROPRIÉTÉS ET INDEXEURS
@@ -24,7 +24,7 @@ namespace CineQuebec.Windows.ObservableClass
             get { return _film.Titre; }
             set
             {
-                if( _film.Titre != value)
+                if (_film.Titre != value)
                 {
                     _film.Titre = value;
                     OnPropertyChanged();
@@ -38,7 +38,7 @@ namespace CineQuebec.Windows.ObservableClass
             get { return _film.Duree; }
             set
             {
-                if(_film.Duree != value)
+                if (_film.Duree != value)
                 {
                     _film.Duree = value; OnPropertyChanged();
                 }
@@ -62,7 +62,7 @@ namespace CineQuebec.Windows.ObservableClass
             get { return _film.Categorie; }
             set
             {
-                if( _film.Categorie != value)
+                if (_film.Categorie != value)
                 {
                     _film.Categorie = value;
                     OnPropertyChanged();
@@ -70,17 +70,37 @@ namespace CineQuebec.Windows.ObservableClass
             }
         }
 
+        private int _indexCategorie;
+
+        public int IndexCategorie
+        {
+            get { return _indexCategorie; }
+            set
+            {
+                if (_indexCategorie != value)
+                {
+                    _indexCategorie = value;
+                    Categorie = value != -1 ?(Categories)value:0;
+                    OnPropertyChanged();
+                }
+            }
+        }
         #endregion PROPRIÉTÉS ET INDEXEURS
 
 
         #region MÉTHODES
+        public OberservableFilm(Film film)
+        {
+            _film = film is null ? new() : film;
+            IndexCategorie=film is null?-1:(int)Categorie;
+        }
 
         internal Film value()
         {
             return _film;
         }
 
-        internal bool isValid()
+        internal bool IsValid()
         {
             return Enum.IsDefined(Categorie) && Duree > 0 && !string.IsNullOrWhiteSpace(Titre);
         }
