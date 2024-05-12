@@ -5,7 +5,10 @@ using CineQuebec.Windows.ViewModel.ObservableClass;
 using Prism.Commands;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Security;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -30,23 +33,46 @@ namespace CineQuebec.Windows.ViewModel
         {
                 _abonneService = abonneService;
             ObservableUsersignInLogIn = new();
+            ObservableUsersignInLogIn.PropertyChanged += ReEvaluateButtonState;
             SaveCommand = new DelegateCommand(LogIn, CanLogIn);
+        }
+
+        private void ReEvaluateButtonState(object sender, PropertyChangedEventArgs e)
+        {
+            ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged(); 
         }
 
         private bool CanLogIn()
         {
-            return true;
+            return ObservableUsersignInLogIn.IsValid();
 
         }
 
         private async void LogIn()
         {
-            //Abonne User = await _abonneService.GetAbonneConnexion(ObservableUsersignInLogIn.Username,ObservableUsersignInLogIn.Password);
-            //if (User is not null)
-            //    ((MainWindow)Application.Current.MainWindow).ConnecterWindow(User);
-            //else
-            //    MessageBox.Show(Resource.errorConnection, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Information);
+            Abonne User = await _abonneService.GetAbonneConnexion(ObservableUsersignInLogIn.Username, ConvertToUnsecureString(ObservableUsersignInLogIn.SecurePassword));
+            if (User is not null)
+                ((MainWindow)Application.Current.MainWindow).ConnecterWindow(User);
+            else
+                MessageBox.Show(Resource.errorConnection, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Information);
 
+        }
+
+        private static string ConvertToUnsecureString(SecureString securePassword)
+        {
+            if (securePassword == null)
+                throw new ArgumentNullException(nameof(securePassword));
+
+            IntPtr unmanagedString = IntPtr.Zero;
+            try
+            {
+                unmanagedString = Marshal.SecureStringToGlobalAllocUnicode(securePassword);
+                return Marshal.PtrToStringUni(unmanagedString);
+            }
+            finally
+            {
+                Marshal.ZeroFreeGlobalAllocUnicode(unmanagedString);
+            }
         }
     }
 }

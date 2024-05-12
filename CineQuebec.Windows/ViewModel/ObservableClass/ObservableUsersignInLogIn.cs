@@ -15,11 +15,9 @@ namespace CineQuebec.Windows.ViewModel.ObservableClass
 //"SecurePassword", typeof(SecureString), typeof(MainWindow), new PropertyMetadata(default(SecureString)));
 
         private string _username;
-       // private string _password;
         private SecureString _securePassword;
 
         public string Username { get { return _username; } set { if (_username != value.Trim()) { _username = value.Trim(); OnPropertyChanged(); } } }
-        //public string Password { get { return _password; } set { if (_password != value) { _password = value; OnPropertyChanged(); } } }
 
         public SecureString SecurePassword
         {
@@ -35,23 +33,6 @@ namespace CineQuebec.Windows.ViewModel.ObservableClass
         internal bool IsValid()
         {
             return !string.IsNullOrWhiteSpace(Username) && SecurePassword.Length>0;
-        }
-
-        public static string ConvertToUnsecureString(SecureString securePassword)
-        {
-            if (securePassword == null)
-                throw new ArgumentNullException(nameof(securePassword));
-
-            IntPtr unmanagedString = IntPtr.Zero;
-            try
-            {
-                unmanagedString = Marshal.SecureStringToGlobalAllocUnicode(securePassword);
-                return Marshal.PtrToStringUni(unmanagedString);
-            }
-            finally
-            {
-                Marshal.ZeroFreeGlobalAllocUnicode(unmanagedString);
-            }
         }
     }
 }

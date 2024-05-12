@@ -17,26 +17,18 @@ namespace CineQuebec.Windows.View
     /// </summary>
     public partial class ConnexionControl : UserControl
     {
-//        public static readonly DependencyProperty SecurePasswordProperty = DependencyProperty.Register(
-//"SecurePassword", typeof(SecureString), typeof(MainWindow), new PropertyMetadata(default(SecureString)));
+        //        public static readonly DependencyProperty SecurePasswordProperty = DependencyProperty.Register(
+        //"SecurePassword", typeof(SecureString), typeof(MainWindow), new PropertyMetadata(default(SecureString)));
         //private readonly IAbonneService _abonneService;
         //private readonly IDataBaseSeeder _dataBaseSeeder;
         private readonly ConnexionModelView _viewModel;
         private StringBuilder sb = new();
         public Abonne User { get; set; }
 
-
-
-        //public SecureString SecurePassword
-        //{
-        //    get => (SecureString)GetValue(SecurePasswordProperty);
-        //    set => SetValue(SecurePasswordProperty, value);
-        //}
-
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
             //SecurePassword = txtPassword.SecurePassword;
-            //_viewModel.ObservableUsersignInLogIn.Password=SecurePassword.ToString();
+            _viewModel.ObservableUsersignInLogIn.SecurePassword = txtPassword.SecurePassword;
         }
 
 
@@ -56,18 +48,11 @@ namespace CineQuebec.Windows.View
 
             if (!ValiderFomulaire())
             {
-                MessageBox.Show(SecurePassword.Length.ToString());
                 MessageBox.Show(sb.ToString(), Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
             }
-                //    User = await _abonneService.GetAbonneConnexion(txtUsername.Text.Trim(), txtPassword.Password.ToString());
-                //    if (User is not null)
-                //        ((MainWindow)Application.Current.MainWindow).ConnecterWindow(User);
-                //    else
-                //        MessageBox.Show(Resource.errorConnection, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Information);
-                //}
         }
 
-            private void Button_Creer_Compte(object sender, RoutedEventArgs e)
+        private void Button_Creer_Compte(object sender, RoutedEventArgs e)
         {
             var container = (IUnityContainer)Application.Current.Resources["UnityContainer"];
             var ajoutUser = container.Resolve<AjoutUser>();
@@ -80,7 +65,7 @@ namespace CineQuebec.Windows.View
 
             if (string.IsNullOrWhiteSpace(txtUsername.Text.Trim()))
                 sb.AppendLine("Le champs username ne peut pas etre vide.");
-            if (string.IsNullOrWhiteSpace(txtPassword.Password.ToString()))
+            if (string.IsNullOrEmpty(txtPassword.Password))
                 sb.AppendLine("Le champs mot de passe ne peut pas etre vide.");
 
             if (sb.Length > 0)
