@@ -1,5 +1,6 @@
 ﻿using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
+using CineQuebec.Windows.DAL.Utils;
 using CineQuebec.Windows.Ressources.i18n;
 using CineQuebec.Windows.ViewModel.ObservableClass;
 using Prism.Commands;
@@ -44,35 +45,18 @@ namespace CineQuebec.Windows.ViewModel
 
         private bool CanLogIn()
         {
-            return ObservableUsersignInLogIn.IsValid();
+            return ObservableUsersignInLogIn.IsValidConnexion();
 
         }
 
         private async void LogIn()
         {
-            Abonne User = await _abonneService.GetAbonneConnexion(ObservableUsersignInLogIn.Username, ConvertToUnsecureString(ObservableUsersignInLogIn.SecurePassword));
+            Abonne User = await _abonneService.GetAbonneConnexion(ObservableUsersignInLogIn.Username, Utils.ConvertToUnsecureString(ObservableUsersignInLogIn.SecurePassword));
             if (User is not null)
                 ((MainWindow)Application.Current.MainWindow).ConnecterWindow(User);
             else
                 MessageBox.Show(Resource.errorConnection, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Information);
 
-        }
-
-        private static string ConvertToUnsecureString(SecureString securePassword)
-        {
-            if (securePassword == null)
-                throw new ArgumentNullException(nameof(securePassword));
-
-            IntPtr unmanagedString = IntPtr.Zero;
-            try
-            {
-                unmanagedString = Marshal.SecureStringToGlobalAllocUnicode(securePassword);
-                return Marshal.PtrToStringUni(unmanagedString);
-            }
-            finally
-            {
-                Marshal.ZeroFreeGlobalAllocUnicode(unmanagedString);
-            }
         }
     }
 }

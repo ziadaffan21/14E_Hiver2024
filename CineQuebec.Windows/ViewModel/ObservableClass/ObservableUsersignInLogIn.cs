@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CineQuebec.Windows.DAL.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -11,8 +12,6 @@ namespace CineQuebec.Windows.ViewModel.ObservableClass
 {
     public class ObservableUsersignInLogIn:PropertyNotifier
     {
-//        public static readonly DependencyProperty SecurePasswordProperty = DependencyProperty.Register(
-//"SecurePassword", typeof(SecureString), typeof(MainWindow), new PropertyMetadata(default(SecureString)));
 
         private string _username;
         private SecureString _securePassword;
@@ -30,9 +29,16 @@ namespace CineQuebec.Windows.ViewModel.ObservableClass
             SecurePassword = new();
         }
 
-        internal bool IsValid()
+        internal bool IsValidConnexion()
         {
             return !string.IsNullOrWhiteSpace(Username) && SecurePassword.Length>0;
+        }
+
+        internal bool IsValidInscription()
+        {
+            return !string.IsNullOrWhiteSpace(Username) && Username.Length>Abonne.NB_MIN_CARACTERES_USERNAME &&
+                Username.Length<Abonne.NB_MAX_CARACTERES_PASSWORD && SecurePassword.Length > Abonne.NB_MIN_CARACTERES_PASSWORD
+                && SecurePassword.Length<Abonne.NB_MAX_CARACTERES_PASSWORD;
         }
     }
 }

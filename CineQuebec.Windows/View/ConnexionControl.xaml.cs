@@ -17,17 +17,12 @@ namespace CineQuebec.Windows.View
     /// </summary>
     public partial class ConnexionControl : UserControl
     {
-        //        public static readonly DependencyProperty SecurePasswordProperty = DependencyProperty.Register(
-        //"SecurePassword", typeof(SecureString), typeof(MainWindow), new PropertyMetadata(default(SecureString)));
-        //private readonly IAbonneService _abonneService;
-        //private readonly IDataBaseSeeder _dataBaseSeeder;
         private readonly ConnexionModelView _viewModel;
         private StringBuilder sb = new();
         public Abonne User { get; set; }
 
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
-            //SecurePassword = txtPassword.SecurePassword;
             _viewModel.ObservableUsersignInLogIn.SecurePassword = txtPassword.SecurePassword;
         }
 
