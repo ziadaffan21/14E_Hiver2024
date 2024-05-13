@@ -1,10 +1,11 @@
 ﻿using CineQuebec.Windows.DAL.Enums;
 using CineQuebec.Windows.Exceptions.AbonneExceptions.DateAdhesion;
 using CineQuebec.Windows.Exceptions.AbonneExceptions.Username;
+using System.Globalization;
 
 namespace CineQuebec.Windows.DAL.Data
 {
-    public class Abonne : Entity
+    public class Abonne : Entity,IComparable
     {
         #region CONSTANTES
 
@@ -82,6 +83,16 @@ namespace CineQuebec.Windows.DAL.Data
         public override string ToString()
         {
             return $"{Username}";
+        }
+
+        public int CompareTo(object obj)
+        {
+            if (obj is null)
+                return 1;
+            if (!(obj is Abonne))
+                throw new ArgumentException("L'object doit être un abonnée", "obj");
+            Abonne autreAbonne = obj as Abonne;
+            return ToString().CompareTo(autreAbonne.ToString());
         }
 
         #endregion MÉTHODES

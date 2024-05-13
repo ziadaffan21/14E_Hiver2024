@@ -19,7 +19,9 @@ namespace CineQuebec.Windows.DAL.Services
 
         public List<Abonne> GetAllAbonnes()
         {
-            return _abonneRepository.ReadAbonnes();
+            List<Abonne> abonnes= _abonneRepository.ReadAbonnes();
+            abonnes.Sort();
+            return abonnes;
         }
 
         public async Task<bool> Add(Abonne abonne)

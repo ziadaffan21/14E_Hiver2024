@@ -1,7 +1,7 @@
 ﻿using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.Exceptions.AbonneExceptions.Username;
 
-namespace CineQuebec.Windows.Tests.DataTest
+namespace CineQuebec.Windows.DAL.Tests.DataTest
 {
     public class AbonneTests
     {

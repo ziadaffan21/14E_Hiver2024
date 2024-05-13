@@ -6,7 +6,7 @@ using MongoDB.Bson;
 
 namespace CineQuebec.Windows.DAL.Data
 {
-    public class Film : Entity
+    public class Film : Entity, IComparable
     {
         #region CONSTANTES
 
@@ -159,6 +159,17 @@ namespace CineQuebec.Windows.DAL.Data
         {
             return Id.GetHashCode();
         }
+
+        public int CompareTo(object obj)
+        {
+            if (obj is null)
+                return 1;
+            if (!(obj is Film))
+                throw new ArgumentException("L'object doit être un film", "obj");
+            Film autreFilm = obj as Film;
+            return ToString().CompareTo(autreFilm.ToString());
+        }
+
 
         #endregion MÉTHODES
     }
