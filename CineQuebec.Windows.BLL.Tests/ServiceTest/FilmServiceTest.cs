@@ -5,7 +5,7 @@ using CineQuebec.Windows.DAL.InterfacesRepositorie;
 using CineQuebec.Windows.DAL.Services;
 using Moq;
 
-namespace CineQuebec.Windows.Tests.ServiceTest
+namespace CineQuebec.Windows.BLL.Tests.ServiceTest
 {
     public class FilmServiceTest
     {

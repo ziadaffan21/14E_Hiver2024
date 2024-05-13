@@ -2,7 +2,7 @@
 using CineQuebec.Windows.DAL.InterfacesRepositorie;
 using Moq;
 
-namespace CineQuebec.Windows.Tests.RepositoryTest
+namespace CineQuebec.Windows.DAL.Tests.RepositoryTest
 {
     public class ProjectionRepositoryTest
     {

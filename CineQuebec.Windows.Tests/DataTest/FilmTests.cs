@@ -3,7 +3,7 @@ using CineQuebec.Windows.DAL.Enums;
 using CineQuebec.Windows.Exceptions.FilmExceptions.CategorieExceptions;
 using CineQuebec.Windows.Exceptions.FilmExceptions.TitreExceptions;
 
-namespace CineQuebec.Windows.Tests.DataTest
+namespace CineQuebec.Windows.DAL.Tests.DataTest
 {
     public class FilmTests
     {
