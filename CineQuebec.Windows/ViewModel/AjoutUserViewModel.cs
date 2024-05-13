@@ -26,6 +26,7 @@ namespace CineQuebec.Windows.ViewModel
         private IAbonneService _abonneService;
         public ICommand SaveCommand { get; init; }
         public event Action<string> ErrorOccurred;
+        public event Action<bool> ReussiteOuEchec;
 
 
 
@@ -59,16 +60,8 @@ namespace CineQuebec.Windows.ViewModel
                 _abonne.Password = PasswodHasher.HashPassword(password, _abonne.Salt);
 
 
-                bool result = await _abonneService.Add(_abonne);
+                ReussiteOuEchec.Invoke(await _abonneService.Add(_abonne));
 
-                if (result)
-                {
-                    ErrorOccurred?.Invoke(Resource.ajoutUser);
-                }
-                else
-                {
-                    ErrorOccurred?.Invoke(Resource.errorAjoutUser);
-                }
             }
             catch (Exception ex)
             {

@@ -22,7 +22,9 @@ namespace CineQuebec.Windows.ViewModel
     {
         private ObservableUsersignInLogIn _observableUsersSignInLogIn;
         private IAbonneService _abonneService;
-        public event Action<string> ErrorOccurred;
+        public event Action<string> ErrorOccured;
+        public event Action<bool> ConnexionErreur;
+        public Abonne User { get; set; }
 
         public ICommand SaveCommand { get; init; }
 
@@ -58,16 +60,13 @@ namespace CineQuebec.Windows.ViewModel
             {
                 string password = Utils.ConvertToUnsecureString(ObservableUsersignInLogIn.SecurePassword);
                 ValiderFomulaire(ObservableUsersignInLogIn.Username, password);
-                Abonne User = await _abonneService.GetAbonneConnexion(ObservableUsersignInLogIn.Username, password);
-                if (User is not null)
-                    ((MainWindow)Application.Current.MainWindow).ConnecterWindow(User);
-                else
-                    ErrorOccurred.Invoke(Resource.errorConnection);
+                User = await _abonneService.GetAbonneConnexion(ObservableUsersignInLogIn.Username, password);
+                ConnexionErreur.Invoke(User is not null);
 
             }
             catch (Exception ex)
             {
-                ErrorOccurred?.Invoke(ex.Message);
+                ErrorOccured?.Invoke(ex.Message);
             }
             
         }
