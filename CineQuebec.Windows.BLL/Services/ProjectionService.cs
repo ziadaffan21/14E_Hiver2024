@@ -27,7 +27,9 @@ namespace CineQuebec.Windows.DAL.Services
 
         public List<Projection> GetAllProjections()
         {
-            return _projectionRepository.ReadProjections();
+            List<Projection> projections= _projectionRepository.ReadProjections();
+            projections.Sort();
+            return projections;
         }
 
         public async Task<List<Projection>> GetProjectionsById(ObjectId idFilm)

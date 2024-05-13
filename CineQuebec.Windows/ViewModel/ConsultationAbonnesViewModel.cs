@@ -30,6 +30,7 @@ namespace CineQuebec.Windows.ViewModel
             {
                 Abonnes.Add(abonne);
             }
+            
 
         }
     }
