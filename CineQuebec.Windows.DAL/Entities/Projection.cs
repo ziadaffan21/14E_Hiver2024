@@ -4,7 +4,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace CineQuebec.Windows.DAL.Data
 {
-    public class Projection : Entity
+    public class Projection : Entity,IComparable
     {
         #region CONSTANTES
 
@@ -93,6 +93,16 @@ namespace CineQuebec.Windows.DAL.Data
         public bool DejaReserve(ObjectId userId)
         {
             return Reservations.Contains(userId);
+        }
+
+        public int CompareTo(object obj)
+        {
+            if (obj is null)
+                return 1;
+            if (!(obj is Projection))
+                throw new ArgumentException("L'object doit être une projection", "obj");
+            Projection autreAbonne = obj as Projection;
+            return ToString().CompareTo(autreAbonne.ToString());
         }
 
         #endregion MÉTHODES

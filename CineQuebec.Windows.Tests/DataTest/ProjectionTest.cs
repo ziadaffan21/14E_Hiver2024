@@ -1,4 +1,4 @@
-﻿namespace CineQuebec.Windows.Tests.DataTest
+﻿namespace CineQuebec.Windows.DAL.DataTest
 {
     internal class ProjectionTest
     {
