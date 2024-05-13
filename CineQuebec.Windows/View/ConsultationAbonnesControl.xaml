@@ -23,7 +23,7 @@
     <Grid>
         <GroupBox Header="Les abonnés" Style="{StaticResource MaterialDesignCardGroupBox}" Width="450" HorizontalAlignment="Left" Height="250" VerticalAlignment="Top">
             <ListBox x:Name="lstUtilisisateurs" ItemsSource="{Binding Abonnes}" HorizontalAlignment="Left" VerticalAlignment="Top"
-                 ItemContainerStyle="{StaticResource MaterialDesignFilterChipPrimaryListBoxItem}" Width="428" Height="207" />
+                 ItemContainerStyle="{StaticResource MaterialDesignFilterChipPrimaryListBoxItem}" Width="428" Height="207" SelectionChanged="lstUtilisisateurs_SelectionChanged" />
         </GroupBox>
     </Grid>
 </UserControl>
