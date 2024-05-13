@@ -60,23 +60,19 @@ namespace CineQuebec.Windows.ViewModel
 
 
                 bool result = await _abonneService.Add(_abonne);
+
                 if (result)
                 {
                     ErrorOccurred?.Invoke(Resource.ajoutUser);
-                    //MessageBox.Show(Resource.ajoutUser, Resource.ajout, MessageBoxButton.OK, MessageBoxImage.Information);
-                    // DialogResultConverter d=new() = true;
                 }
                 else
                 {
                     ErrorOccurred?.Invoke(Resource.errorAjoutUser);
-                    //MessageBox.Show(Resource.errorAjoutUser, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
-                    //DialogResult = false;
                 }
             }
             catch (Exception ex)
             {
                 ErrorOccurred?.Invoke(ex.Message);
-                //MessageBox.Show(ex.Message, Resource.existingAbonneTitre, MessageBoxButton.OK, MessageBoxImage.Error);
             }
 
         }

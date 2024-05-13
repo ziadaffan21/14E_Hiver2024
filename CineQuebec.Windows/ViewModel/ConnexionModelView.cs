@@ -1,6 +1,7 @@
 ﻿using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
 using CineQuebec.Windows.DAL.Utils;
+using CineQuebec.Windows.Exceptions.AbonneExceptions.Username;
 using CineQuebec.Windows.Ressources.i18n;
 using CineQuebec.Windows.ViewModel.ObservableClass;
 using Prism.Commands;
@@ -21,6 +22,8 @@ namespace CineQuebec.Windows.ViewModel
     {
         private ObservableUsersignInLogIn _observableUsersSignInLogIn;
         private IAbonneService _abonneService;
+        public event Action<string> ErrorOccurred;
+
         public ICommand SaveCommand { get; init; }
 
 
@@ -51,12 +54,31 @@ namespace CineQuebec.Windows.ViewModel
 
         private async void LogIn()
         {
-            Abonne User = await _abonneService.GetAbonneConnexion(ObservableUsersignInLogIn.Username, Utils.ConvertToUnsecureString(ObservableUsersignInLogIn.SecurePassword));
-            if (User is not null)
-                ((MainWindow)Application.Current.MainWindow).ConnecterWindow(User);
-            else
-                MessageBox.Show(Resource.errorConnection, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Information);
+            try
+            {
+                string password = Utils.ConvertToUnsecureString(ObservableUsersignInLogIn.SecurePassword);
+                ValiderFomulaire(ObservableUsersignInLogIn.Username, password);
+                Abonne User = await _abonneService.GetAbonneConnexion(ObservableUsersignInLogIn.Username, password);
+                if (User is not null)
+                    ((MainWindow)Application.Current.MainWindow).ConnecterWindow(User);
+                else
+                    ErrorOccurred.Invoke(Resource.errorConnection);
 
+            }
+            catch (Exception ex)
+            {
+                ErrorOccurred?.Invoke(ex.Message);
+            }
+            
+        }
+
+        private void ValiderFomulaire(string username, string password)
+        {
+
+            if (string.IsNullOrWhiteSpace(username))
+                throw new UsernameLengthException("Le champs username ne peut pas etre vide.");
+            if (string.IsNullOrEmpty(password))
+                throw new ArgumentNullException("Le champs mot de passe ne peut pas etre vide.");
         }
     }
 }
