@@ -27,7 +27,7 @@
         <PasswordBox Width="200"
                      x:Name="txtPassword"
                      Grid.Row="1"
-                     PasswordChar="{Binding ObservableUsersignInLogIn.Password}"
+                     
                      Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" PasswordChanged="PasswordBox_PasswordChanged"/>
 
 
