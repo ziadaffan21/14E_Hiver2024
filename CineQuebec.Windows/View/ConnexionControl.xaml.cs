@@ -19,8 +19,6 @@ namespace CineQuebec.Windows.View
     public partial class ConnexionControl : UserControl
     {
         private readonly ConnexionModelView _viewModel;
-        private StringBuilder sb = new();
-        public Abonne User { get; set; }
 
         private void PasswordBox_PasswordChanged(object sender, RoutedEventArgs e)
         {
@@ -33,19 +31,34 @@ namespace CineQuebec.Windows.View
             _viewModel = new ConnexionModelView(abonneService);
             DataContext = _viewModel;
             dataBaseSeeder.Seed();
-            _viewModel.ErrorOccurred += _viewModel_ErrorOccurred;
+            _viewModel.ErrorOccured += _viewModel_ErrorOccurred;
             Unloaded += ConnexionControl_Unloaded;
+            _viewModel.ConnexionErreur += _viewModel_ConnexionErreur;
             InitializeComponent();
+        }
+
+        private void _viewModel_ConnexionErreur(bool reussite)
+        {
+            if(reussite)
+            {
+                ((MainWindow)Application.Current.MainWindow).ConnecterWindow(_viewModel.User);
+            }
+            else
+            {
+                MessageBox.Show(Resource.errorConnection, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
+
+            }
         }
 
         private void ConnexionControl_Unloaded(object sender, RoutedEventArgs e)
         {
-            _viewModel.ErrorOccurred -= _viewModel_ErrorOccurred;
+            _viewModel.ErrorOccured -= _viewModel_ErrorOccurred;
+            _viewModel.ConnexionErreur-= _viewModel_ConnexionErreur;
         }
 
         private void _viewModel_ErrorOccurred(string information)
         {
-            MessageBox.Show(information, "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show(information, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
         private void Button_Creer_Compte(object sender, RoutedEventArgs e)

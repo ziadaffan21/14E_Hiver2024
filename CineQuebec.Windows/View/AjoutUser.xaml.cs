@@ -5,6 +5,7 @@ using CineQuebec.Windows.Exceptions;
 using CineQuebec.Windows.Exceptions.AbonneExceptions;
 using CineQuebec.Windows.Ressources.i18n;
 using CineQuebec.Windows.ViewModel;
+using Microsoft.VisualBasic;
 using System.Text;
 using System.Windows;
 
@@ -24,17 +25,29 @@ namespace CineQuebec.Windows.View
             _viewModel = new AjoutUserViewModel(abonneService);
             DataContext = _viewModel;
             _viewModel.ErrorOccurred += _viewModel_ErrorOccurred;
+            _viewModel.ReussiteOuEchec += _viewModel_ReussiteOuEchec;
             Unloaded += AjoutUser_Unloaded;
+        }
+
+        private void _viewModel_ReussiteOuEchec(bool reussite)
+        {
+            if (reussite)
+                MessageBox.Show(Resource.ajoutUser, Resource.ajout, MessageBoxButton.OK, MessageBoxImage.Information);
+            else
+                MessageBox.Show(Resource.errorAjoutUser, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
+
+
         }
 
         private void AjoutUser_Unloaded(object sender, RoutedEventArgs e)
         {
             _viewModel.ErrorOccurred -= _viewModel_ErrorOccurred;
+            _viewModel.ReussiteOuEchec -= _viewModel_ReussiteOuEchec;
         }
 
         private void _viewModel_ErrorOccurred(string information)
         {
-            MessageBox.Show(information, "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+            MessageBox.Show(information, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
 
         }
 
