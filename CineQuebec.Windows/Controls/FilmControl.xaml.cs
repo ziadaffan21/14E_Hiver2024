@@ -29,18 +29,24 @@ namespace CineQuebec.Windows.Controls
         }
 
         public static readonly DependencyProperty FilmProperty =
-            DependencyProperty.Register("Title", typeof(Film), typeof(FilmControl));
+            DependencyProperty.Register("Film", typeof(Film), typeof(FilmControl));
 
-
-        public FilmControl(Film film)
-        {
-            InitializeComponent();
-            Img.Source = new BitmapImage(new Uri("https://placehold.co/600x400"));
-        }
         public FilmControl()
         {
             InitializeComponent();
-            Img.Source = new BitmapImage(new Uri("https://placehold.co/600x400"));
+
+            try
+            {
+
+            UriBuilder uriBuilder = new UriBuilder("https://picsum.photos/seed/1/200/300");
+            Img.Source = new BitmapImage(uriBuilder.Uri);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to load image: {ex.Message}");
+            }
+
+
         }
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
@@ -50,7 +56,7 @@ namespace CineQuebec.Windows.Controls
 
         private void OuvrirDetails()
         {
-            FilmDetailsView filmDetailsView = new(Film);
+            FilmDetailsView filmDetailsView = new((Film)DataContext);
             filmDetailsView.Show();
         }
     }

@@ -11,54 +11,54 @@ namespace CineQuebec.Windows.ViewModel
     internal class ReservationViewModel : PropertyNotifier
     {
         private readonly IProjectionService _projectionService;
-        private readonly IFilmService _filmService;
         private string _gpoProjections;
         private string _gpoFilm;
-        private Film _selectedFilm = new();
-        private Film _selectedProjection = new();
-        private ObservableCollection<Film> _films = new ObservableCollection<Film>();
+        private Projection _selectedProjection = new();
+        private Film _film;
 
-        public ObservableCollection<Film> Films
+        public Film Film
         {
-            get { return _films; }
+            get { return _film; }
+            set { _film = value; }
+        }
+
+        public Abonne User { get; set; }
+
+        private ObservableCollection<Projection> _projections;
+        public ObservableCollection<Projection> Projections
+        {
+            get { return _projections; }
             set
             {
-                if (_films != value)
+                if (_projections != value)
                 {
-                    _films = value;
-                    OnPropertyChanged(nameof(Films));
+                    _projections = value;
+                    OnPropertyChanged(nameof(Projections));
                 }
             }
         }
 
 
-        public Abonne User { get; set; }
+        public ICommand SaveCommand { get; init; }
 
-        public ObservableCollection<Projection> Projections { get; set; } = [];
-
-        public ICommand AddReservationCommand { get; init; }
-
-
-
-        public Film SelectedFilm
-        {
-            get => _selectedFilm;
-            set
-            {
-                _selectedFilm = value;
-                OnPropertyChanged(nameof(SelectedFilm));
-            }
-        }
-
-        public Film SelectedProjection
+        public Projection SelectedProjection
         {
             get => _selectedProjection;
             set
             {
-                _selectedFilm = value;
-                OnPropertyChanged(nameof(SelectedFilm));
+                _selectedProjection = value;
+                OnPropertyChanged(nameof(_selectedProjection));
             }
         }
+
+        private Window _window;
+
+        public Window Window
+        {
+            get { return _window; }
+            set { _window = value; }
+        }
+
 
 
         public string GpoFilm
@@ -74,12 +74,13 @@ namespace CineQuebec.Windows.ViewModel
         }
 
 
-        public ReservationViewModel(IProjectionService projectionService, IFilmService filmService, Abonne user)
+        public ReservationViewModel(IProjectionService projectionService, Film film, Abonne user, Window window)
         {
             _projectionService = projectionService;
-            _filmService = filmService;
             User = user;
-            AddReservationCommand = new DelegateCommand(AddReservation);
+            Film = film;
+            SaveCommand = new DelegateCommand(AddReservation, CanAddReservation);
+            Window = window; // Store the window instance for later use
         }
 
         private async void AddReservation()
@@ -87,22 +88,15 @@ namespace CineQuebec.Windows.ViewModel
             try
             {
 
-                MessageBoxResult reponse = MessageBox.Show($"Voulez vous réserver une place pour {SelectedFilm}", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+                MessageBoxResult reponse = MessageBox.Show($"Voulez vous réserver une place pour {SelectedProjection.Date.TimeOfDay}", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
                 if (reponse != MessageBoxResult.Yes)
                 {
                     return;
                 }
-
-                if (SelectedFilm != null)
-                {
-
-                    await _projectionService.AjouterReservation(SelectedProjection.Id, User.Id);
-                    MessageBox.Show("Réservation completée avec succées.", "Réservation");
-                }
-                else
-                {
-                    MessageBox.Show("Veuillez choisir une projection valide");
-                }
+                await _projectionService.AjouterReservation(SelectedProjection.Id, User.Id);
+                MessageBox.Show("Réservation completée avec succées.", "Réservation");
+                Window.DialogResult = true;
+                Window.Close();
             }
             catch (Exception ex)
             {
@@ -110,41 +104,28 @@ namespace CineQuebec.Windows.ViewModel
             }
         }
 
+        private bool CanAddReservation()
+        {
+            return SelectedProjection.Film != null; 
+        }
+
         public void Loaded(object sender, RoutedEventArgs e)
         {
-            ChargerFilms();
+            ChargerProjection();
         }
 
-        private async void ChargerFilms()
-        {
-            var filmsCharge = await _filmService.GetAllFilms();
-
-            //TODO : Mettre les films dans Films
-            Films = new(filmsCharge);
-
-
-            for (int i = 0; i < Films.Count; i++)
-            {
-                var film = Films[i];
-                if (!film.EstAffiche)
-                {
-                    Films.Remove(film);
-                }
-            }
-        }
 
         internal void Unloaded(object sender, RoutedEventArgs e)
         {
 
         }
 
-        internal async void ChargerProjection(object sender, SelectionChangedEventArgs e)
+        internal async void ChargerProjection()
         {
-            var projectionsCharge = await _projectionService.GetProjectionByName(SelectedFilm.Titre);
+            var projectionsCharge = await _projectionService.GetProjectionsById(Film.Id);
 
-            //TODO : Mettre les projections dans Projections
+            //TODO : Mettre les projections à venir uniquement dans Projections
             Projections = new(projectionsCharge);
-
 
             //Filtrage des projections déja réservé
             for (int i = 0; i < Projections.Count; i++)
@@ -158,8 +139,14 @@ namespace CineQuebec.Windows.ViewModel
 
             if (Projections.Count <= 0)
             {
-                GpoProjections = $"Aucune projections pour {SelectedFilm.Titre}";
+                GpoProjections = $"Aucune projections pour {Film.Titre}";
             }
+            
+        }
+
+        internal void ReevaluateButton(object sender, SelectionChangedEventArgs e)
+        {
+            ((DelegateCommand)SaveCommand).RaiseCanExecuteChanged();
         }
     }
 }

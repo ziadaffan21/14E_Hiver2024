@@ -31,7 +31,9 @@
   </ItemGroup>
 
 	<ItemGroup>
-		<Resource Include="Ressources\Images\logoCinema.png" />
+		<Resource Include="Ressources\Images\logoCinema.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
 		<Resource Include="Ressources\Images\logoCinemaWithoutText.png">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Resource>
@@ -59,6 +61,12 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Ressources\images\pfp_holder.jpg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

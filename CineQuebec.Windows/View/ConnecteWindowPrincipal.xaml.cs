@@ -22,7 +22,7 @@ namespace CineQuebec.Windows.View
             {
                 var container = (IUnityContainer)Application.Current.Resources["UnityContainer"];
                 var abonneHomeControl = container.Resolve<AbonneHomeControl>();
-                abonneHomeControl.User = abonne;
+                abonneHomeControl.setUser(abonne);
                 mainContentControl.Content = abonneHomeControl;
             }
         }

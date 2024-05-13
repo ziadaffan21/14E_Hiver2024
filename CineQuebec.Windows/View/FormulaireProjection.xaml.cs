@@ -56,7 +56,7 @@ namespace CineQuebec.Windows.View
         private bool ValiderForm()
         {
             sb.Clear();
-
+           
             if (calendrier.SelectedDate is null || calendrier.SelectedDate < DateTime.Today)
                 sb.AppendLine($"La date sélectionnée doit être plus grande ou égale à {DateTime.Today}.");
             //if (horloge.SelectedTime is null)

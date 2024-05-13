@@ -13,6 +13,8 @@ namespace CineQuebec.Windows.DAL.Data
         public const byte NB_MIN_CARACTERES_USERNAME = 2;
         public const byte NB_MAX_CARACTERES_USERNAME = 100;
         public const byte NB_MIN_DUREE = 30;
+        public const string PLACEHOLDER_DESC = "Commodi animi eius nihil nostrum veritatis eaque eligendi ut. Eius et quia doloribus quasi eaque eos veritatis nobis. Culpa alias ut excepturi. Ut laborum inventore eos. Dolorem commodi quibusdam rerum consequatur.";
+
 
         #endregion CONSTANTES
 
@@ -23,11 +25,21 @@ namespace CineQuebec.Windows.DAL.Data
         private DateTime _dateSortie;
         private int _duree;
         private bool _estAffiche;
+        private Realisateur _realisateur;
 
 
         #endregion ATTRIBUTS
 
         #region PROPRIÉTÉS ET INDEXEURS
+
+
+
+        public Realisateur Realisateur
+        {
+            get { return _realisateur; }
+            set { _realisateur = value; }
+        }
+
 
         public string Titre
         {
@@ -56,6 +68,17 @@ namespace CineQuebec.Windows.DAL.Data
             }
         }
 
+        public string DureeToString 
+        { 
+            get 
+            {
+                int heures = Duree / 60;
+                int minutesRestantes = Duree % 60;
+
+                return $"{heures:0}h {minutesRestantes:00 mins}";
+            } 
+        }
+
         public DateTime DateSortie
         {
             get { return _dateSortie; }
@@ -65,6 +88,8 @@ namespace CineQuebec.Windows.DAL.Data
                 _dateSortie = value;
             }
         }
+        public string Year { get { return $"({DateSortie.Year})"; } }
+        public string DateSortieToString { get { return $"{DateSortie.ToShortDateString()}"; }  }
 
         public Categories Categorie
         {
@@ -83,7 +108,7 @@ namespace CineQuebec.Windows.DAL.Data
             set { _estAffiche = value; }
         }
 
-
+       
 
         #endregion PROPRIÉTÉS ET INDEXEURS
 
@@ -128,14 +153,6 @@ namespace CineQuebec.Windows.DAL.Data
                 return Id.Equals(other.Id);
             }
             return false;
-        }
-
-        public string DureeToString()
-        {
-            int heures = Duree / 60;
-            int minutesRestantes = Duree % 60;
-
-            return $"{heures:00}h {minutesRestantes:00}";
         }
 
         public override int GetHashCode()

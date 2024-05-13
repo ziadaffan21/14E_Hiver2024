@@ -5,7 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" x:Class="CineQuebec.Windows.View.AjoutDetailProjection"
       mc:Ignorable="d"
-      Title="AjoutDetailProjection" Loaded="Window_Loaded" Height="291" Width="456">
+      Title="AjoutDetailProjection" Loaded="Window_Loaded" Height="302" d:DesignWidth="390.028">
 
     <!-- Créer un style de présentation pour l'affichage des execptions personnalisées.  -->
     <Window.Resources>

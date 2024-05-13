@@ -82,7 +82,7 @@ namespace CineQuebec.Windows.DAL.Data
 
         public override string ToString()
         {
-            return $"({Film.Titre}) {Date.Day} {Utils.Utils.GetMoisNom(Date).ToUpper()} {Date.Hour:00}:{Date.Minute:00}";
+            return $"{Date.Day} {Utils.Utils.GetMoisNom(Date)} {Date.Hour}h {Date.Minute:00}";
         }
 
         public bool PlaceDisponible()
