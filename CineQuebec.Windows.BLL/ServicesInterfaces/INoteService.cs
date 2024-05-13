@@ -1,4 +1,5 @@
 ﻿using CineQuebec.Windows.DAL.Entities;
+using MongoDB.Bson;
 
 namespace CineQuebec.Windows.BLL.ServicesInterfaces
 {
@@ -9,5 +10,6 @@ namespace CineQuebec.Windows.BLL.ServicesInterfaces
         Task<List<Note>> GetAll();
         Task<float> GetRatingForFilm();
         Task<Note> Update(Note noteToUpdate);
+        Task<Note> FindById(ObjectId idFilm, ObjectId idAbonne);
     }
 }

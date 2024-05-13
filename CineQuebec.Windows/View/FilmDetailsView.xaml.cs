@@ -1,4 +1,6 @@
-﻿using CineQuebec.Windows.DAL.Data;
+﻿using CineQuebec.Windows.BLL.ServicesInterfaces;
+using CineQuebec.Windows.DAL.Data;
+using CineQuebec.Windows.ViewModel.ObservableClass;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +24,7 @@ namespace CineQuebec.Windows.View
     {
 
         private Film _film;
+        private INoteService _noteService;
 
         public Film Film
         {
@@ -30,10 +33,11 @@ namespace CineQuebec.Windows.View
         }
 
 
-        public FilmDetailsView(Film film)
+        public FilmDetailsView(INoteService noteService, Film film)
         {
             Film = film;
             InitializeComponent();
+            _noteService = noteService;
         }
 
         private void NoteButton_Click(object sender, RoutedEventArgs e)
@@ -43,7 +47,7 @@ namespace CineQuebec.Windows.View
 
         private void OuvrirFormNoter()
         {
-            NoterView noterView = new NoterView(Film);
+            NoterView noterView = new NoterView(_noteService, Film.Id);
             noterView.Show();
         }
     }

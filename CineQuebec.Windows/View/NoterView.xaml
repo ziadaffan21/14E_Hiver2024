@@ -14,10 +14,10 @@
                 <RowDefinition Height="Auto"/>
             </Grid.RowDefinitions>
             <Label Grid.Row="0" Content="Note:" Margin="5"/>
-            <TextBox x:Name="RatingTextBox" Grid.Row="1" Margin="5"/>
+            <TextBox x:Name="RatingTextBox" Grid.Row="1" Margin="5" Text="{Binding Note.NoteValue}"/>
             <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="5">
-                <Button x:Name="ConfirmButton" Content="Confirmer" Margin="0,0,10,0" Click="ConfirmButton_Click"/>
-                <Button x:Name="CancelButton" Content="Annuler" Margin="0,0,10,0" Click="CancelButton_Click"/>
+                <Button x:Name="ConfirmButton" Content="Confirmer" Margin="0,0,10,0" Command="{Binding ConfirmCommand}"/>
+                <Button x:Name="CancelButton" Content="Annuler" Margin="0,0,10,0" Click="CancelButton_Click" />
             </StackPanel>
         </Grid>
     </Grid>

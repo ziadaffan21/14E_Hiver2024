@@ -1,4 +1,8 @@
-﻿using CineQuebec.Windows.DAL.Data;
+﻿using CineQuebec.Windows.BLL.ServicesInterfaces;
+using CineQuebec.Windows.DAL.Data;
+using CineQuebec.Windows.ViewModel;
+using CineQuebec.Windows.ViewModel.ObservableClass;
+using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,32 +24,18 @@ namespace CineQuebec.Windows.View
     /// </summary>
     public partial class NoterView : Window
     {
-        private Film _film;
+        private NoterFilmViewModel _viewModele;
 
-        public Film Film
+        public NoterView(INoteService noteService, ObjectId idFilm)
         {
-            get { return _film; }
-            set { _film = value; }
-        }
-
-
-        public NoterView(Film film)
-        {
-            Film = film;
             InitializeComponent();
+            _viewModele = new NoterFilmViewModel(noteService, idFilm);
+            DataContext = _viewModele;
         }
-
 
         private void CancelButton_Click(object sender, RoutedEventArgs e)
         {
-            Close();
-        }
-
-        private void ConfirmButton_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO : Mettre le code d'envoie et de validation.
-            MessageBox.Show("Merci pour votre évaluation.", "Confirmation d'envoie", MessageBoxButton.OK);
-            Close();
+            this.Close();
         }
     }
 }

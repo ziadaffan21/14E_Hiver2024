@@ -7,7 +7,7 @@ namespace CineQuebec.Windows.BLL.Tests
     {
         Task<Note> Add(Note note);
         Task<bool> Delete(Note note);
-        Task<Note> FindById(ObjectId id);
+        Task<Note> FindById(ObjectId idFilm,ObjectId idAbonne);
         Task<List<Note>> GetAll();
         Task<Note> Update(Note note);
     }

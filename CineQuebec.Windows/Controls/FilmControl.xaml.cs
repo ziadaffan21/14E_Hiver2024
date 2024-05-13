@@ -1,4 +1,5 @@
-﻿using CineQuebec.Windows.DAL.Data;
+﻿using CineQuebec.Windows.BLL.ServicesInterfaces;
+using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.View;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Unity;
 
 namespace CineQuebec.Windows.Controls
 {
@@ -22,24 +24,22 @@ namespace CineQuebec.Windows.Controls
     /// </summary>
     public partial class FilmControl : UserControl
     {
+
         public Film Film
         {
             get { return (Film)GetValue(FilmProperty); }
             set { SetValue(FilmProperty, value); }
         }
+        private readonly INoteService _noteService;
 
         public static readonly DependencyProperty FilmProperty =
             DependencyProperty.Register("Title", typeof(Film), typeof(FilmControl));
 
-
-        public FilmControl(Film film)
-        {
-            InitializeComponent();
-            Img.Source = new BitmapImage(new Uri("https://placehold.co/600x400"));
-        }
         public FilmControl()
         {
             InitializeComponent();
+            var container = (IUnityContainer)Application.Current.Resources["UnityContainer"];
+            _noteService = container.Resolve<INoteService>();
             Img.Source = new BitmapImage(new Uri("https://placehold.co/600x400"));
         }
 
@@ -50,7 +50,7 @@ namespace CineQuebec.Windows.Controls
 
         private void OuvrirDetails()
         {
-            FilmDetailsView filmDetailsView = new(Film);
+            FilmDetailsView filmDetailsView = new(_noteService, DataContext as Film) ;
             filmDetailsView.Show();
         }
     }

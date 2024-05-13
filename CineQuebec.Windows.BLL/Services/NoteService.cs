@@ -48,13 +48,9 @@ namespace CineQuebec.Windows.BLL.Tests
             return averageRating;
         }
 
-        public async Task<Note> FindById(ObjectId id)
+        public async Task<Note> FindById(ObjectId idFilm, ObjectId idAbonne)
         {
-            var foundedNote = await _noteRepository.FindById(id);
-
-            if (foundedNote is null)
-                throw new CouldNotFoundNoteException($"Nous n'avons pas pu trouver la note de l'id {id}");
-
+            var foundedNote = await _noteRepository.FindById(idFilm, idAbonne);
             return foundedNote;
         }
     }

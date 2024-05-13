@@ -65,9 +65,14 @@ namespace CineQuebec.Windows.BLL.Tests
             return null;
         }
 
-        public async Task<Note> FindById(ObjectId id)
+        public async Task<Note> FindById(ObjectId idFilm, ObjectId idAbonne)
         {
-            return await collection.Find(Builders<Note>.Filter.Eq(n => n.Id, id)).FirstOrDefaultAsync();
+            var filter = Builders<Note>.Filter.And(
+                   Builders<Note>.Filter.Eq(n => n.FilmId, idFilm),
+                   Builders<Note>.Filter.Eq(n => n.AbonneId, idAbonne)
+               );
+
+            return await collection.Find(filter).FirstOrDefaultAsync();
         }
     }
 }
