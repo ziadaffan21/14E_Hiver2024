@@ -10,5 +10,6 @@ namespace CineQuebec.Windows.BLL.Tests
         Task<Note> FindById(ObjectId idFilm,ObjectId idAbonne);
         Task<List<Note>> GetAll();
         Task<Note> Update(Note note);
+        Task<List<Note>> GetNotesForFilm(ObjectId filmId);
     }
 }

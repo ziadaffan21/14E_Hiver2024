@@ -8,6 +8,13 @@ namespace CineQuebec.Windows.ViewModel.ObservableClass
     {
         private Note _note;
         private ObjectId _idFilm;
+        private ObjectId _id;
+
+        public ObjectId Id
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
 
         public ObjectId IdFilm
         {
@@ -51,6 +58,7 @@ namespace CineQuebec.Windows.ViewModel.ObservableClass
         }
         internal Note Value()
         {
+            _note.Id = Id;
             _note.FilmId = IdFilm;
             _note.AbonneId = IdAbonne;
             _note.NoteValue = NoteValue;

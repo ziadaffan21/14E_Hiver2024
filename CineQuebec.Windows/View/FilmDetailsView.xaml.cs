@@ -1,5 +1,6 @@
 ﻿using CineQuebec.Windows.BLL.ServicesInterfaces;
 using CineQuebec.Windows.DAL.Data;
+using CineQuebec.Windows.ViewModel;
 using CineQuebec.Windows.ViewModel.ObservableClass;
 using System;
 using System.Collections.Generic;
@@ -22,33 +23,32 @@ namespace CineQuebec.Windows.View
     /// </summary>
     public partial class FilmDetailsView : Window
     {
-
+        private readonly FilmDetailsViewModel _viewModel;
         private Film _film;
         private INoteService _noteService;
 
-        public Film Film
-        {
-            get { return _film; }
-            set { _film = value; }
-        }
 
 
         public FilmDetailsView(INoteService noteService, Film film)
         {
-            Film = film;
             InitializeComponent();
+            _film = film;
             _noteService = noteService;
+            _viewModel = new FilmDetailsViewModel(noteService, film);
+            DataContext = _viewModel;
+            Loaded += _viewModel.OnLoad;
+            ((FilmDetailsViewModel)this.DataContext).SuccessMessage += HandleSuccess;
+            this.Unloaded += FilmDetailsViewModel_Unloaded;
         }
 
-        private void NoteButton_Click(object sender, RoutedEventArgs e)
+        private void FilmDetailsViewModel_Unloaded(object sender, RoutedEventArgs e)
         {
-            OuvrirFormNoter();
+            ((FilmDetailsViewModel)this.DataContext).SuccessMessage -= HandleSuccess;
         }
 
-        private void OuvrirFormNoter()
+        private void HandleSuccess(string successMessage)
         {
-            NoterView noterView = new NoterView(_noteService, Film.Id);
-            noterView.Show();
+            MessageBox.Show(successMessage, "Success", MessageBoxButton.OK, MessageBoxImage.Information);
         }
     }
 }

@@ -34,9 +34,9 @@ namespace CineQuebec.Windows.BLL.Tests
             return await _noteRepository.Delete(noteToDelete);
         }
 
-        public async Task<float> GetRatingForFilm()
+        public async Task<float> GetRatingForFilm(ObjectId idFilm)
         {
-            var notes = await GetAll();
+            var notes = await _noteRepository.GetNotesForFilm(idFilm);
             if (notes == null || !notes.Any())
             {
                 return 0;
@@ -45,7 +45,7 @@ namespace CineQuebec.Windows.BLL.Tests
             float totalRating = notes.Sum(note => note.NoteValue);
             float averageRating = totalRating / notes.Count;
 
-            return averageRating;
+            return float.Parse(averageRating.ToString("0.00"));
         }
 
         public async Task<Note> FindById(ObjectId idFilm, ObjectId idAbonne)
