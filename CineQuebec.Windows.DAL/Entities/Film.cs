@@ -33,7 +33,16 @@ namespace CineQuebec.Windows.DAL.Data
         #region PROPRIÉTÉS ET INDEXEURS
 
 
+        private Acteur _acteurs;
 
+        public Acteur Acteurs
+        {
+            get { return _acteurs; }
+            set { _acteurs = value; }
+        }
+
+
+        //TODO : Créer le constructeur qu prend en paramètre le réalisateur.
         public Realisateur Realisateur
         {
             get { return _realisateur; }

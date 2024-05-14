@@ -1,4 +1,5 @@
-﻿using CineQuebec.Windows.DAL.Data;
+﻿using CineQuebec.Windows.BLL.ServicesInterfaces;
+using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
 using CineQuebec.Windows.DAL.Utils;
 using CineQuebec.Windows.ViewModel;
@@ -61,14 +62,14 @@ namespace CineQuebec.Windows.View
                 }
                 else
                 {
-                    txtIndisponible.Visibility = Visibility.Visible;
-                    txtIndisponible.Text = $"Disponible le {film.DateSortie.Day} {Utils.GetMoisNom(film.DateSortie)} {film.DateSortie.Year}";
+                   // txtIndisponible.Visibility = Visibility.Visible;
+                   // txtIndisponible.Text = $"Disponible le {film.DateSortie.Day} {Utils.GetMoisNom(film.DateSortie)} {film.DateSortie.Year}";
                 }
             }
 
-            if (!await _viewModel.PeutNoter())
+            if (await _viewModel.PeutNoter())
             {
-                btNoter.Visibility = Visibility.Collapsed;
+                btNoter.Visibility = Visibility.Visible;
             }
             if (!await _viewModel.PeutReserver())
             {

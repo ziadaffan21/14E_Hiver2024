@@ -1,4 +1,7 @@
-﻿using CineQuebec.Windows.DAL.Data;
+﻿using CineQuebec.Windows.BLL.ServicesInterfaces;
+using CineQuebec.Windows.BLL.Tests;
+using CineQuebec.Windows.DAL.Data;
+using CineQuebec.Windows.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,6 +25,9 @@ namespace CineQuebec.Windows.View
     {
         private Film _film;
 
+        private readonly NoterViewModel _viewModel;
+        private INoteService _noteService;
+
         public Film Film
         {
             get { return _film; }
@@ -29,23 +35,30 @@ namespace CineQuebec.Windows.View
         }
 
 
-        public NoterView(Film film)
+        public NoterView(INoteService noteService, Film film)
         {
-            Film = film;
             InitializeComponent();
+            _film = film;
+            _noteService = noteService;
+            _viewModel = new NoterViewModel(noteService, film);
+            DataContext = _viewModel;
+            Loaded += _viewModel.OnLoad;
+            ((NoterViewModel)this.DataContext).SuccessMessage += HandleSuccess;
+            this.Unloaded += FilmDetailsViewModel_Unloaded;
         }
 
 
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        private void FilmDetailsViewModel_Unloaded(object sender, RoutedEventArgs e)
         {
+            ((NoterViewModel)this.DataContext).SuccessMessage -= HandleSuccess;
+        }
+
+        private void HandleSuccess(string successMessage)
+        {
+            MessageBox.Show(successMessage, "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             Close();
         }
 
-        private void ConfirmButton_Click(object sender, RoutedEventArgs e)
-        {
-            //TODO : Mettre le code d'envoie et de validation.
-            MessageBox.Show("Merci pour votre évaluation.", "Confirmation d'envoie", MessageBoxButton.OK);
-            Close();
-        }
+        
     }
 }

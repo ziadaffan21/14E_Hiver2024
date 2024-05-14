@@ -9,9 +9,11 @@ namespace CineQuebec.Windows.View
     /// </summary>
     public partial class ConnecteWindowPrincipal : Window
     {
+        public Abonne User { get; set; }
         public ConnecteWindowPrincipal(Abonne abonne = null)
         {
             InitializeComponent();
+            User = abonne;
             if ((bool)abonne.isAdmin)
             {
                 var container = (IUnityContainer)Application.Current.Resources["UnityContainer"];

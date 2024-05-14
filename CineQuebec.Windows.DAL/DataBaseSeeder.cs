@@ -24,7 +24,7 @@ namespace CineQuebec.Windows.DAL
         public async Task Seed()
         {
             //await SeedFilms();
-            await SeedAbonnes();
+            //await SeedAbonnes();
             await SeedActeur();
             await SeedRealisateur();
             //await SeedProjection();

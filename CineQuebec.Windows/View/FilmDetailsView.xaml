@@ -7,7 +7,6 @@
         mc:Ignorable="d"
         Title="FilmDetailsView" Height="450" Width="600">
     <Grid>
-
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -28,9 +27,16 @@
                     <TextBlock x:Name="txtDuree" FontSize="12" Text="{Binding Film.DureeToString}"/>
                     <TextBlock x:Name="txtCategorie" FontSize="12" Text="{Binding Film.Categorie}"/>
                 </StackPanel>
-                <Button x:Name="btNoter" Command="{Binding NoterCommand}" HorizontalAlignment="Right" Style="{DynamicResource MaterialDesignRaisedDarkButton}"  Margin="40,0,10,0" Click="btNoter_Click">
-                Noter ce film
-            </Button>
+                <Button x:Name="btNoter" Command="{Binding NoterCommand}" HorizontalAlignment="Right" Style="{DynamicResource MaterialDesignRaisedDarkButton}" Visibility="Collapsed"  Margin="40,0,10,0" Click="btNoter_Click">
+                    Noter ce film
+                </Button>
+            </StackPanel>
+            <StackPanel Orientation="Vertical" HorizontalAlignment="Left" Margin="0,10,0,0">
+                <TextBlock Text="Note des spéctateurs" VerticalAlignment="Center"/>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <TextBlock Text="{Binding NoteMoy}" FontSize="14" FontWeight="Bold" Name="txtNoteMoy" Margin="5,0,5,0" VerticalAlignment="Center"/>
+                    <Image Width="24" Height="24" Source="/Ressources/images/grade.png"/>
+                </StackPanel>
             </StackPanel>
             <TextBlock x:Name="txtDescription" FontSize="14"  Width="200" HorizontalAlignment="Left" TextWrapping="Wrap" Text="[Description]" Margin="0,10,0,10"/>
         </StackPanel>
@@ -41,5 +47,7 @@
             </StackPanel>
             <Button x:Name="btReserver" Command="{Binding ReserverCommand}" Content="Réserver un billet" Margin="0,0,10,0" Click="btReserver_Click"/>
         </StackPanel>
+        
+        
     </Grid>
 </Window>

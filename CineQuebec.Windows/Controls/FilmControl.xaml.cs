@@ -1,4 +1,5 @@
-﻿using CineQuebec.Windows.DAL.Data;
+﻿using CineQuebec.Windows.BLL.ServicesInterfaces;
+using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.View;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Unity;
 
 namespace CineQuebec.Windows.Controls
 {
@@ -22,11 +24,13 @@ namespace CineQuebec.Windows.Controls
     /// </summary>
     public partial class FilmControl : UserControl
     {
+
         public Film Film
         {
             get { return (Film)GetValue(FilmProperty); }
             set { SetValue(FilmProperty, value); }
         }
+        private readonly INoteService _noteService;
 
         public static readonly DependencyProperty FilmProperty =
             DependencyProperty.Register("Film", typeof(Film), typeof(FilmControl));

@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Ressources\images\grade.png" />
     <None Remove="Ressources\Images\logoCinema.png" />
     <None Remove="Ressources\Images\logoCinemaWithoutText.png" />
     <None Remove="Ressources\images\projections.png" />
@@ -31,6 +32,9 @@
   </ItemGroup>
 
 	<ItemGroup>
+		<Resource Include="Ressources\images\grade.png">
+		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Resource>
 		<Resource Include="Ressources\Images\logoCinema.png">
 		  <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
 		</Resource>

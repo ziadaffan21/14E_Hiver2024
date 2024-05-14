@@ -23,11 +23,11 @@ namespace CineQuebec.Windows.ViewModel
 {
     public class FormulaireFilmViewModel : PropertyNotifier
     {
-        private OberservableFilm _film;
+        private ObservableFilm _film;
         private IEventAggregator _eventAggregator;
         private string[] _descriptions;
         public ICommand SaveCommand { get; init; }
-        public OberservableFilm Film
+        public ObservableFilm Film
         {
             get { return _film; }
             set
