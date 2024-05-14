@@ -10,8 +10,10 @@ namespace CineQuebec.Windows.DAL.Repositories
         private readonly IMongoClient _mongoClient;
         private readonly IMongoDatabase _mongoDatabase;
         private readonly IDataBaseUtils _dataBaseUtils;
+        private IMongoCollection<Projection> _mongoCollection { get { return _mongoDatabase.GetCollection<Projection>(PROJECTION); } }
 
         private const string PROJECTION = "Projections";
+
 
         public ProjectionRepository(IDataBaseUtils dataBaseUtils, IMongoClient mongoClient = null)
         {
@@ -30,6 +32,7 @@ namespace CineQuebec.Windows.DAL.Repositories
 
         public async Task AjouterProjection(Projection projection)
         {
+           
             var tableProjection = _mongoDatabase.GetCollection<Projection>(PROJECTION);
             await tableProjection.InsertOneAsync(projection);
         }
@@ -48,23 +51,19 @@ namespace CineQuebec.Windows.DAL.Repositories
                 return;
             }
 
-            var reponse = await tableProjection.UpdateOneAsync(filter, update);           
+            var reponse = await tableProjection.UpdateOneAsync(filter, update);
         }
 
-        public async Task<List<Projection>> ReadProjectionsById(Object idFilm)
+        public async Task<List<Projection>> GetProjectionsById(Object idFilm)
         {
-            List<Projection> projections = await Task.Run(() => ReadProjections());
-            List<Projection> projectionsFiltre = new();
+            var projectionCollection = _mongoDatabase.GetCollection<Projection>(PROJECTION);
 
-            foreach (var projection in projections)
-            {
-                if (projection.Film.Id.Equals(idFilm))
-                {
-                    projectionsFiltre.Add(projection);
-                }
-            }
+            var filter = Builders<Projection>.Filter.And(
+                Builders<Projection>.Filter.Eq(p => p.Film.Id, idFilm)
+            );
 
-            return projectionsFiltre;
+            var projections = await projectionCollection.Find(filter).ToListAsync();
+            return projections;
         }
 
         public async Task<Projection> GetProjectionByDateAndFilmId(DateTime dateProjection, string titreFilm)
@@ -85,7 +84,7 @@ namespace CineQuebec.Windows.DAL.Repositories
         public async Task<Projection> GetProjectionById(ObjectId projectionId)
         {
             var projectionCollection = _mongoDatabase.GetCollection<Projection>(PROJECTION);
-            var filter = Builders<Projection>.Filter.Eq(p => p.Id, projectionId); 
+            var filter = Builders<Projection>.Filter.Eq(p => p.Id, projectionId);
             var projection = await projectionCollection.Find(filter).FirstOrDefaultAsync();
 
             return projection;
@@ -97,9 +96,39 @@ namespace CineQuebec.Windows.DAL.Repositories
             var filter = Builders<Projection>.Filter.Eq(p => p.Film.Titre, name);
 
             var projections = await collection.Find(filter).ToListAsync();
-
             return projections;
         }
-      
+
+        public async Task<List<Projection>> GetProjectionsForUser(ObjectId idFilm, ObjectId idUser)
+        {
+            var projections = await GetProjectionsById(idFilm);
+            List<Projection> projectionsFiltre = new();
+
+            foreach (var projection in projections)
+            {
+                if (projection.Reservations.Contains(idUser))
+                {
+                    projectionsFiltre.Add(projection);
+                }
+            }
+
+            return projectionsFiltre;
+        }
+
+        public async Task<List<Projection>> GetUpcomingProjection(ObjectId filmId)
+        {
+            DateTime now = DateTime.UtcNow;
+            string nowIso = now.ToString("o"); 
+
+            var filter = Builders<Projection>.Filter.And(
+                Builders<Projection>.Filter.Gte("Date", nowIso), 
+                Builders<Projection>.Filter.Eq(p => p.Film.Id, filmId)
+            );
+
+         
+            var projections = await _mongoCollection.Find(filter).ToListAsync();
+            return projections;
+        }
+
     }
 }

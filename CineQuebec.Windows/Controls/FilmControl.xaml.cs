@@ -34,19 +34,6 @@ namespace CineQuebec.Windows.Controls
         public FilmControl()
         {
             InitializeComponent();
-
-            try
-            {
-
-            UriBuilder uriBuilder = new UriBuilder("https://picsum.photos/seed/1/200/300");
-            Img.Source = new BitmapImage(uriBuilder.Uri);
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Failed to load image: {ex.Message}");
-            }
-
-
         }
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)

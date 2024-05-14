@@ -1,6 +1,7 @@
 ﻿using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
 using CineQuebec.Windows.DAL.Utils;
+using CineQuebec.Windows.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,35 +23,21 @@ namespace CineQuebec.Windows.View
     /// </summary>
     public partial class FilmDetailsView : Window
     {
-
-        private Film _film;
-
-        public Film Film
-        {
-            get { return _film; }
-            set { _film = value; }
-        }
-
-        public Abonne User { get; set; }
-
-        IProjectionService ProjectionService { get; set; }
+        public FilmDetailsViewModel _viewModel { get; set; } 
 
         public FilmDetailsView(Film film)
         {
-            Film = film;
-            DataContext = Film;
-            ProjectionService = AbonneHomeControl.ProjectionService;
-            User = AbonneHomeControl.CurrentUser;
+            _viewModel = new(film, AbonneHomeControl.CurrentUser, AbonneHomeControl.ProjectionService);
+            DataContext = _viewModel;
+            
             InitializeComponent();
             InitialiserDetails();
         }
 
         private void InitialiserDetails()
         {
-            Title = Film.Titre;
-            txtTitre.Text = Film.Titre;
-
-
+            Title = _viewModel.Film.Titre;
+            txtTitre.Text = _viewModel.Film.Titre;
 
             //TODO : Remplacer par une proprieté
             txtDescription.Text = Film.PLACEHOLDER_DESC;
@@ -60,42 +47,46 @@ namespace CineQuebec.Windows.View
             FormaterAffichage();
         }
 
-        private void FormaterAffichage()
+        private async void FormaterAffichage()
         {
-            if (Film.EstAffiche)
+            var film = _viewModel.Film;
+
+            if (film.EstAffiche)
             {
                 //TODO : Checker si projections
-                if (true)
+
+                bool hasUpcomingProjections = await _viewModel.HasUpcomingProjections();
+
+                if (hasUpcomingProjections)
                 {
                     txtIndisponible.Visibility = Visibility.Collapsed;
                 }
                 else
                 {
                     txtIndisponible.Visibility = Visibility.Visible;
-                    txtIndisponible.Text = $"Disponible le {Film.DateSortie.Day} {Utils.GetMoisNom(Film.DateSortie)} {Film.DateSortie.Year}";
+                    txtIndisponible.Text = $"Disponible le {film.DateSortie.Day} {Utils.GetMoisNom(film.DateSortie)} {film.DateSortie.Year}";
                 }
+            }
+
+            if (!await _viewModel.PeutNoter())
+            {
+                btNoter.Visibility = Visibility.Collapsed;
+            }
+            if (!await _viewModel.PeutReserver())
+            {
+                btReserver.Visibility = Visibility.Collapsed;
             }
         }
 
         private void btNoter_Click(object sender, RoutedEventArgs e)
         {
-            OuvrirFormNoter();
         }
 
-        private void OuvrirFormNoter()
-        {
-            NoterView noterView = new NoterView(Film);
-            noterView.Show();
-        }
+       
 
         private void btReserver_Click(object sender, RoutedEventArgs e)
         {
-            ReservationView reservationView = new(ProjectionService, Film, User);
-            bool? resultat = reservationView.ShowDialog();
-            if (resultat == true)
-            {
-                UpdateInterface();
-            }
+           
         }
 
         private void UpdateInterface()

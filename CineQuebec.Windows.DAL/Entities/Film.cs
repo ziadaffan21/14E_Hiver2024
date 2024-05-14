@@ -79,6 +79,8 @@ namespace CineQuebec.Windows.DAL.Data
             } 
         }
 
+        public string Image { get { return $"https://picsum.photos/seed/{Id}/200/300"; } }
+
         public DateTime DateSortie
         {
             get { return _dateSortie; }

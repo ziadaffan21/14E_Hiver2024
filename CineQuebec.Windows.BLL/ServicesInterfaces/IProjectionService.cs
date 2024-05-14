@@ -13,5 +13,7 @@ namespace CineQuebec.Windows.DAL.ServicesInterfaces
 
         Task<List<Projection>> GetProjectionByName(string titre);
         Task AjouterReservation(ObjectId pojectionId, ObjectId userId);
+        Task<List<Projection>> GetProjectionsForUser(ObjectId filmId, ObjectId userId);
+        Task<List<Projection>> GetUpcomingProjections(ObjectId id);
     }
 }

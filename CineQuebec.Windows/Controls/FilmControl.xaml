@@ -23,7 +23,7 @@
                         <DropShadowEffect/>
                     </Border.Effect>
                 </Border>-->
-                    <Image x:Name="Img" Width="150" Height="200" Margin="0"/>
+                <Image x:Name="Img" Source="{Binding Image}" Width="150" Height="200" Margin="0"/>
                 
                 
                 <StackPanel Orientation="Vertical">

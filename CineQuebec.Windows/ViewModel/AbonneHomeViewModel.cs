@@ -12,7 +12,6 @@ namespace CineQuebec.Windows.ViewModel
 
         private Abonne _user;
 
-
         public Abonne User
         {
             get { return _user; }
@@ -22,6 +21,8 @@ namespace CineQuebec.Windows.ViewModel
                 OnPropertyChanged(nameof(User));
             }
         }
+
+        public string UserImage { get { return $"https://robohash.org/{User.Username}?set=set3"; } }
 
         public ObservableCollection<Film> Films
         {
@@ -51,9 +52,8 @@ namespace CineQuebec.Windows.ViewModel
        
         private async void ChargerFilms()
         {
-            var filmsCharge = await _filmService.GetAllFilms();
+            List<Film> filmsCharge = await _filmService.GetAllFilms();
 
-            //TODO : Mettre les films dans Films
             Films = new(filmsCharge);
 
 

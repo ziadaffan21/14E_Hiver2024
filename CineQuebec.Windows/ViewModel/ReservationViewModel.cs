@@ -16,6 +16,9 @@ namespace CineQuebec.Windows.ViewModel
         private Projection _selectedProjection = new();
         private Film _film;
 
+
+        public ICommand SaveCommand { get; init; }
+
         public Film Film
         {
             get { return _film; }
@@ -39,7 +42,6 @@ namespace CineQuebec.Windows.ViewModel
         }
 
 
-        public ICommand SaveCommand { get; init; }
 
         public Projection SelectedProjection
         {
@@ -122,9 +124,8 @@ namespace CineQuebec.Windows.ViewModel
 
         internal async void ChargerProjection()
         {
-            var projectionsCharge = await _projectionService.GetProjectionsById(Film.Id);
+            var projectionsCharge = await _projectionService.GetUpcomingProjections(Film.Id);
 
-            //TODO : Mettre les projections à venir uniquement dans Projections
             Projections = new(projectionsCharge);
 
             //Filtrage des projections déja réservé
