@@ -60,7 +60,7 @@ namespace CineQuebec.Windows.ViewModel
                 _abonne.Password = PasswodHasher.HashPassword(password, _abonne.Salt);
 
 
-                ReussiteOuEchec.Invoke(await _abonneService.Add(_abonne));
+                ReussiteOuEchec?.Invoke(await _abonneService.Add(_abonne));
 
             }
             catch (Exception ex)
