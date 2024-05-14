@@ -26,6 +26,28 @@ namespace CineQuebec.Windows.View
             _viewModel=new FormulaireProjectionViewModel(projectionService, filmService, eventAggregator);
             DataContext = _viewModel;
             calendrier.DisplayDateStart = DateTime.Now;
+            _viewModel.ErrorOcuured += ViewModel_ErrorOccured;
+            _viewModel.AjoutModif += ViewModel_AjoutModif;
+            Unloaded += AjoutDetailProjection_Unloaded;
+        }
+
+        private void AjoutDetailProjection_Unloaded(object sender, RoutedEventArgs e)
+        {
+            _viewModel.AjoutModif-= ViewModel_AjoutModif;
+            _viewModel.ErrorOcuured-= ViewModel_ErrorOccured;
+
+        }
+
+        private void ViewModel_AjoutModif(bool etat)
+        {
+            if (etat)
+                MessageBox.Show(Resource.ajoutReussiProjection, Resource.ajout, MessageBoxButton.OK, MessageBoxImage.Information);
+            DialogResult = true;
+        }
+
+        private void ViewModel_ErrorOccured(string error)
+        {
+            MessageBox.Show(error, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         private void btnCreer_Click(object sender, RoutedEventArgs e)

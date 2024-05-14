@@ -32,7 +32,10 @@ namespace CineQuebec.Windows.View
         private void _viewModel_ReussiteOuEchec(bool reussite)
         {
             if (reussite)
+            {
                 MessageBox.Show(Resource.ajoutUser, Resource.ajout, MessageBoxButton.OK, MessageBoxImage.Information);
+                DialogResult = true;
+            }
             else
                 MessageBox.Show(Resource.errorAjoutUser, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
 

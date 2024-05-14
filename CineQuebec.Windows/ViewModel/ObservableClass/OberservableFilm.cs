@@ -102,7 +102,7 @@ namespace CineQuebec.Windows.ViewModel.ObservableClass
 
         internal bool IsValid()
         {
-            return Enum.IsDefined(Categorie) && Duree > 30 && !string.IsNullOrWhiteSpace(Titre) && Titre.Length < Film.NB_MAX_CARACTERES_USERNAME && Titre.Length > Film.NB_MIN_CARACTERES_USERNAME;
+            return IndexCategorie!=-1 && Duree > 30 && !string.IsNullOrWhiteSpace(Titre.Trim()) && Titre.Trim().Length < Film.NB_MAX_CARACTERES_USERNAME && Titre.Trim().Length > Film.NB_MIN_CARACTERES_USERNAME;
         }
 
         public override string ToString()

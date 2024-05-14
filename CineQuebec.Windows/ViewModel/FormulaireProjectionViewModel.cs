@@ -23,7 +23,8 @@ namespace CineQuebec.Windows.ViewModel
         private List<Film> _films;
         private IEventAggregator _eventAggregator;
         public ICommand SaveCommand { get; init; }
-
+        public Action<string> ErrorOcuured;
+        public Action<bool> AjoutModif;
         public ObservableProjection Projection {
             get { return _projection; } 
             set { _projection = value;
@@ -57,7 +58,15 @@ namespace CineQuebec.Windows.ViewModel
 
         public async void GetAllFIlm()
         {
-            Films= await  _filmService.GetAllFilms();
+            try
+            {
+                Films = await _filmService.GetAllFilms();
+
+            }
+            catch (Exception ex)
+            {
+                ErrorOcuured?.Invoke(ex.Message);
+            }
         }
 
         private bool CanSave()
@@ -70,13 +79,13 @@ namespace CineQuebec.Windows.ViewModel
             try
             {
                 _projectionService.AjouterProjection(Projection.value());
-                MessageBox.Show(Resource.ajoutReussiProjection, Resource.ajout, MessageBoxButton.OK, MessageBoxImage.Information);
                 _eventAggregator.GetEvent<AddModifierProjectionEvent>().Publish(Projection.value());
+                AjoutModif?.Invoke(true);
 
             }
             catch (ExistingProjectionException ex)
             {
-                MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
+                ErrorOcuured?.Invoke(ex.Message);
             }
             
         }
