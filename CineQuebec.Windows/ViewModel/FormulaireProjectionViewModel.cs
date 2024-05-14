@@ -32,6 +32,22 @@ namespace CineQuebec.Windows.ViewModel
         
         }
 
+
+        private DateTime _projectionTime;
+
+        /// <summary>
+        /// Représente le temps de la projection
+        /// </summary>
+        public DateTime ProjectionTime
+        {
+            get { return _projectionTime; }
+            set { 
+                _projectionTime = value;
+                OnPropertyChanged();
+            }
+        }
+
+
         public List<Film > Films { get { return _films; } private set { _films = value;  OnPropertyChanged(); } }
 
         private readonly IProjectionService _projectionService;
@@ -48,6 +64,10 @@ namespace CineQuebec.Windows.ViewModel
             Projection.PropertyChanged += ReEvaluateButtonState;
             SaveCommand = new DelegateCommand(Save, CanSave);            
             GetAllFIlm();
+
+
+            //On inialise l'horloge à maintenant.
+            ProjectionTime = DateTime.Now;
         }
 
         private void ReEvaluateButtonState(object sender, PropertyChangedEventArgs e)
@@ -69,6 +89,12 @@ namespace CineQuebec.Windows.ViewModel
         {
             try
             {
+                //Au moment de la sauvegarde, on change l'heure de la projection pour celle dans ProjectionTime
+                var date = Projection.Date;
+                var time = ProjectionTime.TimeOfDay;
+                Projection.Date = new(date.Year,date.Month,date.Day,time.Hours,time.Minutes,time.Seconds);
+
+
                 _projectionService.AjouterProjection(Projection.value());
                 MessageBox.Show(Resource.ajoutReussiProjection, Resource.ajout, MessageBoxButton.OK, MessageBoxImage.Information);
                 _eventAggregator.GetEvent<AddModifierProjectionEvent>().Publish(Projection.value());

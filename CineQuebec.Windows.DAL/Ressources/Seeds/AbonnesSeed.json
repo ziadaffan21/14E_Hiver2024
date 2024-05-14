@@ -1,0 +1,156 @@
+[{
+  "_id": {
+    "$oid": "664335ae48163631e25fc5cc"
+  },
+  "Username": "admin",
+  "Password": {
+    "$binary": {
+      "base64": "LCNFhwak5dJfAIRV5S9Dcg==",
+      "subType": "00"
+    }
+  },
+  "DateAdhesion": {
+    "$date": "2024-05-14T09:58:05.557Z"
+  },
+  "Salt": {
+    "$binary": {
+      "base64": "mG59R+8BrOxoA5uOYGE6Xw==",
+      "subType": "00"
+    }
+  },
+  "isAdmin": true,
+  "Acteurs": [],
+  "Realisateurs": [],
+  "Films": [],
+  "CategoriesPrefere": []
+},
+{
+  "_id": {
+    "$oid": "664335ae48163631e25fc5cd"
+  },
+  "Username": "user1",
+  "Password": {
+    "$binary": {
+      "base64": "LCNFhwak5dJfAIRV5S9Dcg==",
+      "subType": "00"
+    }
+  },
+  "DateAdhesion": {
+    "$date": "2024-05-14T09:58:06.354Z"
+  },
+  "Salt": {
+    "$binary": {
+      "base64": "mG59R+8BrOxoA5uOYGE6Xw==",
+      "subType": "00"
+    }
+  },
+  "isAdmin": false,
+  "Acteurs": [],
+  "Realisateurs": [],
+  "Films": [],
+  "CategoriesPrefere": []
+},
+{
+  "_id": {
+    "$oid": "664367339545a299f4b1e0c4"
+  },
+  "Username": "user2",
+  "Password": {
+    "$binary": {
+      "base64": "Q2P4+gyFetkVfBC3aEq4ng==",
+      "subType": "00"
+    }
+  },
+  "DateAdhesion": {
+    "$date": "2024-05-14T13:29:21.623Z"
+  },
+  "Salt": {
+    "$binary": {
+      "base64": "N+2lsM16vKiYcWRUuHSI1w==",
+      "subType": "00"
+    }
+  },
+  "isAdmin": false,
+  "Acteurs": [],
+  "Realisateurs": [],
+  "Films": [],
+  "CategoriesPrefere": []
+},
+{
+  "_id": {
+    "$oid": "664367389545a299f4b1e0c5"
+  },
+  "Username": "user3",
+  "Password": {
+    "$binary": {
+      "base64": "6iTymo35actW+1ezzDTt0w==",
+      "subType": "00"
+    }
+  },
+  "DateAdhesion": {
+    "$date": "2024-05-14T13:29:27.647Z"
+  },
+  "Salt": {
+    "$binary": {
+      "base64": "0jT9YLRjydib8fVv9cz4kQ==",
+      "subType": "00"
+    }
+  },
+  "isAdmin": false,
+  "Acteurs": [],
+  "Realisateurs": [],
+  "Films": [],
+  "CategoriesPrefere": []
+},
+{
+  "_id": {
+    "$oid": "6643673c9545a299f4b1e0c6"
+  },
+  "Username": "user4",
+  "Password": {
+    "$binary": {
+      "base64": "I9YoXpVBaYZBPK+x42/IMQ==",
+      "subType": "00"
+    }
+  },
+  "DateAdhesion": {
+    "$date": "2024-05-14T13:29:31.796Z"
+  },
+  "Salt": {
+    "$binary": {
+      "base64": "VYqpWIhwpXGqEE5w0msI8g==",
+      "subType": "00"
+    }
+  },
+  "isAdmin": false,
+  "Acteurs": [],
+  "Realisateurs": [],
+  "Films": [],
+  "CategoriesPrefere": []
+},
+{
+  "_id": {
+    "$oid": "664367429545a299f4b1e0c7"
+  },
+  "Username": "user5",
+  "Password": {
+    "$binary": {
+      "base64": "QZUztCbkxrtO5clLXjDCSg==",
+      "subType": "00"
+    }
+  },
+  "DateAdhesion": {
+    "$date": "2024-05-14T13:29:38.140Z"
+  },
+  "Salt": {
+    "$binary": {
+      "base64": "JMh1P2UIeIho1UMD/T3tAA==",
+      "subType": "00"
+    }
+  },
+  "isAdmin": false,
+  "Acteurs": [],
+  "Realisateurs": [],
+  "Films": [],
+  "CategoriesPrefere": []
+}]

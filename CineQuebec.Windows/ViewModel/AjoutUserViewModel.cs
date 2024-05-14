@@ -56,7 +56,7 @@ namespace CineQuebec.Windows.ViewModel
                 if (result)
                 {
                     MessageBox.Show(Resource.ajoutUser, Resource.ajout, MessageBoxButton.OK, MessageBoxImage.Information);
-                    // DialogResultConverter d=new() = true;
+                    // DialogResult = true;
                 }
                 else
                 {

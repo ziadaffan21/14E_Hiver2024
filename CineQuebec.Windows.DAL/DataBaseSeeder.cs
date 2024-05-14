@@ -1,7 +1,9 @@
 ﻿using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.Enums;
 using MongoDB.Bson;
+using MongoDB.Bson.IO;
 using MongoDB.Driver;
+using System.Text.Json;
 
 namespace CineQuebec.Windows.DAL
 {
@@ -12,6 +14,13 @@ namespace CineQuebec.Windows.DAL
         private readonly IDataBaseUtils _dataBaseUtils;
         private readonly Film film1 = new Film("The Shawshank Redemption", DateTime.Now, 120, Categories.ANIMATION);
         private readonly Film film2 = new Film("The Godfather", DateTime.Now, 120, Categories.ADVENTURE);
+
+
+        private string CheminSeed(string nom)
+        {
+            string basePath = AppDomain.CurrentDomain.BaseDirectory;
+            return Path.Combine(basePath, "Ressources", "Seeds", $"{nom}Seed.json");
+        }
 
         public DataBaseSeeder(IDataBaseUtils dataBaseUtils, IMongoClient mongoDBClient = null)
         {
@@ -25,8 +34,8 @@ namespace CineQuebec.Windows.DAL
         {
             //await SeedFilms();
             //await SeedAbonnes();
-            await SeedActeur();
-            await SeedRealisateur();
+            //await SeedActeur();
+            //await SeedRealisateur();
             //await SeedProjection();
         }
 
@@ -36,11 +45,18 @@ namespace CineQuebec.Windows.DAL
 
             await filmsCollection.DeleteManyAsync(new BsonDocument());
 
-            var films = new List<Film>
-                    {
-                        film1,
-                        film2
-                    };
+            var chemin = CheminSeed("Film");
+
+            if (!File.Exists(chemin))
+            {
+                return;
+            }
+
+
+            var jsonContent = File.ReadAllText(chemin);
+            var films = JsonSerializer.Deserialize<List<Film>>(jsonContent);
+
+
 
             var bsonFilms = films.Select(film => film.ToBsonDocument()).ToList();
 
@@ -52,16 +68,28 @@ namespace CineQuebec.Windows.DAL
             var abonneCollection = _database.GetCollection<BsonDocument>("Abonnes");
             await abonneCollection.DeleteManyAsync(new BsonDocument());
 
-            var salt = PasswodHasher.CreateSalt();
+            //var salt = PasswodHasher.CreateSalt();
 
-            var abonnes = new List<Abonne>
-                {
-                    new Abonne("admin",PasswodHasher.HashPassword("12345",salt),salt,DateTime.Now)
-                    {
-                        isAdmin = true,
-                    },
-                    new Abonne("user1",PasswodHasher.HashPassword("12345",salt),salt,DateTime.Now)
-                };
+            //var abonnes = new List<Abonne>
+            //    {
+            //        new Abonne("admin",PasswodHasher.HashPassword("12345",salt),salt,DateTime.Now)
+            //        {
+            //            isAdmin = true,
+            //        },
+            //        new Abonne("user1",PasswodHasher.HashPassword("12345",salt),salt,DateTime.Now)
+            //    };
+
+
+            var chemin = CheminSeed("Abonnes");
+
+            if (!File.Exists(chemin))
+            {
+                return;
+            }
+
+            var jsonContent = File.ReadAllText(chemin);
+            var abonnes = json.Deserialize<List<Abonne>>(jsonContent);
+
 
             var bsonAbonnes = abonnes.Select(abonne => abonne.ToBsonDocument()).ToList();
             await abonneCollection.InsertManyAsync(bsonAbonnes);

@@ -32,7 +32,7 @@ namespace CineQuebec.Windows.View
             //_abonneService = abonneService;
             _viewModel = new ConnexionModelView(abonneService);
             DataContext = _viewModel;
-            //dataBaseSeeder.Seed();
+            dataBaseSeeder.Seed();
             //_dataBaseSeeder = dataBaseSeeder;
             InitializeComponent();
             //_dataBaseSeeder.Seed();

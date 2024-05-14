@@ -1,0 +1,80 @@
+[{
+  "_id": {
+    "$oid": "664335ae48163631e25fc5d0"
+  },
+  "Prenom": "Martin",
+  "Nom": "Scorsese",
+  "Naissance": {
+    "$date": "2024-05-14T09:58:06.414Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "664335ae48163631e25fc5d1"
+  },
+  "Prenom": "Steven",
+  "Nom": "Spielberg",
+  "Naissance": {
+    "$date": "2024-05-14T09:58:06.414Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "664335ae48163631e25fc5d2"
+  },
+  "Prenom": "Quentin",
+  "Nom": "Tarantino",
+  "Naissance": {
+    "$date": "2024-05-14T09:58:06.414Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "664335ae48163631e25fc5d3"
+  },
+  "Prenom": "Christopher",
+  "Nom": "Nolan",
+  "Naissance": {
+    "$date": "2024-05-14T09:58:06.414Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "664335ae48163631e25fc5d4"
+  },
+  "Prenom": "James",
+  "Nom": "Cameron",
+  "Naissance": {
+    "$date": "2024-05-14T09:58:06.414Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "664335ae48163631e25fc5d5"
+  },
+  "Prenom": "George",
+  "Nom": "Lucas",
+  "Naissance": {
+    "$date": "2024-05-14T09:58:06.414Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "664335ae48163631e25fc5d6"
+  },
+  "Prenom": "Peter",
+  "Nom": "Jackson",
+  "Naissance": {
+    "$date": "2024-05-14T09:58:06.414Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "664335ae48163631e25fc5d7"
+  },
+  "Prenom": "James",
+  "Nom": "Marshall",
+  "Naissance": {
+    "$date": "2024-05-14T09:58:06.414Z"
+  }
+}]

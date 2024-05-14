@@ -1,0 +1,20 @@
+[{
+  "_id": {
+    "$oid": "664335ae48163631e25fc5ce"
+  },
+  "Prenom": "Leonardo",
+  "Nom": "DiCaprio",
+  "Naissance": {
+    "$date": "2024-05-14T09:58:06.408Z"
+  }
+},
+{
+  "_id": {
+    "$oid": "664335ae48163631e25fc5cf"
+  },
+  "Prenom": "Meryl",
+  "Nom": "Streep",
+  "Naissance": {
+    "$date": "2024-05-14T09:58:06.409Z"
+  }
+}]
