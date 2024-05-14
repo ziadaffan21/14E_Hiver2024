@@ -50,5 +50,10 @@ namespace CineQuebec.Windows.View
         {
             MessageBox.Show(successMessage, "Success", MessageBoxButton.OK, MessageBoxImage.Information);
         }
+
+        private void btnOK_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
