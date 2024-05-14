@@ -57,7 +57,7 @@ namespace CineQuebec.Windows.ViewModel
             List<Projection> projections = await ProjectionService.GetProjectionsForUser(Film.Id, User.Id);
             foreach (var projection in projections)
             {
-                if (projection.Date > DateTime.Now)
+                if (projection.Date < DateTime.Now)
                 {
                     return true;
                 }

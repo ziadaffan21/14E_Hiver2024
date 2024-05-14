@@ -42,8 +42,6 @@ namespace CineQuebec.Windows.View
             //TODO : Remplacer par une proprieté
             txtDescription.Text = Film.PLACEHOLDER_DESC;
 
-            UriBuilder uriBuilder = new UriBuilder("https://picsum.photos/seed/1/200/300");
-            FilmImage.Source = new BitmapImage(uriBuilder.Uri);
             FormaterAffichage();
         }
 
@@ -75,6 +73,8 @@ namespace CineQuebec.Windows.View
             if (!await _viewModel.PeutReserver())
             {
                 btReserver.Visibility = Visibility.Collapsed;
+                txtIndisponible.Visibility = Visibility.Visible;
+                txtIndisponible.Text = $"Aucune projections à venir";
             }
         }
 
