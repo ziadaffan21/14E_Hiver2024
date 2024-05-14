@@ -41,10 +41,8 @@ namespace CineQuebec.Windows.View
         private void btnReserverUnePlace_Click(object sender, RoutedEventArgs e)
         {
             var reservationView = new ReservationView(_filmService, _projectionService, User);
-            if ((bool)reservationView.ShowDialog())
-            {
-                User = reservationView.User;
-            }
+            reservationView.ShowDialog();
+
         }
 
         private void btnVoirPreferance_Click(object sender, RoutedEventArgs e)

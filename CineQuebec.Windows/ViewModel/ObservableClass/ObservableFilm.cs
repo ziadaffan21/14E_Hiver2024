@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace CineQuebec.Windows.ViewModel.ObservableClass
 {
-    public class OberservableFilm : PropertyNotifier
+    public class ObservableFilm : PropertyNotifier
     {
         private Film _film;
 
@@ -89,7 +89,7 @@ namespace CineQuebec.Windows.ViewModel.ObservableClass
 
 
         #region MÉTHODES
-        public OberservableFilm(Film film)
+        public ObservableFilm(Film film)
         {
             _film = film is null ? new() : film;
             IndexCategorie = film is null ? -1 : (int)Categorie;
@@ -103,6 +103,11 @@ namespace CineQuebec.Windows.ViewModel.ObservableClass
         internal bool IsValid()
         {
             return Enum.IsDefined(Categorie) && Duree > 30 && !string.IsNullOrWhiteSpace(Titre) && Titre.Length < Film.NB_MAX_CARACTERES_USERNAME && Titre.Length > Film.NB_MIN_CARACTERES_USERNAME;
+        }
+
+        public override string ToString()
+        {
+            return _film.ToString();
         }
 
         #endregion MÉTHODES

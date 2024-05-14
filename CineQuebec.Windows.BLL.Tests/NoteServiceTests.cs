@@ -1,3 +1,4 @@
+using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.Entities;
 using Moq;
 
@@ -17,6 +18,7 @@ namespace CineQuebec.Windows.BLL.Tests
                 new Note(new MongoDB.Bson.ObjectId(),new MongoDB.Bson.ObjectId(),4)
             };
         }
+
         [Fact]
         public async Task GetAll_Should_Return_all_Notes()
         {
@@ -77,11 +79,11 @@ namespace CineQuebec.Windows.BLL.Tests
         public async void Find_By_Id_Should_Return_One_Note_With_Its_Id()
         {
             Note noteToFind = new Note { NoteValue = 10 };
-            _noteRepo.Setup(x => x.FindById(noteToFind.Id)).ReturnsAsync(noteToFind);
+            _noteRepo.Setup(x => x.FindById(noteToFind.Id,new MongoDB.Bson.ObjectId())).ReturnsAsync(noteToFind);
 
             var noteService = new NoteService(_noteRepo.Object);
 
-            Note foundedNote = await noteService.FindById(noteToFind.Id);
+            Note foundedNote = await noteService.FindById(noteToFind.Id,new MongoDB.Bson.ObjectId());
 
             Assert.Equal(noteToFind, foundedNote);
         }
@@ -89,13 +91,20 @@ namespace CineQuebec.Windows.BLL.Tests
         [Fact]
         public async void GetRatingForFilm_Should_Return_TheRating()
         {
-            _noteRepo.Setup(x => x.GetAll()).ReturnsAsync(notes);
+            var film = new Film();
+            var notes = new List<Note>
+            {
+                new Note { NoteValue = 4 },
+                new Note { NoteValue = 3 },
+                new Note { NoteValue = 5 }
+            };
+
+            _noteRepo.Setup(x => x.GetNotesForFilm(film.Id)).ReturnsAsync(notes);
             var noteService = new NoteService(_noteRepo.Object);
 
             float expectedRating = notes.Any() ? notes.Sum(note => note.NoteValue) / notes.Count : 0;
 
-            var result = await noteService.GetRatingForFilm();
-
+            var result = await noteService.GetRatingForFilm(film.Id);
             Assert.Equal(expectedRating, result);
         }
 

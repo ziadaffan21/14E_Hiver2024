@@ -26,7 +26,9 @@ namespace CineQuebec.Windows.DAL.Services
 
         public async Task<List<Film>> GetAllFilms()
         {
-            return await _filmRepository.ReadFilms();
+            List<Film> lstFilm= await _filmRepository.ReadFilms();
+            lstFilm.Sort();
+            return lstFilm;
         }
 
         public async Task ModifierFilm(Film film)

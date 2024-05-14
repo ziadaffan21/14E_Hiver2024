@@ -53,7 +53,7 @@ namespace CineQuebec.Windows.BLL.Tests
 
                 var updateResult = await collection.UpdateOneAsync(
                     Builders<Note>.Filter.Eq(n => n.Id, note.Id),
-                    Builders<Note>.Update.Set(n => n, existingNote)
+                    Builders<Note>.Update.Set(n => n.NoteValue, existingNote.NoteValue)
                 );
 
                 if (updateResult.ModifiedCount > 0)
@@ -65,9 +65,23 @@ namespace CineQuebec.Windows.BLL.Tests
             return null;
         }
 
-        public async Task<Note> FindById(ObjectId id)
+        public async Task<Note> FindById(ObjectId idFilm, ObjectId idAbonne)
         {
-            return await collection.Find(Builders<Note>.Filter.Eq(n => n.Id, id)).FirstOrDefaultAsync();
+            var filter = Builders<Note>.Filter.And(
+                   Builders<Note>.Filter.Eq(n => n.FilmId, idFilm),
+                   Builders<Note>.Filter.Eq(n => n.AbonneId, idAbonne)
+               );
+
+            return await collection.Find(filter).FirstOrDefaultAsync();
+        }
+
+        public async Task<List<Note>> GetNotesForFilm(ObjectId filmId)
+        {
+            var filter = Builders<Note>.Filter.Eq(n => n.FilmId, filmId);
+
+            var notes = await collection.FindAsync<Note>(filter).Result.ToListAsync();
+
+            return notes;
         }
     }
 }

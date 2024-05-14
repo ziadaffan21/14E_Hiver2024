@@ -1,6 +1,7 @@
 ﻿using CineQuebec.Windows.DAL.ServicesInterfaces;
 using CineQuebec.Windows.Exceptions;
 using CineQuebec.Windows.Ressources.i18n;
+using CineQuebec.Windows.ViewModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -11,30 +12,15 @@ namespace CineQuebec.Windows.View
     /// </summary>
     public partial class ConsultationAbonnesControl : UserControl
     {
-        private readonly IAbonneService _abonneService;
+        private readonly ConsultationAbonnesViewModel _viewModel;
 
         public ConsultationAbonnesControl(IAbonneService abonneService)
         {
-            _abonneService = abonneService;
-            InitializeComponent();
-            ChargerAbonnes();
-        }
+            _viewModel=new ConsultationAbonnesViewModel(abonneService);
+            DataContext = _viewModel;
 
-        private void ChargerAbonnes()
-        {
-            try
-            {
-                var abonne = _abonneService.GetAllAbonnes();
-                lstUtilisisateurs.ItemsSource = abonne;
-            }
-            catch (MongoDataConnectionException err)
-            {
-                MessageBox.Show(err.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            catch (Exception)
-            {
-                MessageBox.Show(Resource.erreurGenerique, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+            Loaded += _viewModel.Load;
+            InitializeComponent();
         }
     }
 }

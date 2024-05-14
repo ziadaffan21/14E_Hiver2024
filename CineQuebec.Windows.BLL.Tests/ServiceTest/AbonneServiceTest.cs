@@ -6,7 +6,7 @@ using CineQuebec.Windows.Exceptions.AbonneExceptions;
 using MongoDB.Bson;
 using Moq;
 
-namespace CineQuebec.Windows.Tests.ServiceTest
+namespace CineQuebec.Windows.BLL.Tests.ServiceTest
 {
     public class AbonneServiceTest
     {
