@@ -1,4 +1,6 @@
-﻿using CineQuebec.Windows.DAL;
+﻿using CineQuebec.Windows.BLL.ServicesInterfaces;
+using CineQuebec.Windows.BLL.Tests;
+using CineQuebec.Windows.DAL;
 using CineQuebec.Windows.DAL.Interfaces;
 using CineQuebec.Windows.DAL.InterfacesRepositorie;
 using CineQuebec.Windows.DAL.Repositories;
@@ -25,6 +27,8 @@ namespace CineQuebec.Windows
             container.RegisterSingleton<IAbonneRepository, AbonneRepository>();
             container.RegisterSingleton<IRealisateurRepository, RealisateurRepository>();
             container.RegisterSingleton<IActeurRepository, ActeurRepository>();
+            container.RegisterSingleton<INoteRepository, NoteRepository>();
+            container.RegisterSingleton<INoteService, NoteService>();
             container.RegisterSingleton<IDataBaseUtils, DataBaseUtils>();
             container.RegisterSingleton<IDataBaseSeeder, DataBaseSeeder>();
             container.RegisterSingleton<IEventAggregator, EventAggregator>();

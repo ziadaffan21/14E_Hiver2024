@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace CineQuebec.Windows.ViewModel.ObservableClass
 {
-    public class OberservableFilm : PropertyNotifier
+    public class ObservableFilm : PropertyNotifier
     {
         private Film _film;
 
@@ -89,7 +89,7 @@ namespace CineQuebec.Windows.ViewModel.ObservableClass
 
 
         #region MÉTHODES
-        public OberservableFilm(Film film)
+        public ObservableFilm(Film film)
         {
             _film = film is null ? new() : film;
             IndexCategorie = film is null ? -1 : (int)Categorie;

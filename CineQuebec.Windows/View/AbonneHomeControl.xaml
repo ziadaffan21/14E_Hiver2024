@@ -27,8 +27,8 @@
             <ItemsControl Name="lst_films"  ItemsSource="{Binding Films, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" HorizontalAlignment="Stretch">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                    <local:FilmControl x:Name="FilmListControl"/>
-                </DataTemplate>
+                        <local:FilmControl x:Name="FilmListControl" />
+                    </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>
         </ScrollViewer>
