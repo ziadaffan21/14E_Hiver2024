@@ -32,7 +32,7 @@
 
 
         <Button Content="{x:Static rs:Resource.connexion_connect}"
-                        Width="200" Command="{Binding SaveCommand}" Click="Button_Click" Grid.Column="0" Grid.Row="2"/>
+                        Width="200" Command="{Binding SaveCommand}" Grid.Column="0" Grid.Row="2"/>
         <Button Content="{x:Static rs:Resource.connexion_creer}"
                         Width="200" Click="Button_Creer_Compte"  Grid.Row="2" Grid.Column="1"/>
 

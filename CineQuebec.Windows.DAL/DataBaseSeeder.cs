@@ -86,7 +86,7 @@ namespace CineQuebec.Windows.DAL
             {
                 return;
             }
-
+            
             var jsonContent = File.ReadAllText(chemin);
            // var abonnes = json.Deserialize<List<Abonne>>(jsonContent);
 

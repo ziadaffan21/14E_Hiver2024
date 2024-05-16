@@ -13,8 +13,8 @@ namespace CineQuebec.Windows.ViewModel
 {
     public class ConsultationAbonnesViewModel : PropertyNotifier
     {
-        private ObservableCollection<Abonne> _abonnes;
         private readonly IAbonneService _abonneService;
+        
 
         public ObservableCollection<Abonne> Abonnes { get; init; } = new();
 
@@ -30,8 +30,6 @@ namespace CineQuebec.Windows.ViewModel
             {
                 Abonnes.Add(abonne);
             }
-            
-
         }
     }
 }

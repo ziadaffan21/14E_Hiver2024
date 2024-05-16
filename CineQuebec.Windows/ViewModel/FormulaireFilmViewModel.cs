@@ -18,6 +18,8 @@ using CineQuebec.Windows.Exceptions;
 using CineQuebec.Windows.ViewModel.ObservableClass;
 using Prism.Events;
 using CineQuebec.Windows.ViewModel.Event;
+using CineQuebec.Windows.Exceptions.FilmExceptions.TitreExceptions;
+using CineQuebec.Windows.Exceptions.FilmExceptions.CategorieExceptions;
 
 namespace CineQuebec.Windows.ViewModel
 {
@@ -44,6 +46,9 @@ namespace CineQuebec.Windows.ViewModel
             set { _descriptions = value; OnPropertyChanged(); }
         }
 
+        public Action<bool> AjoutModif;
+        public Action<string> errorOccured;
+
 
         private readonly IFilmService _filmService;
 
@@ -62,18 +67,16 @@ namespace CineQuebec.Windows.ViewModel
         {
             try
             {
+                ValiderForm();
                 await _filmService.AjouterFilm(Film.value());
-                MessageBox.Show(Resource.ajoutReussi, Resource.ajout, MessageBoxButton.OK, MessageBoxImage.Information);
+                AjoutModif?.Invoke(true);
+                //MessageBox.Show(Resource.ajoutReussi, Resource.ajout, MessageBoxButton.OK, MessageBoxImage.Information);
                 _eventAggregator.GetEvent<AddModifierFilmEvent>().Publish(Film.value());
 
             }
-            catch (ExistingFilmException ex)
+            catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            catch (MongoDataConnectionException ex)
-            {
-                MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
+                errorOccured?.Invoke(ex.Message);
             }
 
         }
@@ -94,20 +97,26 @@ namespace CineQuebec.Windows.ViewModel
         {
             try
             {
+                ValiderForm();
                 await _filmService.ModifierFilm(Film.value());
-                MessageBox.Show(Resource.modificationReussi, Resource.modification, MessageBoxButton.OK, MessageBoxImage.Information);
+                AjoutModif?.Invoke(false);
 
             }
-            catch (ExistingFilmException ex)
+            catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
+                errorOccured?.Invoke(ex.Message);
             }
-            catch (MongoDataConnectionException ex)
-            {
-                MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
+        }
 
+        private void ValiderForm()
+        {
 
+            if (string.IsNullOrWhiteSpace(Film.Titre.Trim()) || Film.Titre.Trim().Length > 100 || Film.Titre.Trim().Length <2)
+                throw new TitreNullException("Le titre doit etre entre 2 et 100 caractères.");
+            if (Film.IndexCategorie == -1)
+                throw new CategorieUndefinedException("La catégorie doit etre définie");
+            if (Film.Duree <= 30)
+                throw new ArgumentOutOfRangeException("La durée du film doit etre plus grande que 30 minutes.");
         }
     }
 }
