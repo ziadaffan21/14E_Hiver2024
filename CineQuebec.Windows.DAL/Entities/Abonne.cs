@@ -1,6 +1,7 @@
 ﻿using CineQuebec.Windows.DAL.Enums;
 using CineQuebec.Windows.Exceptions.AbonneExceptions.DateAdhesion;
 using CineQuebec.Windows.Exceptions.AbonneExceptions.Username;
+using MongoDB.Bson;
 using System.Globalization;
 
 namespace CineQuebec.Windows.DAL.Data
@@ -20,6 +21,8 @@ namespace CineQuebec.Windows.DAL.Data
 
         private string _username;
         private DateTime _dateAdhesion;
+        private bool _isAdmin = false;
+
 
         #endregion ATTRIBUTS
 
@@ -50,7 +53,15 @@ namespace CineQuebec.Windows.DAL.Data
         }
 
         public byte[] Salt { get; set; }
-        public bool isAdmin { get; set; } = false;
+
+
+        public bool IsAdmin
+        {
+            get { return _isAdmin; }
+            set { _isAdmin = value; }
+        }
+
+
         public List<Acteur> Acteurs { get; set; } = new List<Acteur>();
         public List<Realisateur> Realisateurs { get; init; } = new List<Realisateur>();
         public List<Film> Films { get; set; } = new List<Film>();
@@ -74,6 +85,19 @@ namespace CineQuebec.Windows.DAL.Data
         {
             Password = password;
             Salt = salt;
+        }
+
+
+        public Abonne(ObjectId id , string username, byte[] password, byte[] salt, DateTime dateAdhesion, bool isAdmin) : this(username, password, salt, dateAdhesion)
+        {
+            //Constructeur pour l'ajout à la bd.
+            Id = id;
+            Username = username;
+            Password = password;
+            Salt = salt;
+            DateAdhesion = dateAdhesion;
+            IsAdmin = isAdmin;
+
         }
 
         #endregion CONSTRUCTEURS
