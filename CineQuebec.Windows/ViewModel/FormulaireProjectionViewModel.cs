@@ -17,19 +17,23 @@ using System.Windows.Input;
 
 namespace CineQuebec.Windows.ViewModel
 {
-    public class FormulaireProjectionViewModel:PropertyNotifier
+    public class FormulaireProjectionViewModel : PropertyNotifier
     {
         private ObservableProjection _projection;
         private List<Film> _films;
         private IEventAggregator _eventAggregator;
         public ICommand SaveCommand { get; init; }
-
-        public ObservableProjection Projection {
-            get { return _projection; } 
-            set { _projection = value;
+        public Action<string> ErrorOcuured;
+        public Action<bool> AjoutModif;
+        public ObservableProjection Projection
+        {
+            get { return _projection; }
+            set
+            {
+                _projection = value;
                 OnPropertyChanged();
             }
-        
+
         }
 
 
@@ -41,28 +45,29 @@ namespace CineQuebec.Windows.ViewModel
         public DateTime ProjectionTime
         {
             get { return _projectionTime; }
-            set { 
+            set
+            {
                 _projectionTime = value;
                 OnPropertyChanged();
             }
         }
 
 
-        public List<Film > Films { get { return _films; } private set { _films = value;  OnPropertyChanged(); } }
+        public List<Film> Films { get { return _films; } private set { _films = value; OnPropertyChanged(); } }
 
         private readonly IProjectionService _projectionService;
 
         private readonly IFilmService _filmService;
 
 
-        public FormulaireProjectionViewModel(IProjectionService projectionService, IFilmService filmService,IEventAggregator eventAggregator)
+        public FormulaireProjectionViewModel(IProjectionService projectionService, IFilmService filmService, IEventAggregator eventAggregator)
         {
             _projectionService = projectionService;
             _filmService = filmService;
             _eventAggregator = eventAggregator;
             Projection = new();
             Projection.PropertyChanged += ReEvaluateButtonState;
-            SaveCommand = new DelegateCommand(Save, CanSave);            
+            SaveCommand = new DelegateCommand(Save, CanSave);
             GetAllFIlm();
 
 
@@ -77,7 +82,15 @@ namespace CineQuebec.Windows.ViewModel
 
         public async void GetAllFIlm()
         {
-            Films= await  _filmService.GetAllFilms();
+            try
+            {
+                Films = await _filmService.GetAllFilms();
+
+            }
+            catch (Exception ex)
+            {
+                ErrorOcuured?.Invoke(ex.Message);
+            }
         }
 
         private bool CanSave()
@@ -92,19 +105,19 @@ namespace CineQuebec.Windows.ViewModel
                 //Au moment de la sauvegarde, on change l'heure de la projection pour celle dans ProjectionTime
                 var date = Projection.Date;
                 var time = ProjectionTime.TimeOfDay;
-                Projection.Date = new(date.Year,date.Month,date.Day,time.Hours,time.Minutes,time.Seconds);
+                Projection.Date = new(date.Year, date.Month, date.Day, time.Hours, time.Minutes, time.Seconds);
 
 
                 _projectionService.AjouterProjection(Projection.value());
-                MessageBox.Show(Resource.ajoutReussiProjection, Resource.ajout, MessageBoxButton.OK, MessageBoxImage.Information);
                 _eventAggregator.GetEvent<AddModifierProjectionEvent>().Publish(Projection.value());
+                AjoutModif?.Invoke(true);
 
             }
             catch (ExistingProjectionException ex)
             {
-                MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
+                ErrorOcuured?.Invoke(ex.Message);
             }
-            
+
         }
     }
 }

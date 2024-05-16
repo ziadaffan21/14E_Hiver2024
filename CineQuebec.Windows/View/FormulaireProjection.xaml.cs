@@ -12,20 +12,42 @@ using System.Windows.Controls;
 namespace CineQuebec.Windows.View
 {
     /// <summary>
-    /// Logique d'interaction pour AjoutDetailProjection.xaml
+    /// Logique d'interaction pour FormulaireProjection.xaml
     /// </summary>
-    public partial class AjoutDetailProjection : Window
+    public partial class FormulaireProjection : Window
     {
         private StringBuilder sb = new();
 
         private readonly FormulaireProjectionViewModel _viewModel;
 
-        public AjoutDetailProjection(IProjectionService projectionService, IFilmService filmService,IEventAggregator eventAggregator)
+        public FormulaireProjection(IProjectionService projectionService, IFilmService filmService, IEventAggregator eventAggregator, Projection projection = null)
         {
             InitializeComponent();
-            _viewModel=new FormulaireProjectionViewModel(projectionService, filmService, eventAggregator);
+            _viewModel = new FormulaireProjectionViewModel(projectionService, filmService, eventAggregator);
             DataContext = _viewModel;
             calendrier.DisplayDateStart = DateTime.Now;
+            _viewModel.ErrorOcuured += ViewModel_ErrorOccured;
+            _viewModel.AjoutModif += ViewModel_AjoutModif;
+            Unloaded += AjoutDetailProjection_Unloaded;
+        }
+
+        private void AjoutDetailProjection_Unloaded(object sender, RoutedEventArgs e)
+        {
+            _viewModel.AjoutModif -= ViewModel_AjoutModif;
+            _viewModel.ErrorOcuured -= ViewModel_ErrorOccured;
+
+        }
+
+        private void ViewModel_AjoutModif(bool etat)
+        {
+            if (etat)
+                MessageBox.Show(Resource.ajoutReussiProjection, Resource.ajout, MessageBoxButton.OK, MessageBoxImage.Information);
+            DialogResult = true;
+        }
+
+        private void ViewModel_ErrorOccured(string error)
+        {
+            MessageBox.Show(error, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         private void btnCreer_Click(object sender, RoutedEventArgs e)
@@ -56,7 +78,7 @@ namespace CineQuebec.Windows.View
         private bool ValiderForm()
         {
             sb.Clear();
-           
+
             if (calendrier.SelectedDate is null || calendrier.SelectedDate < DateTime.Today)
                 sb.AppendLine($"La date sélectionnée doit être plus grande ou égale à {DateTime.Today}.");
             //if (horloge.SelectedTime is null)

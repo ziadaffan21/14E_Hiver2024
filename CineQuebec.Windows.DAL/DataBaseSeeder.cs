@@ -88,11 +88,11 @@ namespace CineQuebec.Windows.DAL
             }
 
             var jsonContent = File.ReadAllText(chemin);
-            var abonnes = json.Deserialize<List<Abonne>>(jsonContent);
+           // var abonnes = json.Deserialize<List<Abonne>>(jsonContent);
 
 
-            var bsonAbonnes = abonnes.Select(abonne => abonne.ToBsonDocument()).ToList();
-            await abonneCollection.InsertManyAsync(bsonAbonnes);
+            //var bsonAbonnes = abonnes.Select(abonne => abonne.ToBsonDocument()).ToList();
+            //await abonneCollection.InsertManyAsync(bsonAbonnes);
         }
 
         private async Task SeedActeur()

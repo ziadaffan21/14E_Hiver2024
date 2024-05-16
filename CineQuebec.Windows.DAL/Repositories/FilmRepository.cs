@@ -1,6 +1,7 @@
 ﻿using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.Exceptions.FilmExceptions;
 using CineQuebec.Windows.DAL.InterfacesRepositorie;
+using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace CineQuebec.Windows.DAL.Repositories
@@ -8,6 +9,7 @@ namespace CineQuebec.Windows.DAL.Repositories
     public class FilmRepository : IFilmRepository
     {
         private const string FILMS = "Films";
+        private const string PROJECTION = "Projections";
         private readonly IMongoClient _mongoBDClinet;
         private readonly IDataBaseUtils _dataBaseUtils;
 
@@ -55,5 +57,15 @@ namespace CineQuebec.Windows.DAL.Repositories
 
             return film;
         }
+
+        public async Task SupprimerFilm(ObjectId id)
+        {
+            var tableFilm = _mongoDataBase.GetCollection<Film>(FILMS);
+            var tableProjections = _mongoDataBase.GetCollection<Projection>(PROJECTION);
+
+            await tableFilm.FindOneAndDeleteAsync(f => f.Id == id);
+            await tableProjections.DeleteManyAsync(f => f.Film.Id == id);
+        }
+
     }
 }

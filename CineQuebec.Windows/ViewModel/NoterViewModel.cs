@@ -8,6 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Input;
 using Prism.Commands;
+using ZstdSharp.Unsafe;
 
 
 namespace CineQuebec.Windows.ViewModel
@@ -20,6 +21,7 @@ namespace CineQuebec.Windows.ViewModel
         private float _noteTotal;
         private ObservableNote _note = new(null);
         private bool noteExiste = false;
+        private Window _window;
         public ICommand EnregistrerNoteCommand { get; set; }
 
         public ObservableNote Note
@@ -51,21 +53,30 @@ namespace CineQuebec.Windows.ViewModel
             }
         }
 
-        public NoterViewModel(INoteService noteService, Film film)
+        public NoterViewModel(INoteService noteService, Film film, Window window)
         {
             this._noteService = noteService;
             this.Film = film;
             EnregistrerNoteCommand = new DelegateCommand(Save);
             GetNote(film.Id);
+            _window = window;
         }
 
         private void Save()
         {
             if (!noteExiste)
+            {
                 _noteService.Add(Note.Value());
-            else _noteService.Update(Note.Value());
+                _window.DialogResult = true;
+
+            }
+
+            else
+            {
+                _noteService.Update(Note.Value());
             SuccessMessage.Invoke("La note a été enregistrée avec succès.");
             GetNoteForFilm();
+            }
         }
 
         public void OnLoad(object sender, RoutedEventArgs e)

@@ -40,7 +40,7 @@ namespace CineQuebec.Windows.View
             InitializeComponent();
             _film = film;
             _noteService = noteService;
-            _viewModel = new NoterViewModel(noteService, film);
+            _viewModel = new NoterViewModel(noteService, film,this);
             DataContext = _viewModel;
             Loaded += _viewModel.OnLoad;
             ((NoterViewModel)this.DataContext).SuccessMessage += HandleSuccess;
