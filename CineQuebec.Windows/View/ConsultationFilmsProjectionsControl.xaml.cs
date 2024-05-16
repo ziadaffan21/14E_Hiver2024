@@ -32,7 +32,19 @@ namespace CineQuebec.Windows.View
             _eventAggregator = eventAggregator;
             DataContext = _viewModel;
             Loaded += _viewModel.Load;
+            _viewModel.ErrorOccured += _viewModel_ErrorOccured;
+            Unloaded += ConsultationFilmsProjectionsControl_Unloaded;
             InitializeComponent();
+        }
+
+        private void ConsultationFilmsProjectionsControl_Unloaded(object sender, RoutedEventArgs e)
+        {
+            _viewModel.ErrorOccured -= _viewModel_ErrorOccured;
+        }
+
+        private void _viewModel_ErrorOccured(string error)
+        {
+            MessageBox.Show(error, Resource.erreur,MessageBoxButton.OK,MessageBoxImage.Error);
         }
 
         /// <summary>
@@ -49,6 +61,7 @@ namespace CineQuebec.Windows.View
 
                 detailFilm.ShowDialog();
             }
+            
         }
 
         private void lstFilms_SelectionChanged(object sender, SelectionChangedEventArgs e)

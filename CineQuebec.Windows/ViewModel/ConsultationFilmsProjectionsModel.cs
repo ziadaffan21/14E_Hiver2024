@@ -21,6 +21,7 @@ namespace CineQuebec.Windows.ViewModel
         public ObservableCollection<Projection> Projections { get; init; }=new();
         private readonly IFilmService _filmService;
         private readonly IProjectionService _projectionService;
+        public Action<string> ErrorOccured;
 
 
         public ConsultationFilmsProjectionsModel(IFilmService filmService,IProjectionService projectionService, IEventAggregator eventAggregator)
@@ -34,29 +35,47 @@ namespace CineQuebec.Windows.ViewModel
 
         internal async void Load(object sender, RoutedEventArgs e)
         {
-            Films.Clear();
-            Projections.Clear();
-
-            foreach (Film film in await _filmService.GetAllFilms())
+            try
             {
-                Films.Add(film);
+                Films.Clear();
+                Projections.Clear();
+
+                foreach (Film film in await _filmService.GetAllFilms())
+                {
+                    Films.Add(film);
+                }
+
+                foreach (Projection projection in _projectionService.GetAllProjections())
+                {
+                    Projections.Add(projection);
+                }
+            }
+            catch (Exception ex)
+            {
+
+                ErrorOccured?.Invoke(ex.Message);
             }
 
-            foreach (Projection projection in _projectionService.GetAllProjections())
-            {
-                Projections.Add(projection);
-            }
 
         }
 
         internal async void LoadProjectionFilm(ObjectId id)
         {
-            if (!ObjectId.TryParse(id.ToString(), out _)) throw new InvalidGuidException($"L'id {id} est invalid");
-            Projections.Clear();
-            foreach (Projection projection in await _projectionService.GetProjectionsById(id))
+            try
             {
-                Projections.Add(projection);
+                if (!ObjectId.TryParse(id.ToString(), out _)) throw new InvalidGuidException($"L'id {id} est invalid");
+                Projections.Clear();
+                foreach (Projection projection in await _projectionService.GetProjectionsById(id))
+                {
+                    Projections.Add(projection);
+                }
             }
+            catch (Exception ex)
+            {
+
+                ErrorOccured?.Invoke(ex.Message);
+            }
+
         }
     }
 }
