@@ -18,5 +18,6 @@ namespace CineQuebec.Windows.DAL.InterfacesRepositorie
         Task<List<Projection>> GetProjectionsForUser(ObjectId idFilm, ObjectId idUser);
         Task<List<Projection>> GetUpcomingProjection(ObjectId projectionId);
         Task SupprimerProjection(ObjectId id);
+        Task ModifierProjecion(Projection projection);
     }
 }

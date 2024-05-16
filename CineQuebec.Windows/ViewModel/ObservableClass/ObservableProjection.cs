@@ -14,6 +14,11 @@ namespace CineQuebec.Windows.ViewModel.ObservableClass
     {
         private Projection _projection = new();
 
+        public ObservableProjection(Projection projection)
+        {
+            _projection = projection;
+        }
+
 
         #region PROPRIÉTÉS ET INDEXEURS
 

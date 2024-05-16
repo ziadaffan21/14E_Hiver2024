@@ -78,6 +78,7 @@ namespace CineQuebec.Windows.ViewModel
             {
                 await _projectionService.SupprimerProjection(projection.Id);
                 Load(null,null);
+                LoadProjectionFilm(projection.Film.Id);
                 MessageBox.Show("La projection a été supprimé avec succées");
 
             }
@@ -98,12 +99,20 @@ namespace CineQuebec.Windows.ViewModel
 
         internal void ModifierProjection(IEventAggregator eventAggregator, Projection projection)
         {
+            if (projection.Date < DateTime.Now)
+            {
+                MessageBox.Show("Impossible de modifier une projection qui est déja passé.", "Modification",MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+
             FormulaireProjection detailProjection = new FormulaireProjection(_projectionService, _filmService, eventAggregator, projection);
            bool reponse = (bool)detailProjection.ShowDialog();
 
             if (reponse)
             {
                 Load(null, null);
+                LoadProjectionFilm(projection.Film.Id);
             }
         }
 

@@ -1,4 +1,5 @@
 ﻿using CineQuebec.Windows.DAL.Data;
+using CineQuebec.Windows.DAL.Enums;
 using CineQuebec.Windows.DAL.Exceptions.ProjectionException;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
 using CineQuebec.Windows.Exceptions;
@@ -19,16 +20,50 @@ namespace CineQuebec.Windows.View
         private StringBuilder sb = new();
 
         private readonly FormulaireProjectionViewModel _viewModel;
+        private Etat Etat = Etat.Ajouter;
 
         public FormulaireProjection(IProjectionService projectionService, IFilmService filmService, IEventAggregator eventAggregator, Projection projection = null)
         {
             InitializeComponent();
-            _viewModel = new FormulaireProjectionViewModel(projectionService, filmService, eventAggregator);
+            _viewModel = new FormulaireProjectionViewModel(projectionService, filmService, eventAggregator,projection);
             DataContext = _viewModel;
             calendrier.DisplayDateStart = DateTime.Now;
             _viewModel.ErrorOcuured += ViewModel_ErrorOccured;
             _viewModel.AjoutModif += ViewModel_AjoutModif;
             Unloaded += AjoutDetailProjection_Unloaded;
+            Etat = projection == null ? Etat.Ajouter : Etat.Modifier;
+            if (Etat == Etat.Modifier)
+            {
+                _viewModel.ProjectionTime = projection.Date;
+            }
+        }
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            InitialiserFormulaire();
+        }
+
+        private void InitialiserFormulaire()
+        {
+            cboFilm.Focus();
+            txtPlace.Focus();
+
+            switch (Etat)
+            {
+                case Etat.Ajouter:
+                    lblTitre.Text = "Ajouter un film";
+                    btnAjouterModifier.Content = "Ajouter";
+                    break;
+
+                case Etat.Modifier:
+                    lblTitre.Text = "Modifier un film";
+                    btnAjouterModifier.Content = "Modifier";
+                    
+                    break;
+
+                default:
+                    DialogResult = false;
+                    break;
+            }   
         }
 
         private void AjoutDetailProjection_Unloaded(object sender, RoutedEventArgs e)
@@ -42,7 +77,7 @@ namespace CineQuebec.Windows.View
         {
             if (etat)
                 MessageBox.Show(Resource.ajoutReussiProjection, Resource.ajout, MessageBoxButton.OK, MessageBoxImage.Information);
-            DialogResult = true;
+            //DialogResult = true;
         }
 
         private void ViewModel_ErrorOccured(string error)
@@ -93,17 +128,7 @@ namespace CineQuebec.Windows.View
 
             return true;
         }
-
-        private void Window_Loaded(object sender, RoutedEventArgs e)
-        {
-            InitialiserFormulaireAjout();
-        }
-
-        private void InitialiserFormulaireAjout()
-        {
-            cboFilm.Focus();
-            txtPlace.Focus();
-        }
+     
 
         private void horloge_ContextMenuClosing(object sender, ContextMenuEventArgs e)
         {
