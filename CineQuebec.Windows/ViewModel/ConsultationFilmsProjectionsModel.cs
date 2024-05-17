@@ -74,7 +74,7 @@ namespace CineQuebec.Windows.ViewModel
 
         public async void SupprimerProjection(Projection projection)
         {
-            MessageBoxResult reponse = MessageBox.Show($"Voulez vous supprimer la projection de {projection}","Confirmation",MessageBoxButton.YesNo,MessageBoxImage.Hand);
+            MessageBoxResult reponse = MessageBox.Show($"Voulez vous supprimer la projection de {projection}","Confirmation",MessageBoxButton.YesNo,MessageBoxImage.Question);
 
             if (reponse == MessageBoxResult.Yes)
             {
@@ -88,7 +88,7 @@ namespace CineQuebec.Windows.ViewModel
 
         public async void SupprimerFilm(Film film)
         {
-            MessageBoxResult reponse = MessageBox.Show($"Voulez vous supprimer la projection de {film}", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Hand);
+            MessageBoxResult reponse = MessageBox.Show($"Voulez vous supprimer la projection de {film}", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Question);
 
             if (reponse == MessageBoxResult.Yes)
             {
