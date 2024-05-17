@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CineQuebec.Windows.ViewModel.Event
 {
-    internal class AddModifierProjectionEvent:PubSubEvent<Projection>
+    public class AddModifierProjectionEvent:PubSubEvent<Projection>
     {
     }
 }

@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace CineQuebec.Windows.ViewModel
 {
-    internal class ReservationViewModel : PropertyNotifier
+    public class ReservationViewModel : PropertyNotifier
     {
         private readonly IProjectionService _projectionService;
         private string _gpoProjections;
@@ -85,7 +85,7 @@ namespace CineQuebec.Windows.ViewModel
             Window = window; // Store the window instance for later use
         }
 
-        private async void AddReservation()
+        public async void AddReservation()
         {
             try
             {
@@ -122,7 +122,7 @@ namespace CineQuebec.Windows.ViewModel
 
         }
 
-        internal async void ChargerProjection()
+        public async void ChargerProjection()
         {
             var projectionsCharge = await _projectionService.GetUpcomingProjections(Film.Id);
 

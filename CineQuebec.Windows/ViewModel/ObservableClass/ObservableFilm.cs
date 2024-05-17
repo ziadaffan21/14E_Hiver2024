@@ -95,12 +95,12 @@ namespace CineQuebec.Windows.ViewModel.ObservableClass
             IndexCategorie = film is null ? -1 : (int)Categorie;
         }
 
-        internal Film value()
+        public Film value()
         {
             return _film;
         }
 
-        internal bool IsValid()
+        public bool IsValid()
         {
             return IndexCategorie!=-1 && Duree > 30 && !string.IsNullOrWhiteSpace(Titre.Trim()) && Titre.Trim().Length < Film.NB_MAX_CARACTERES_USERNAME && Titre.Trim().Length > Film.NB_MIN_CARACTERES_USERNAME;
         }

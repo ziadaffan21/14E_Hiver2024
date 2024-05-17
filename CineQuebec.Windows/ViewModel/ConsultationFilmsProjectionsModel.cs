@@ -20,8 +20,8 @@ namespace CineQuebec.Windows.ViewModel
 {
     public class ConsultationFilmsProjectionsModel:PropertyNotifier
     {
-        public ObservableCollection<Film> Films { get; init; } =new();
-        public ObservableCollection<Projection> Projections { get; init; }=new();
+        public ObservableCollection<Film> Films { get; init; }
+        public ObservableCollection<Projection> Projections { get; init; }
         public Film SelectedFilm { get; init; }
         public Projection SelectedProjection { get; init; }
 
@@ -34,11 +34,13 @@ namespace CineQuebec.Windows.ViewModel
         {
             _filmService = filmService;
             _projectionService = projectionService;
+            Films = new ObservableCollection<Film>();
+            Projections = new ObservableCollection<Projection>();
             eventAggregator.GetEvent<AddModifierFilmEvent>().Subscribe(Films.Add);
             eventAggregator.GetEvent<AddModifierProjectionEvent>().Subscribe(Projections.Add);
         }
 
-        internal async void Load(object sender, RoutedEventArgs e)
+        public async void Load(object sender, RoutedEventArgs e)
         {
             try
             {
@@ -59,7 +61,7 @@ namespace CineQuebec.Windows.ViewModel
 
         }
 
-        internal async void LoadProjectionFilm(ObjectId id)
+        public async void LoadProjectionFilm(ObjectId id)
         {
             if (!ObjectId.TryParse(id.ToString(), out _)) throw new InvalidGuidException($"L'id {id} est invalid");
             Projections.Clear();
@@ -70,7 +72,7 @@ namespace CineQuebec.Windows.ViewModel
             }
         }
 
-        internal async void SupprimerProjection(Projection projection)
+        public async void SupprimerProjection(Projection projection)
         {
             MessageBoxResult reponse = MessageBox.Show($"Voulez vous supprimer la projection de {projection}","Confirmation",MessageBoxButton.YesNo,MessageBoxImage.Hand);
 
@@ -84,7 +86,7 @@ namespace CineQuebec.Windows.ViewModel
             }
         }
 
-        internal async void SupprimerFilm(Film film)
+        public async void SupprimerFilm(Film film)
         {
             MessageBoxResult reponse = MessageBox.Show($"Voulez vous supprimer la projection de {film}", "Confirmation", MessageBoxButton.YesNo, MessageBoxImage.Hand);
 
@@ -97,7 +99,7 @@ namespace CineQuebec.Windows.ViewModel
 
         }
 
-        internal void ModifierProjection(IEventAggregator eventAggregator, Projection projection)
+        public void ModifierProjection(IEventAggregator eventAggregator, Projection projection)
         {
             if (projection.Date < DateTime.Now)
             {
@@ -116,7 +118,7 @@ namespace CineQuebec.Windows.ViewModel
             }
         }
 
-        internal void ModifierFIlm(IEventAggregator eventAggregator, Film film)
+        public void ModifierFIlm(IEventAggregator eventAggregator, Film film)
         {
             DetailFilm detailFilm = new DetailFilm(_filmService, eventAggregator, film);
 

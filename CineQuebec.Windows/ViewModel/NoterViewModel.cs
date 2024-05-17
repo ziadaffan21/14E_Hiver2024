@@ -62,7 +62,7 @@ namespace CineQuebec.Windows.ViewModel
             _window = window;
         }
 
-        private void Save()
+        public void Save()
         {
             if (!noteExiste)
             {
@@ -84,7 +84,7 @@ namespace CineQuebec.Windows.ViewModel
             GetNoteForFilm();
         }
 
-        private async void GetNoteForFilm()
+        public async void GetNoteForFilm()
         {
             NoteTotal = await _noteService.GetRatingForFilm(_film.Id);
         }

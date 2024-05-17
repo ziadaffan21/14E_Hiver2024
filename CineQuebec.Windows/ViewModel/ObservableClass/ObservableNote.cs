@@ -56,7 +56,7 @@ namespace CineQuebec.Windows.ViewModel.ObservableClass
         {
             _note = note is null ? new() : note;
         }
-        internal Note Value()
+        public Note Value()
         {
             _note.Id = Id;
             _note.FilmId = IdFilm;
@@ -64,9 +64,11 @@ namespace CineQuebec.Windows.ViewModel.ObservableClass
             _note.NoteValue = NoteValue;
             return _note;
         }
-        internal bool IsValid()
+        public bool IsValid()
         {
-            return NoteValue >= 0 || NoteValue <= 10;
+            if (NoteValue >= 0 && NoteValue <= 10)
+                return true;
+            return false ;
         }
         public override string ToString()
         {

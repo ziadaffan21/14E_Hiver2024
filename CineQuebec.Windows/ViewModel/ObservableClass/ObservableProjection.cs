@@ -14,6 +14,10 @@ namespace CineQuebec.Windows.ViewModel.ObservableClass
     {
         private Projection _projection = new();
 
+        public ObservableProjection()
+        {
+            
+        }
         public ObservableProjection(Projection projection)
         {
             _projection = projection != null ? projection : new();
@@ -64,12 +68,12 @@ namespace CineQuebec.Windows.ViewModel.ObservableClass
         #endregion PROPRIÉTÉS ET INDEXEURS
 
         #region MÉTHODES
-        internal Projection value()
+        public Projection Value()
         {
             return _projection;
         }
 
-        internal bool IsValid()
+        public bool IsValid()
         {
             return Film is not null && PlaceDisponible >= Projection.NB_PLACE_MIN && Date >= DateTime.Now;
         }

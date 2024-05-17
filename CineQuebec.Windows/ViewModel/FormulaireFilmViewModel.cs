@@ -63,7 +63,7 @@ namespace CineQuebec.Windows.ViewModel
             SaveCommand = film is null ? new DelegateCommand(Ajout, CanSave) : new DelegateCommand(Save, CanSave);
         }
 
-        private async void Ajout()
+        public async void Ajout()
         {
             try
             {
@@ -93,7 +93,7 @@ namespace CineQuebec.Windows.ViewModel
 
         }
 
-        private async void Save()
+        public async void Save()
         {
             try
             {
@@ -108,7 +108,7 @@ namespace CineQuebec.Windows.ViewModel
             }
         }
 
-        private void ValiderForm()
+        public void ValiderForm()
         {
 
             if (string.IsNullOrWhiteSpace(Film.Titre.Trim()) || Film.Titre.Trim().Length > 100 || Film.Titre.Trim().Length <2)
