@@ -1,4 +1,5 @@
 ﻿using CineQuebec.Windows.DAL.Data;
+using MongoDB.Bson;
 
 namespace CineQuebec.Windows.DAL.ServicesInterfaces
 {
@@ -9,5 +10,6 @@ namespace CineQuebec.Windows.DAL.ServicesInterfaces
         Task AjouterFilm(Film film);
 
         Task ModifierFilm(Film film);
+        Task SupprimerFilm(ObjectId id);
     }
 }

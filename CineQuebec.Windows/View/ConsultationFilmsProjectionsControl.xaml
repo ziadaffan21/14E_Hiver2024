@@ -38,11 +38,25 @@
 
         <GroupBox Grid.Row="1"  Header="Films" Style="{StaticResource MaterialDesignGroupBox}" Width="400" HorizontalAlignment="Left" Height="250" VerticalAlignment="Top" Margin="5,0,5,0">
             <ListBox x:Name="lstFilms" HorizontalAlignment="Left" VerticalAlignment="Top" ItemsSource="{Binding Films}"
-                 ItemContainerStyle="{StaticResource MaterialDesignListBoxItem}" Width="385" Height="212" MouseDoubleClick="lstFilm_DoubleClick" SelectionChanged="lstFilms_SelectionChanged"  />
+                 ItemContainerStyle="{StaticResource MaterialDesignListBoxItem}" Width="385" Height="212"  SelectionChanged="lstFilms_SelectionChanged">
+                <ListBox.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Modifier" Name="btModifierFilm" Click="btModifierFilm_Click"/>
+                        <MenuItem Header="Supprimer" Name="btSupprimerFilm" Click="btSupprimerFilm_Click"/>
+                    </ContextMenu>
+                </ListBox.ContextMenu>
+
+            </ListBox>
         </GroupBox>
         <GroupBox Grid.Row="1" Grid.Column="1" Name="gpoProjections"  Header="Projections" Style="{StaticResource MaterialDesignGroupBox}" Width="400" HorizontalAlignment="Left" Height="250" VerticalAlignment="Top" Margin="5,0,5,0">
-            <ListBox x:Name="lstProjections" ItemsSource="{Binding Projections}" HorizontalAlignment="Left" VerticalAlignment="Top"
-          ItemContainerStyle="{StaticResource MaterialDesignListBoxItem}" Width="385" Height="212" />
+            <ListBox x:Name="lstProjections" ItemsSource="{Binding Projections}" HorizontalAlignment="Left" VerticalAlignment="Top" ItemContainerStyle="{StaticResource MaterialDesignListBoxItem}" Width="385" Height="212" >
+                <ListBox.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Modifier" Name="btModifierProjection" Click="btModifierProjection_Click"/>
+                        <MenuItem Header="Supprimer" Name="btSupprimerProjection" Click="btSupprimerProjection_Click"/>
+                    </ContextMenu>
+                </ListBox.ContextMenu>
+            </ListBox>
         </GroupBox>
     </Grid>
 </UserControl>

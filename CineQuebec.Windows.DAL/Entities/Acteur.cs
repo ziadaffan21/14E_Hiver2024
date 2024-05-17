@@ -1,4 +1,5 @@
 ﻿using CineQuebec.Windows.DAL.Entities;
+using MongoDB.Bson;
 
 namespace CineQuebec.Windows.DAL.Data
 {
@@ -8,8 +9,17 @@ namespace CineQuebec.Windows.DAL.Data
         {
         }
 
-        public Acteur(string prenom, string nom, DateTime naissance) : base(prenom, nom, naissance)
+        public Acteur(string prenom, string nom, DateTime naissance, ObjectId? id = null) : base(prenom, nom, naissance)
         {
+            Nom = nom;
+            Prenom = prenom;
+            Naissance = naissance;
+
+
+            if (id != null)
+            {
+            Id = (ObjectId)id;
+            }
         }
 
         public override string ToString()

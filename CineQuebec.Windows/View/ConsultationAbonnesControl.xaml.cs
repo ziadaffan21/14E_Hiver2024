@@ -22,5 +22,10 @@ namespace CineQuebec.Windows.View
             Loaded += _viewModel.Load;
             InitializeComponent();
         }
+
+        private void lstUtilisisateurs_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            lstUtilisisateurs.SelectedIndex = -1;
+        }
     }
 }

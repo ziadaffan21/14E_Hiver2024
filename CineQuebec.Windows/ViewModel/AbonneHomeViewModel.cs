@@ -9,15 +9,21 @@ namespace CineQuebec.Windows.ViewModel
     public class AbonneHomeViewModel : PropertyNotifier
     {
         private ObservableCollection<Film> _films = new ObservableCollection<Film>();
-        private readonly IFilmService _filmService;
 
-        public AbonneHomeViewModel(IFilmService filmService)
+        private Abonne _user;
+
+        public Abonne User
         {
-            _filmService = filmService;
-            ChargerFilms();
-
+            get { return _user; }
+            set 
+            {   
+                _user = value;
+                OnPropertyChanged(nameof(User));
+            }
         }
-       
+
+        public string UserImage { get { return $"https://robohash.org/{User.Username}?set=set3"; } }
+
         public ObservableCollection<Film> Films
         {
             get { return _films; }
@@ -31,11 +37,23 @@ namespace CineQuebec.Windows.ViewModel
             }
         }
 
+
+
+
+        private readonly IFilmService _filmService;
+
+        public AbonneHomeViewModel(IFilmService filmService, Abonne user)
+        {
+            _filmService = filmService;
+            User = user;
+            ChargerFilms();
+
+        }
+       
         private async void ChargerFilms()
         {
-            var filmsCharge = await _filmService.GetAllFilms();
+            List<Film> filmsCharge = await _filmService.GetAllFilms();
 
-            //TODO : Mettre les films dans Films
             Films = new(filmsCharge);
 
 

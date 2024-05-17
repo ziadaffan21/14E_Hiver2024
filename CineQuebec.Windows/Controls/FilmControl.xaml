@@ -12,19 +12,26 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         
-        <Border Background="White" CornerRadius="10" Padding="10" Margin="5" Grid.Column="0" Grid.ColumnSpan="2" MouseDown="Border_MouseDown">
+        <Border Background="White" VerticalAlignment="Stretch" Padding="0" Margin="5" Grid.Column="0" Grid.ColumnSpan="2" MouseDown="Border_MouseDown">
             <Border.Effect>
                 <DropShadowEffect  Color="Gray" Direction="0" BlurRadius="5" ShadowDepth="1"/>
             </Border.Effect>
-            <StackPanel Orientation="Horizontal" Margin="5">
-                <Image x:Name="Img" Width="100" Height="100" Margin="5"/>
+            <StackPanel Orientation="Horizontal"  Margin="0">
+
+                <!--<Border VerticalAlignment="Stretch" Padding="0" Margin="5" Grid.Column="0" Grid.ColumnSpan="2">
+                    <Border.Effect>
+                        <DropShadowEffect/>
+                    </Border.Effect>
+                </Border>-->
+                <Image x:Name="Img" Source="{Binding Image}" Width="150" Height="200" Margin="0"/>
+                
+                
                 <StackPanel Orientation="Vertical">
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock x:Name="Titre" Text="{Binding Titre}" FontWeight="Bold"/>
+                        <TextBlock x:Name="Titre" Text="{Binding }" FontSize="24" FontWeight="Bold"/>
                     </StackPanel>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock x:Name="Duree" Text="{Binding Duree}"/>
-                        <TextBlock Text="mins" Margin="10,0,0,0"/>
+                        <TextBlock x:Name="Duree" FontSize="14" Text="{Binding DureeToString}"/>
                     </StackPanel>
                 </StackPanel>
             </StackPanel>

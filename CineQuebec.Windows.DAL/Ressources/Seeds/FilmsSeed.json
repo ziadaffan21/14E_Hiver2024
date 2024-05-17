@@ -1,0 +1,60 @@
+[{
+  "_id": {
+    "$oid": "664005cb5f4e274cb216576a"
+  },
+  "Titre": "The Shawshank Redemption",
+  "Duree": 120,
+  "DateSortie": {
+    "$date": "2024-05-11T23:56:58.373Z"
+  },
+  "Categorie": 8,
+  "EstAffiche": true
+},
+{
+  "_id": {
+    "$oid": "664005cb5f4e274cb216576b"
+  },
+  "Titre": "The Godfather",
+  "Duree": 120,
+  "DateSortie": {
+    "$date": "2024-05-11T23:56:58.408Z"
+  },
+  "Categorie": 11,
+  "EstAffiche": true
+},
+{
+  "_id": {
+    "$oid": "664006065f4e274cb2165778"
+  },
+  "Titre": "543",
+  "Duree": 120,
+  "DateSortie": {
+    "$date": "2024-05-11T23:57:44.799Z"
+  },
+  "Categorie": 4,
+  "EstAffiche": true
+},
+{
+  "_id": {
+    "$oid": "6640060f5f4e274cb2165779"
+  },
+  "Titre": "asfdhgjg",
+  "Duree": 120,
+  "DateSortie": {
+    "$date": "2024-05-11T23:58:00.092Z"
+  },
+  "Categorie": 5,
+  "EstAffiche": true
+},
+{
+  "_id": {
+    "$oid": "6640061a5f4e274cb216577a"
+  },
+  "Titre": "hgfdxcgfdcx",
+  "Duree": 98,
+  "DateSortie": {
+    "$date": "2024-05-11T23:58:09.161Z"
+  },
+  "Categorie": 2,
+  "EstAffiche": false
+}]

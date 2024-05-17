@@ -13,44 +13,33 @@ namespace CineQuebec.Windows.View
     {
         private readonly IProjectionService _projectionService;
         private readonly IFilmService _filmService;
-
-        public Abonne User { get; set; }
-
-
+        private Abonne _user;
+        
+        public Abonne User
+        {
+            get { return _user; }
+            set { _user = value; }
+        }
 
         private ReservationViewModel _viewmodel { get; set; }
 
-        public ReservationView(IFilmService filmService, IProjectionService projectionService, Abonne user)
+        public ReservationView(IProjectionService projectionService, Film film, Abonne user)
         {
-            _viewmodel = new(projectionService, filmService, user);
+
+
+            
+            _viewmodel = new(projectionService, film, user,this);
             DataContext = _viewmodel;
             InitializeComponent();
-
             Loaded += _viewmodel.Loaded;
             Unloaded += _viewmodel.Unloaded;
-            lstFilms.SelectionChanged += _viewmodel.ChargerProjection;
-            lstFilms.ItemsSource = _viewmodel.Films;
-        }
-
-
-
-        private void lstFilms_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            var film = (Film)lstFilms.SelectedItem;
-            if (lstFilms.SelectedIndex >= 0)
-            {
-                gpoProjections.Header = $"Projections ({film.Titre})";
-            }
-            else
-            {
-                gpoProjections.Header = $"Projections";
-            }
+            lstProjections.SelectionChanged += _viewmodel.ReevaluateButton;
         }
 
 
         private void btConfirmer_Click(object sender, RoutedEventArgs e)
         {
-            DialogResult = true;
+            //DialogResult = true;
             //Close();
         }
 

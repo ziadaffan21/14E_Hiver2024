@@ -75,6 +75,15 @@ namespace CineQuebec.Windows.DAL.Data
             Reservations = new();
         }
 
+        public Projection(DateTime date, int placeDisponible, Film film, ObjectId id, List<ObjectId> reservations) : this(date, placeDisponible, film)
+        {
+            Id = id;
+            Date = date;
+            NbPlaces= placeDisponible;
+            Film= film;
+            Reservations = reservations;
+        }
+
 
         #endregion CONSTRUCTEURS
 
@@ -82,7 +91,7 @@ namespace CineQuebec.Windows.DAL.Data
 
         public override string ToString()
         {
-            return $"({Film.Titre}) {Date.Day} {Utils.Utils.GetMoisNom(Date).ToUpper()} {Date.Hour:00}:{Date.Minute:00}";
+            return $"{Date.Day} {Utils.Utils.GetMoisNom(Date)} {Date.Hour}h {Date.Minute:00}";
         }
 
         public bool PlaceDisponible()
