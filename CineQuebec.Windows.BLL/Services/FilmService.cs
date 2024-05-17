@@ -2,6 +2,7 @@
 using CineQuebec.Windows.DAL.Exceptions.FilmExceptions;
 using CineQuebec.Windows.DAL.InterfacesRepositorie;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
+using MongoDB.Bson;
 
 namespace CineQuebec.Windows.DAL.Services
 {
@@ -37,6 +38,12 @@ namespace CineQuebec.Windows.DAL.Services
                 throw new ArgumentNullException("Film", "Le film ne peut pas etre null.");
 
             await _filmRepository.ModifierFilm(film);
+        }
+
+        public async Task SupprimerFilm(ObjectId id)
+        {
+
+            await _filmRepository.SupprimerFilm(id);
         }
     }
 }

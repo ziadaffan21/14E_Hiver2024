@@ -1,7 +1,8 @@
 ﻿using CineQuebec.Windows.BLL.ServicesInterfaces;
 using CineQuebec.Windows.DAL.Data;
+using CineQuebec.Windows.DAL.ServicesInterfaces;
+using CineQuebec.Windows.DAL.Utils;
 using CineQuebec.Windows.ViewModel;
-using CineQuebec.Windows.ViewModel.ObservableClass;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,37 +24,72 @@ namespace CineQuebec.Windows.View
     /// </summary>
     public partial class FilmDetailsView : Window
     {
-        private readonly FilmDetailsViewModel _viewModel;
-        private Film _film;
-        private INoteService _noteService;
+        public FilmDetailsViewModel _viewModel { get; set; } 
 
-
-
-        public FilmDetailsView(INoteService noteService, Film film)
+        public FilmDetailsView(Film film)
         {
-            InitializeComponent();
-            _film = film;
-            _noteService = noteService;
-            _viewModel = new FilmDetailsViewModel(noteService, film);
+
+
+
+            _viewModel = new(film);
             DataContext = _viewModel;
-            Loaded += _viewModel.OnLoad;
-            ((FilmDetailsViewModel)this.DataContext).SuccessMessage += HandleSuccess;
-            this.Unloaded += FilmDetailsViewModel_Unloaded;
+            
+            InitializeComponent();
+            InitialiserDetails();
         }
 
-        private void FilmDetailsViewModel_Unloaded(object sender, RoutedEventArgs e)
+        private void InitialiserDetails()
         {
-            ((FilmDetailsViewModel)this.DataContext).SuccessMessage -= HandleSuccess;
+            Title = _viewModel.Film.Titre;
+            txtTitre.Text = _viewModel.Film.Titre;
+
+            //TODO : Remplacer par une proprieté
+            txtDescription.Text = Film.PLACEHOLDER_DESC;
+
+            FormaterAffichage();
         }
 
-        private void HandleSuccess(string successMessage)
+        private async void FormaterAffichage()
         {
-            MessageBox.Show(successMessage, "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            var film = _viewModel.Film;
+
+            if (film.EstAffiche)
+            {
+                bool hasUpcomingProjections = await _viewModel.HasUpcomingProjections();
+
+                if (hasUpcomingProjections)
+                {
+                    txtIndisponible.Visibility = Visibility.Collapsed;
+                }
+            }
+
+            if (await _viewModel.PeutNoter())
+            {
+                btNoter.Visibility = Visibility.Visible;
+            }
+            if (!await _viewModel.PeutReserver())
+            {
+                btReserver.Visibility = Visibility.Collapsed;
+                txtIndisponible.Visibility = Visibility.Visible;
+                txtIndisponible.Text = $"Aucune projections à venir";
+            }
         }
 
-        private void btnOK_Click(object sender, RoutedEventArgs e)
+        private void btNoter_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            
+        }
+
+       
+
+        private void btReserver_Click(object sender, RoutedEventArgs e)
+        {
+           
+        }
+
+        private void UpdateInterface()
+        {
+            //TODO : Implementer la mise à jour de l'interface
         }
     }
 }

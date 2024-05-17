@@ -33,14 +33,11 @@ namespace CineQuebec.Windows.Controls
         private readonly INoteService _noteService;
 
         public static readonly DependencyProperty FilmProperty =
-            DependencyProperty.Register("Title", typeof(Film), typeof(FilmControl));
+            DependencyProperty.Register("Film", typeof(Film), typeof(FilmControl));
 
         public FilmControl()
         {
             InitializeComponent();
-            var container = (IUnityContainer)Application.Current.Resources["UnityContainer"];
-            _noteService = container.Resolve<INoteService>();
-            Img.Source = new BitmapImage(new Uri("https://placehold.co/600x400"));
         }
 
         private void Border_MouseDown(object sender, MouseButtonEventArgs e)
@@ -50,7 +47,7 @@ namespace CineQuebec.Windows.Controls
 
         private void OuvrirDetails()
         {
-            FilmDetailsView filmDetailsView = new(_noteService, DataContext as Film) ;
+            FilmDetailsView filmDetailsView = new((Film)DataContext);
             filmDetailsView.Show();
         }
     }

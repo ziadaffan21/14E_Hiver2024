@@ -1,23 +1,30 @@
 ﻿using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace CineQuebec.Windows.ViewModel
 {
     public class AbonneHomeViewModel : PropertyNotifier
     {
+
+
         private ObservableCollection<Film> _films = new ObservableCollection<Film>();
+        private Abonne _user;
         private readonly IFilmService _filmService;
+        private readonly IProjectionService _projectionService;
 
-        public AbonneHomeViewModel(IFilmService filmService)
+        public Abonne User
         {
-            _filmService = filmService;
-            ChargerFilms();
-
+            get { return _user; }
+            set
+            {
+                _user = value;
+                OnPropertyChanged(nameof(User));
+            }
         }
-       
+
+        public string UserImage { get { return $"https://robohash.org/{User.Username}?set=set3"; } }
+
         public ObservableCollection<Film> Films
         {
             get { return _films; }
@@ -31,18 +38,34 @@ namespace CineQuebec.Windows.ViewModel
             }
         }
 
+
+
+
+
+        public AbonneHomeViewModel(IFilmService filmService, IProjectionService projectionService, Abonne user)
+        {
+            _filmService = filmService;
+            _projectionService = projectionService;
+            User = user;
+            ChargerFilms();
+
+        }
+
         private async void ChargerFilms()
         {
-            var filmsCharge = await _filmService.GetAllFilms();
+            List<Film> filmsCharge = await _filmService.GetAllFilms();
 
-            //TODO : Mettre les films dans Films
             Films = new(filmsCharge);
 
 
             for (int i = 0; i < Films.Count; i++)
             {
                 var film = Films[i];
-                if (!film.EstAffiche)
+                var projections = await _projectionService.GetUpcomingProjections(film.Id);
+
+                bool estAlafiche = projections.Count > 0;
+
+                if (estAlafiche)
                 {
                     Films.Remove(film);
                 }

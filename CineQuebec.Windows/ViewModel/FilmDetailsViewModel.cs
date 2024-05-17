@@ -1,12 +1,8 @@
-﻿using Amazon.Util.Internal;
-using CineQuebec.Windows.BLL.ServicesInterfaces;
+﻿using CineQuebec.Windows.BLL.ServicesInterfaces;
 using CineQuebec.Windows.DAL.Data;
-using CineQuebec.Windows.DAL.Entities;
+using CineQuebec.Windows.DAL.ServicesInterfaces;
 using CineQuebec.Windows.View;
-using CineQuebec.Windows.ViewModel.ObservableClass;
-using MongoDB.Bson;
 using Prism.Commands;
-using Prism.Events;
 using System.Windows;
 using System.Windows.Input;
 using Unity;
@@ -15,91 +11,117 @@ namespace CineQuebec.Windows.ViewModel
 {
     public class FilmDetailsViewModel : PropertyNotifier
     {
-        private INoteService _noteService;
-        public event Action<string> SuccessMessage;
         private Film _film;
-        private float _noteTotal;
-        private ObservableNote _note = new(null);
-        private bool noteExiste = false;
-        public ICommand EnregistrerNoteCommand { get; set; }
+        private bool _projectionAVenir;
 
-        public ObservableNote Note
-        {
-            get => _note;
-            set
-            {
-                _note = value;
-                OnPropertyChanged();
-            }
-        }
+        private INoteService _noteService;
+        public ICommand EnregistrerNoteCommand { get; set; }
+        private IProjectionService _projectionService { get; set; }
+        public ICommand NoterCommand { get; init; }
+        public ICommand ReserverCommand { get; init; }
         public Film Film
         {
-            get => _film;
+            get { return _film; }
             set
             {
                 _film = value;
-                OnPropertyChanged();
+                OnPropertyChanged(nameof(Film));
             }
         }
 
-        public float NoteTotal
+        public bool ProjectionAVenir
         {
-            get { return _noteTotal; }
+            get => _projectionAVenir;
             set
             {
-                _noteTotal = value;
-                OnPropertyChanged();
+                _projectionAVenir = value;
+                OnPropertyChanged(nameof(ProjectionAVenir));
             }
         }
 
+        private float _noteMoy;
 
-        public FilmDetailsViewModel(INoteService noteService, Film film)
+        public float NoteMoy
         {
-            this._noteService = noteService;
-            this.Film = film;
-            EnregistrerNoteCommand = new DelegateCommand(Save);
-            GetNote(film.Id);
-        }
-
-        private void Save()
-        {
-            if (!noteExiste)
-                _noteService.Add(Note.Value());
-            else _noteService.Update(Note.Value());
-            SuccessMessage.Invoke("La note a été enregistrée avec succès.");
-            GetNoteForFilm();
-        }
-
-        public void OnLoad(object sender, RoutedEventArgs e)
-        {
-            GetNoteForFilm();
-        }
-
-        private async void GetNoteForFilm()
-        {
-            NoteTotal = await _noteService.GetRatingForFilm(_film.Id);
-        }
-        private async void GetNote(ObjectId idFilm)
-        {
-            var note = await _noteService.FindById(idFilm, ((ConnecteWindowPrincipal)Application.Current.MainWindow).User.Id);
-            if (note is not null)
+            get { return _noteMoy; }
+            set
             {
-                noteExiste = true;
-                Note = new ObservableNote
-                {
-                    Id = note.Id,
-                    IdAbonne = note.AbonneId,
-                    IdFilm = note.FilmId,
-                    NoteValue = note.NoteValue
-                };
+                _noteMoy = value;
+                OnPropertyChanged(nameof(NoteMoy));
             }
-            else
-                Note = new ObservableNote
-                {
-                    IdAbonne = ((ConnecteWindowPrincipal)Application.Current.MainWindow).User.Id,
-                    IdFilm = idFilm
-                };
+        }
+        public Abonne User { get; set; }
+
+
+
+        public FilmDetailsViewModel(Film film)
+        {
+            var container = (IUnityContainer)Application.Current.Resources["UnityContainer"];
+            _noteService = container.Resolve<INoteService>();
+            _projectionService = container.Resolve<IProjectionService>();
+            Film = film;
+            User = ((ConnecteWindowPrincipal)Application.Current.MainWindow).User;
+            NoterCommand = new DelegateCommand(OuvrirFormNoter);
+            ReserverCommand = new DelegateCommand(OuvrirFormReserver);
+
+            //Méthode temporaire pour ajouter la note moyenne
+            _ = InitialiserAsync();
         }
 
+        private async Task InitialiserAsync()
+        {
+            NoteMoy = await _noteService.GetRatingForFilm(Film.Id);
+        }
+
+        public async Task<bool> PeutNoter()
+        {
+            List<Projection> projections = await _projectionService.GetProjectionsForUser(Film.Id, User.Id);
+            foreach (var projection in projections)
+            {
+                if (projection.Date < DateTime.Now)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        public async Task<bool> PeutReserver()
+        {
+            List<Projection> projections = await _projectionService.GetProjectionsById(Film.Id);
+
+            for (int i = 0; i < projections.Count; i++)
+            {
+                var projection = projections[i];
+
+                if (projection.Reservations.Contains(User.Id))
+                {
+                    projections.Remove(projection);
+                }
+            }
+            return projections.Count > 0;
+        }
+
+        private void OuvrirFormNoter()
+        {
+            NoterView noterView = new NoterView(_noteService, Film);
+            noterView.Show();
+        }
+
+        private void OuvrirFormReserver()
+        {
+            ReservationView reservationView = new(_projectionService, Film, User);
+            if (reservationView.ShowDialog() == true)
+            {
+
+            }
+        }
+
+        internal async Task<bool> HasUpcomingProjections()
+        {
+            var projections = await _projectionService.GetUpcomingProjections(Film.Id);
+
+            return projections.Count > 0;
+        }
     }
 }

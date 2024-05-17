@@ -1,4 +1,5 @@
 ﻿using CineQuebec.Windows.DAL.Data;
+using MongoDB.Bson;
 
 namespace CineQuebec.Windows.DAL.InterfacesRepositorie
 {
@@ -11,5 +12,6 @@ namespace CineQuebec.Windows.DAL.InterfacesRepositorie
         Task<List<Film>> ReadFilms();
 
         Task<Film> GetFilmByTitre(string titre);
+        Task SupprimerFilm(ObjectId id);
     }
 }

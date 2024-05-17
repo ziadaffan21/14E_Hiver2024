@@ -23,7 +23,7 @@ namespace CineQuebec.Windows.View
         private readonly IEventAggregator _eventAggregator;
         private readonly ConsultationFilmsProjectionsModel _viewModel;
 
-        public ConsultationFilmsProjectionsControl(IFilmService filmService, IProjectionService projectionService,IEventAggregator eventAggregator)
+        public ConsultationFilmsProjectionsControl(IFilmService filmService, IProjectionService projectionService, IEventAggregator eventAggregator)
         {
             _filmService = filmService;
             _projectionService = projectionService;
@@ -31,24 +31,20 @@ namespace CineQuebec.Windows.View
             _viewModel = new ConsultationFilmsProjectionsModel(filmService, projectionService, eventAggregator);
             _eventAggregator = eventAggregator;
             DataContext = _viewModel;
-            Loaded += _viewModel.Load;
+            Loaded += _viewModel.Load; 
+            _viewModel.ErrorOccured += _viewModel_ErrorOccured;
+            Unloaded += ConsultationFilmsProjectionsControl_Unloaded;
             InitializeComponent();
         }
 
-        /// <summary>
-        /// Événement lancé lors de lu double click d'un élément dans la liste des films
-        /// </summary>
-        /// <param name="sender">ListBox contenant les films</param>
-        /// <param name="e"></param>
-        private void lstFilm_DoubleClick(object sender, MouseButtonEventArgs e)
+        private void ConsultationFilmsProjectionsControl_Unloaded(object sender, RoutedEventArgs e)
         {
-            if (lstFilms.SelectedItem != null)
-            {
-                Film film = lstFilms.SelectedItem as Film;
-                DetailFilm detailFilm = new DetailFilm(_filmService,_eventAggregator, film);
+            _viewModel.ErrorOccured -= _viewModel_ErrorOccured;
+        }
 
-                detailFilm.ShowDialog();
-            }
+        private void _viewModel_ErrorOccured(string error)
+        {
+            MessageBox.Show(error, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
         }
 
         private void lstFilms_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -61,16 +57,62 @@ namespace CineQuebec.Windows.View
 
         private void btnAjoutFilm_Click(object sender, RoutedEventArgs e)
         {
-            DetailFilm detailFilm = new DetailFilm(_filmService,_eventAggregator);
+            DetailFilm detailFilm = new DetailFilm(_filmService, _eventAggregator);
             detailFilm.ShowDialog();
-            
+
         }
 
         private void btnAjoutProjection_Click(object sender, RoutedEventArgs e)
         {
-            AjoutDetailProjection detailProjection = new AjoutDetailProjection(_projectionService, _filmService,_eventAggregator);
-            detailProjection.ShowDialog();
+            FormulaireProjection detailProjection = new FormulaireProjection(_projectionService,_filmService,_eventAggregator);
+
+            
+            bool reponse = (bool)detailProjection.ShowDialog();
+            
             lstFilms.SelectedIndex = -1;
+        }
+
+        private void btModifierProjection_Click(object sender, RoutedEventArgs e)
+        {
+            Projection projection = lstProjections.SelectedItem as Projection;
+            if (projection != null)
+            {
+                _viewModel.ModifierProjection(_eventAggregator, projection);
+                lstFilms.SelectedIndex = -1;
+            }
+        }
+
+        private void btSupprimerProjection_Click(object sender, RoutedEventArgs e)
+        {
+            Projection projection = (Projection)lstProjections.SelectedItem;
+
+            if (projection != null)
+            {
+                _viewModel.SupprimerProjection(projection);
+            }
+
+        }
+
+        private void btModifierFilm_Click(object sender, RoutedEventArgs e)
+        {
+            Film film = lstFilms.SelectedItem as Film;
+
+            if (film != null)
+            {
+                
+                _viewModel.ModifierFIlm(_eventAggregator, film);
+            }
+        }
+
+        private void btSupprimerFilm_Click(object sender, RoutedEventArgs e)
+        {
+
+            Film film = (Film)lstFilms.SelectedItem;
+
+            if (film != null)
+            {
+                _viewModel.SupprimerFilm(film);
+            }
         }
     }
 }
