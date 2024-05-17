@@ -55,7 +55,7 @@ namespace CineQuebec.Windows.ViewModel
             {
                 string password = Utils.ConvertToUnsecureString(ObservableUsersignInLogIn.SecurePassword);
                 ValidationFormulaire(ObservableUsersignInLogIn.Username, password);
-                Abonne _abonne = new Abonne(ObservableUsersignInLogIn.Username, DateTime.Now);
+                Abonne _abonne = new Abonne(ObservableUsersignInLogIn.Username.ToLower(), DateTime.Now);
                 _abonne.Salt = PasswodHasher.CreateSalt();
                 _abonne.Password = PasswodHasher.HashPassword(password, _abonne.Salt);
 
