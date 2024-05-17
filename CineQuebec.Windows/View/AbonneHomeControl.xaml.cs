@@ -23,6 +23,7 @@ namespace CineQuebec.Windows.View
 
         private AbonneHomeViewModel _viewModel;
 
+        //TODO : Changer ça
         public static IProjectionService ProjectionService;
         public static Abonne CurrentUser { get; internal set; }
 
@@ -36,7 +37,7 @@ namespace CineQuebec.Windows.View
             _projectionService = projectionService;
             ProjectionService = projectionService;
 
-            _viewModel = new(filmService, User);
+            _viewModel = new(filmService,_projectionService, User);
             DataContext = _viewModel;
         }
 

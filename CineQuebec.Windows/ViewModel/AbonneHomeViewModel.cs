@@ -6,11 +6,17 @@ using System.Runtime.CompilerServices;
 
 namespace CineQuebec.Windows.ViewModel
 {
+
+
+
     public class AbonneHomeViewModel : PropertyNotifier
     {
-        private ObservableCollection<Film> _films = new ObservableCollection<Film>();
 
+
+        private ObservableCollection<Film> _films = new ObservableCollection<Film>();
         private Abonne _user;
+        private readonly IFilmService _filmService;
+        private readonly IProjectionService _projectionService;
 
         public Abonne User
         {
@@ -40,11 +46,11 @@ namespace CineQuebec.Windows.ViewModel
 
 
 
-        private readonly IFilmService _filmService;
 
-        public AbonneHomeViewModel(IFilmService filmService, Abonne user)
+        public AbonneHomeViewModel(IFilmService filmService, IProjectionService projectionService, Abonne user)
         {
             _filmService = filmService;
+            _projectionService = projectionService;
             User = user;
             ChargerFilms();
 
@@ -60,7 +66,11 @@ namespace CineQuebec.Windows.ViewModel
             for (int i = 0; i < Films.Count; i++)
             {
                 var film = Films[i];
-                if (!film.EstAffiche)
+                var projections = await _projectionService.GetUpcomingProjections(film.Id);
+
+                bool estAlafiche = projections.Count > 0;
+
+                if (estAlafiche)
                 {
                     Films.Remove(film);
                 }

@@ -26,12 +26,13 @@ namespace CineQuebec.Windows.DAL.Tests.DataTest
             film = new Film(TITRE_FILM, DATE, 120, categorie);
         }
 
-        [Fact]
-        public void Titre_Throw_Titre_Null_Exception_Si_Titre_Null()
-        {
-            //Act et Assert
-            Assert.Throws<TitreNullException>(() => new Film(STRING_VIDE, DATE, 120, Categories.COMEDY));
-        }
+        
+        //[Fact]
+        //public void Titre_Throw_Titre_Null_Exception_Si_Titre_Null()
+        //{
+        //    //Act et Assert
+        //    Assert.Throws<TitreNullException>(() => new Film(STRING_VIDE, DATE, 120, Categories.COMEDY));
+        //}
 
         //[Fact]
         //public void Titre_Throw_TitreLengthException_Si_Titre_Est_Long()

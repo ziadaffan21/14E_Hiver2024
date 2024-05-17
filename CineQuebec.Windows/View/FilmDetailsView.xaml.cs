@@ -28,6 +28,10 @@ namespace CineQuebec.Windows.View
 
         public FilmDetailsView(Film film)
         {
+            //TODO: Ajouter le resolver pour prendre es services
+
+
+
             _viewModel = new(film, AbonneHomeControl.CurrentUser, AbonneHomeControl.ProjectionService);
             DataContext = _viewModel;
             

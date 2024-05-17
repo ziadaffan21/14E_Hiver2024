@@ -85,7 +85,7 @@ namespace CineQuebec.Windows.DAL.Data
                 int heures = Duree / 60;
                 int minutesRestantes = Duree % 60;
 
-                return $"{heures:0}h {minutesRestantes:00 mins}";
+                return $"{heures:0}h {minutesRestantes:00} mins";
             } 
         }
 

@@ -65,7 +65,10 @@ namespace CineQuebec.Windows.View
         private void btnAjoutProjection_Click(object sender, RoutedEventArgs e)
         {
             FormulaireProjection detailProjection = new FormulaireProjection(_projectionService,_filmService,_eventAggregator);
+
+            
             bool reponse = (bool)detailProjection.ShowDialog();
+            
             lstFilms.SelectedIndex = -1;
         }
 
