@@ -75,6 +75,15 @@ namespace CineQuebec.Windows.DAL.Data
             Reservations = new();
         }
 
+        public Projection(DateTime date, int placeDisponible, Film film, ObjectId id, List<ObjectId> reservations) : this(date, placeDisponible, film)
+        {
+            Id = id;
+            Date = date;
+            NbPlaces= placeDisponible;
+            Film= film;
+            Reservations = reservations;
+        }
+
 
         #endregion CONSTRUCTEURS
 

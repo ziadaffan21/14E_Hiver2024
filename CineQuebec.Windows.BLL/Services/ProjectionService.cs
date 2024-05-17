@@ -56,5 +56,15 @@ namespace CineQuebec.Windows.DAL.Services
         {
             return await _projectionRepository.GetUpcomingProjection(projectionId);
         }
+
+        public async Task SupprimerProjection(ObjectId id)
+        {
+                await _projectionRepository.SupprimerProjection(id);
+        }
+
+        public async Task ModifierProjection(Projection projection)
+        {
+            await _projectionRepository.ModifierProjecion(projection);
+        }
     }
 }

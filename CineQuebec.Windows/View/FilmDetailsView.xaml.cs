@@ -81,6 +81,7 @@ namespace CineQuebec.Windows.View
 
         private void btNoter_Click(object sender, RoutedEventArgs e)
         {
+            
         }
 
        

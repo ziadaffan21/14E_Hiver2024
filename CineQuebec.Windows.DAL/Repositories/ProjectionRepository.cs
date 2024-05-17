@@ -130,5 +130,14 @@ namespace CineQuebec.Windows.DAL.Repositories
             return projections;
         }
 
+        public async Task SupprimerProjection(ObjectId id)
+        {
+            await _mongoCollection.FindOneAndDeleteAsync(f => f.Id == id);
+        }
+
+        public async Task ModifierProjecion(Projection projection)
+        {
+            await _mongoCollection.FindOneAndReplaceAsync(f => f.Id == projection.Id, projection);
+        }
     }
 }
