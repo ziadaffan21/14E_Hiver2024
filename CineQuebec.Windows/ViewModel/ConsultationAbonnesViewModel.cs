@@ -23,7 +23,7 @@ namespace CineQuebec.Windows.ViewModel
             _abonneService=abonneService;
         }
 
-        internal void Load(object sender, RoutedEventArgs e)
+        public void Load(object sender, RoutedEventArgs e)
         {
             Abonnes.Clear();
             foreach (Abonne abonne in  _abonneService.GetAllAbonnes())

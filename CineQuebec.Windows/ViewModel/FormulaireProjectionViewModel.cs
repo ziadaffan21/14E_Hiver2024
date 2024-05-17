@@ -75,7 +75,7 @@ namespace CineQuebec.Windows.ViewModel
             ProjectionTime = DateTime.Now;
         }
 
-        private void Save()
+        public void Save()
         {
             try
             {
@@ -85,8 +85,8 @@ namespace CineQuebec.Windows.ViewModel
                 Projection.Date = new(date.Year, date.Month, date.Day, time.Hours, time.Minutes, time.Seconds);
 
 
-                _projectionService.ModifierProjection(Projection.value());
-                _eventAggregator.GetEvent<AddModifierProjectionEvent>().Publish(Projection.value());
+                _projectionService.ModifierProjection(Projection.Value());
+                _eventAggregator.GetEvent<AddModifierProjectionEvent>().Publish(Projection.Value());
                 AjoutModif?.Invoke(true);
 
             }
@@ -119,7 +119,7 @@ namespace CineQuebec.Windows.ViewModel
             return Projection.IsValid();
         }
 
-        private void Ajout()
+        public void Ajout()
         {
             try
             {
@@ -129,8 +129,8 @@ namespace CineQuebec.Windows.ViewModel
                 Projection.Date = new(date.Year, date.Month, date.Day, time.Hours, time.Minutes, time.Seconds);
 
 
-                _projectionService.AjouterProjection(Projection.value());
-                _eventAggregator.GetEvent<AddModifierProjectionEvent>().Publish(Projection.value());
+                _projectionService.AjouterProjection(Projection.Value());
+                _eventAggregator.GetEvent<AddModifierProjectionEvent>().Publish(Projection.Value());
                 AjoutModif?.Invoke(true);
 
             }

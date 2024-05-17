@@ -54,7 +54,7 @@ namespace CineQuebec.Windows.ViewModel
 
         }
 
-        private async void LogIn()
+        public async void LogIn()
         {
             try
             {

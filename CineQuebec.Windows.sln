@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CineQuebec.Windows.DAL", "C
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CineQuebec.Windows.BLL", "CineQuebec.Windows.BLL\CineQuebec.Windows.BLL.csproj", "{1AD10973-2BF3-4BFC-AEF5-07AB9CCEEF36}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CineQuebec.Windows.Tests.UI", "CineQuebec.Windows.Tests.UI\CineQuebec.Windows.Tests.UI.csproj", "{30A02D2E-DC5B-4573-949C-BBFD55BEC1E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CineQuebec.Windows.UI.Tests", "CineQuebec.Windows.Tests.UI\CineQuebec.Windows.UI.Tests.csproj", "{30A02D2E-DC5B-4573-949C-BBFD55BEC1E2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CineQuebec.Windows.BLL.Tests", "CineQuebec.Windows.BLL.Tests\CineQuebec.Windows.BLL.Tests.csproj", "{DA151367-79CC-49BD-B549-A838B554E82B}"
 EndProject

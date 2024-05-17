@@ -3,7 +3,7 @@ using Prism.Events;
 
 namespace CineQuebec.Windows.ViewModel.Event
 {
-    internal class AddModifierFilmEvent:PubSubEvent<Film>
+    public class AddModifierFilmEvent:PubSubEvent<Film>
     {
     }
 }

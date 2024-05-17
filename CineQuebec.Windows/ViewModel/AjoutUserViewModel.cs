@@ -49,7 +49,7 @@ namespace CineQuebec.Windows.ViewModel
             return ObservableUsersignInLogIn.IsValidInscription();
         }
 
-        private async void SignUp()
+        public async void SignUp()
         {
             try
             {
