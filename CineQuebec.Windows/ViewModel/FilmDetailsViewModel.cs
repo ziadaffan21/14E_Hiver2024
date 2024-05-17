@@ -65,7 +65,7 @@ namespace CineQuebec.Windows.ViewModel
             ReserverCommand = new DelegateCommand(OuvrirFormReserver);
 
             //Méthode temporaire pour ajouter la note moyenne
-            InitialiserAsync();
+            _ = InitialiserAsync();
         }
 
         private async Task InitialiserAsync()
@@ -99,7 +99,6 @@ namespace CineQuebec.Windows.ViewModel
                     projections.Remove(projection);
                 }
             }
-
             return projections.Count > 0;
         }
 
@@ -114,7 +113,7 @@ namespace CineQuebec.Windows.ViewModel
             ReservationView reservationView = new(_projectionService, Film, User);
             if (reservationView.ShowDialog() == true)
             {
-                //TODO Afficher la réservation.
+
             }
         }
 
@@ -124,6 +123,5 @@ namespace CineQuebec.Windows.ViewModel
 
             return projections.Count > 0;
         }
-
     }
 }

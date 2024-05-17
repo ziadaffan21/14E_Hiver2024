@@ -2,7 +2,6 @@
 using CineQuebec.Windows.DAL.Interfaces;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
 using CineQuebec.Windows.ViewModel;
-using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -37,7 +36,7 @@ namespace CineQuebec.Windows.View
             _projectionService = projectionService;
             ProjectionService = projectionService;
 
-            _viewModel = new(filmService,_projectionService, User);
+            _viewModel = new(filmService, _projectionService, User);
             DataContext = _viewModel;
         }
 

@@ -28,7 +28,6 @@ namespace CineQuebec.Windows.View
 
         public FilmDetailsView(Film film)
         {
-            //TODO: Ajouter le resolver pour prendre es services
 
 
 
@@ -56,18 +55,11 @@ namespace CineQuebec.Windows.View
 
             if (film.EstAffiche)
             {
-                //TODO : Checker si projections
-
                 bool hasUpcomingProjections = await _viewModel.HasUpcomingProjections();
 
                 if (hasUpcomingProjections)
                 {
                     txtIndisponible.Visibility = Visibility.Collapsed;
-                }
-                else
-                {
-                   // txtIndisponible.Visibility = Visibility.Visible;
-                   // txtIndisponible.Text = $"Disponible le {film.DateSortie.Day} {Utils.GetMoisNom(film.DateSortie)} {film.DateSortie.Year}";
                 }
             }
 

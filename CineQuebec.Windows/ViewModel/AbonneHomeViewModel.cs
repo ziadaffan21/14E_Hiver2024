@@ -1,14 +1,9 @@
 ﻿using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 
 namespace CineQuebec.Windows.ViewModel
 {
-
-
-
     public class AbonneHomeViewModel : PropertyNotifier
     {
 
@@ -21,8 +16,8 @@ namespace CineQuebec.Windows.ViewModel
         public Abonne User
         {
             get { return _user; }
-            set 
-            {   
+            set
+            {
                 _user = value;
                 OnPropertyChanged(nameof(User));
             }
@@ -55,7 +50,7 @@ namespace CineQuebec.Windows.ViewModel
             ChargerFilms();
 
         }
-       
+
         private async void ChargerFilms()
         {
             List<Film> filmsCharge = await _filmService.GetAllFilms();

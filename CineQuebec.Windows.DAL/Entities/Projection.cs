@@ -1,10 +1,9 @@
 ﻿using CineQuebec.Windows.Exceptions.ProjectionException;
 using MongoDB.Bson;
-using MongoDB.Bson.Serialization.Attributes;
 
 namespace CineQuebec.Windows.DAL.Data
 {
-    public class Projection : Entity,IComparable
+    public class Projection : Entity, IComparable
     {
         #region CONSTANTES
 
@@ -79,8 +78,8 @@ namespace CineQuebec.Windows.DAL.Data
         {
             Id = id;
             Date = date;
-            NbPlaces= placeDisponible;
-            Film= film;
+            NbPlaces = placeDisponible;
+            Film = film;
             Reservations = reservations;
         }
 
