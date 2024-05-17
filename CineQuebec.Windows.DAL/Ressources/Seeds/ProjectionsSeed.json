@@ -1,298 +1,332 @@
-[{
-  "_id": {
-    "$oid": "6641b06f234c773863ee0fa7"
-  },
-  "Date": {
-    "$date": "2024-05-10T12:00:00.000Z"
-  },
-  "NbPlaces": 50,
-  "Film": {
+[
+  {
     "_id": {
-      "$oid": "664005cb5f4e274cb216576a"
+      "$oid": "6641b06f234c773863ee0fa7"
     },
-    "Realisateur": null,
-    "Titre": "The Shawshank Redemption",
-    "Duree": 120,
-    "DateSortie": {
-      "$date": "2024-05-11T23:56:58.373Z"
+    "Date": {
+      "$date": "2024-05-10T12:00:00.000Z"
     },
-    "Categorie": 8,
-    "EstAffiche": true
-  },
-  "Reservations": [
-    {
-      "$oid": "664335ae48163631e25fc5cd"
+    "NbPlaces": 50,
+    "Film": {
+      "_id": {
+        "$oid": "664005cb5f4e274cb216576a"
+      },
+      "Acteurs": null,
+      "Realisateur": null,
+      "Titre": "The Shawshank Redemption",
+      "Duree": 120,
+      "DateSortie": {
+        "$date": "2024-05-11T23:56:58.373Z"
+      },
+      "Categorie": 8,
+      "EstAffiche": true
     },
-    {
-      "$oid": "664367339545a299f4b1e0c4"
-    }
-  ]
-},
-{
-  "_id": {
-    "$oid": "6641b07e234c773863ee0fa8"
+    "Reservations": [
+      {
+        "$oid": "664335ae48163631e25fc5cd"
+      },
+      {
+        "$oid": "664367339545a299f4b1e0c4"
+      }
+    ]
   },
-  "Date": {
-    "$date": "2024-07-18T04:00:00.000Z"
-  },
-  "NbPlaces": 50,
-  "Film": {
+  {
     "_id": {
-      "$oid": "664005cb5f4e274cb216576b"
+      "$oid": "6641b07e234c773863ee0fa8"
     },
-    "Realisateur": null,
-    "Titre": "The Godfather",
-    "Duree": 120,
-    "DateSortie": {
-      "$date": "2024-05-11T23:56:58.408Z"
+    "Date": {
+      "$date": "2024-07-18T04:00:00.000Z"
     },
-    "Categorie": 11,
-    "EstAffiche": true
-  },
-  "Reservations": [
-    {
-      "$oid": "6641b878d36e3bb4b7281b83"
+    "NbPlaces": 50,
+    "Film": {
+      "_id": {
+        "$oid": "664005cb5f4e274cb216576b"
+      },
+      "Acteurs": null,
+      "Realisateur": null,
+      "Titre": "The Godfather",
+      "Duree": 120,
+      "DateSortie": {
+        "$date": "2024-05-11T23:56:58.408Z"
+      },
+      "Categorie": 11,
+      "EstAffiche": true
     },
-    {
-      "$oid": "664334bdb606a19f978b9eca"
-    }
-  ]
-},
-{
-  "_id": {
-    "$oid": "6641b089234c773863ee0fa9"
+    "Reservations": [
+      {
+        "$oid": "6641b878d36e3bb4b7281b83"
+      },
+      {
+        "$oid": "664334bdb606a19f978b9eca"
+      }
+    ]
   },
-  "Date": {
-    "$date": "2025-07-11T04:00:00.000Z"
-  },
-  "NbPlaces": 50,
-  "Film": {
+  {
     "_id": {
-      "$oid": "664006065f4e274cb2165778"
+      "$oid": "6641b089234c773863ee0fa9"
     },
-    "Realisateur": null,
-    "Titre": "543",
-    "Duree": 120,
-    "DateSortie": {
-      "$date": "2024-05-11T23:57:44.799Z"
+    "Date": {
+      "$date": "2025-07-11T04:15:00.000Z"
     },
-    "Categorie": 4,
-    "EstAffiche": true
-  },
-  "Reservations": [
-    {
-      "$oid": "664325dfd1774a2271f4ea69"
+    "NbPlaces": 50,
+    "Film": {
+      "_id": {
+        "$oid": "664006065f4e274cb2165778"
+      },
+      "Acteurs": null,
+      "Realisateur": null,
+      "Titre": "543",
+      "Duree": 120,
+      "DateSortie": {
+        "$date": "2024-05-11T23:57:44.799Z"
+      },
+      "Categorie": 4,
+      "EstAffiche": true
     },
-    {
-      "$oid": "66432e8eea56522e45c68a35"
-    }
-  ]
-},
-{
-  "_id": {
-    "$oid": "6641b096234c773863ee0faa"
+    "Reservations": [
+      {
+        "$oid": "664325dfd1774a2271f4ea69"
+      },
+      {
+        "$oid": "66432e8eea56522e45c68a35"
+      }
+    ]
   },
-  "Date": {
-    "$date": "2024-09-20T04:00:00.000Z"
-  },
-  "NbPlaces": 50,
-  "Film": {
+  {
     "_id": {
-      "$oid": "664005cb5f4e274cb216576b"
+      "$oid": "6641b096234c773863ee0faa"
     },
-    "Realisateur": null,
-    "Titre": "The Godfather",
-    "Duree": 120,
-    "DateSortie": {
-      "$date": "2024-05-11T23:56:58.408Z"
+    "Date": {
+      "$date": "2024-09-20T04:00:00.000Z"
     },
-    "Categorie": 11,
-    "EstAffiche": true
+    "NbPlaces": 50,
+    "Film": {
+      "_id": {
+        "$oid": "664005cb5f4e274cb216576b"
+      },
+      "Acteurs": null,
+      "Realisateur": null,
+      "Titre": "The Godfather",
+      "Duree": 120,
+      "DateSortie": {
+        "$date": "2024-05-11T23:56:58.408Z"
+      },
+      "Categorie": 11,
+      "EstAffiche": true
+    },
+    "Reservations": [
+      {
+        "$oid": "6641b878d36e3bb4b7281b83"
+      }
+    ]
   },
-  "Reservations": [
-    {
-      "$oid": "6641b878d36e3bb4b7281b83"
-    }
-  ]
-},
-{
-  "_id": {
-    "$oid": "6641b0a2234c773863ee0fab"
-  },
-  "Date": {
-    "$date": "2024-05-23T04:00:00.000Z"
-  },
-  "NbPlaces": 50,
-  "Film": {
+  {
     "_id": {
-      "$oid": "6640061a5f4e274cb216577a"
+      "$oid": "6641b0a2234c773863ee0fab"
     },
-    "Realisateur": null,
-    "Titre": "hgfdxcgfdcx",
-    "Duree": 98,
-    "DateSortie": {
-      "$date": "2024-05-11T23:58:09.161Z"
+    "Date": {
+      "$date": "2024-05-23T04:00:00.000Z"
     },
-    "Categorie": 2,
-    "EstAffiche": false
+    "NbPlaces": 50,
+    "Film": {
+      "_id": {
+        "$oid": "6640061a5f4e274cb216577a"
+      },
+      "Acteurs": null,
+      "Realisateur": null,
+      "Titre": "hgfdxcgfdcx",
+      "Duree": 98,
+      "DateSortie": {
+        "$date": "2024-05-11T23:58:09.161Z"
+      },
+      "Categorie": 2,
+      "EstAffiche": false
+    },
+    "Reservations": []
   },
-  "Reservations": []
-},
-{
-  "_id": {
-    "$oid": "6641b0b2234c773863ee0fac"
-  },
-  "Date": {
-    "$date": "2024-05-23T04:00:00.000Z"
-  },
-  "NbPlaces": 50,
-  "Film": {
+  {
     "_id": {
-      "$oid": "6640060f5f4e274cb2165779"
+      "$oid": "6641b0b2234c773863ee0fac"
     },
-    "Realisateur": null,
-    "Titre": "asfdhgjg",
-    "Duree": 120,
-    "DateSortie": {
-      "$date": "2024-05-11T23:58:00.092Z"
+    "Date": {
+      "$date": "2024-05-23T04:00:00.000Z"
     },
-    "Categorie": 5,
-    "EstAffiche": true
+    "NbPlaces": 50,
+    "Film": {
+      "_id": {
+        "$oid": "6640060f5f4e274cb2165779"
+      },
+      "Acteurs": null,
+      "Realisateur": null,
+      "Titre": "asfdhgjg",
+      "Duree": 120,
+      "DateSortie": {
+        "$date": "2024-05-11T23:58:00.092Z"
+      },
+      "Categorie": 5,
+      "EstAffiche": true
+    },
+    "Reservations": [
+      {
+        "$oid": "664332d2da067697cacc766c"
+      },
+      {
+        "$oid": "664333dfd95d997ab9845200"
+      },
+      {
+        "$oid": "664334bdb606a19f978b9eca"
+      },
+      {
+        "$oid": "664335ae48163631e25fc5cd"
+      }
+    ]
   },
-  "Reservations": [
-    {
-      "$oid": "664332d2da067697cacc766c"
-    },
-    {
-      "$oid": "664333dfd95d997ab9845200"
-    },
-    {
-      "$oid": "664334bdb606a19f978b9eca"
-    },
-    {
-      "$oid": "664335ae48163631e25fc5cd"
-    }
-  ]
-},
-{
-  "_id": {
-    "$oid": "6641b0ca234c773863ee0fad"
-  },
-  "Date": {
-    "$date": "2024-05-30T04:00:00.000Z"
-  },
-  "NbPlaces": 50,
-  "Film": {
+  {
     "_id": {
-      "$oid": "664005cb5f4e274cb216576b"
+      "$oid": "6641b0ca234c773863ee0fad"
     },
-    "Realisateur": null,
-    "Titre": "The Godfather",
-    "Duree": 120,
-    "DateSortie": {
-      "$date": "2024-05-11T23:56:58.408Z"
+    "Date": {
+      "$date": "2024-05-30T04:00:00.000Z"
     },
-    "Categorie": 11,
-    "EstAffiche": true
+    "NbPlaces": 50,
+    "Film": {
+      "_id": {
+        "$oid": "664005cb5f4e274cb216576b"
+      },
+      "Acteurs": null,
+      "Realisateur": null,
+      "Titre": "The Godfather",
+      "Duree": 120,
+      "DateSortie": {
+        "$date": "2024-05-11T23:56:58.408Z"
+      },
+      "Categorie": 11,
+      "EstAffiche": true
+    },
+    "Reservations": [
+      {
+        "$oid": "6641b878d36e3bb4b7281b83"
+      }
+    ]
   },
-  "Reservations": [
-    {
-      "$oid": "6641b878d36e3bb4b7281b83"
-    }
-  ]
-},
-{
-  "_id": {
-    "$oid": "6641b0e9234c773863ee0fae"
-  },
-  "Date": {
-    "$date": "2024-06-06T04:00:00.000Z"
-  },
-  "NbPlaces": 50,
-  "Film": {
+  {
     "_id": {
-      "$oid": "6640061a5f4e274cb216577a"
+      "$oid": "6641b0e9234c773863ee0fae"
     },
-    "Realisateur": null,
-    "Titre": "hgfdxcgfdcx",
-    "Duree": 98,
-    "DateSortie": {
-      "$date": "2024-05-11T23:58:09.161Z"
+    "Date": {
+      "$date": "2024-06-06T04:00:00.000Z"
     },
-    "Categorie": 2,
-    "EstAffiche": false
+    "NbPlaces": 50,
+    "Film": {
+      "_id": {
+        "$oid": "6640061a5f4e274cb216577a"
+      },
+      "Acteurs": null,
+      "Realisateur": null,
+      "Titre": "hgfdxcgfdcx",
+      "Duree": 98,
+      "DateSortie": {
+        "$date": "2024-05-11T23:58:09.161Z"
+      },
+      "Categorie": 2,
+      "EstAffiche": false
+    },
+    "Reservations": []
   },
-  "Reservations": []
-},
-{
-  "_id": {
-    "$oid": "6643638ec61ae5ea08860f6c"
-  },
-  "Date": {
-    "$date": "2024-05-16T04:00:00.000Z"
-  },
-  "NbPlaces": 52,
-  "Film": {
+  {
     "_id": {
-      "$oid": "664005cb5f4e274cb216576a"
+      "$oid": "6643638ec61ae5ea08860f6c"
     },
-    "Acteurs": null,
-    "Realisateur": null,
-    "Titre": "The Shawshank Redemption",
-    "Duree": 120,
-    "DateSortie": {
-      "$date": "2024-05-11T23:56:58.373Z"
+    "Date": {
+      "$date": "2024-05-16T04:00:00.000Z"
     },
-    "Categorie": 8,
-    "EstAffiche": true
+    "NbPlaces": 52,
+    "Film": {
+      "_id": {
+        "$oid": "664005cb5f4e274cb216576a"
+      },
+      "Acteurs": null,
+      "Realisateur": null,
+      "Titre": "The Shawshank Redemption",
+      "Duree": 120,
+      "DateSortie": {
+        "$date": "2024-05-11T23:56:58.373Z"
+      },
+      "Categorie": 8,
+      "EstAffiche": true
+    },
+    "Reservations": []
   },
-  "Reservations": []
-},
-{
-  "_id": {
-    "$oid": "66436829fe0e9f17ef6f18a8"
-  },
-  "Date": {
-    "$date": "2024-05-15T04:00:00.000Z"
-  },
-  "NbPlaces": 50,
-  "Film": {
+  {
     "_id": {
-      "$oid": "6640061a5f4e274cb216577a"
+      "$oid": "664369780f2a2e3397a32225"
     },
-    "Acteurs": null,
-    "Realisateur": null,
-    "Titre": "hgfdxcgfdcx",
-    "Duree": 98,
-    "DateSortie": {
-      "$date": "2024-05-11T23:58:09.161Z"
+    "Date": {
+      "$date": "2024-05-15T13:38:00.000Z"
     },
-    "Categorie": 2,
-    "EstAffiche": false
+    "NbPlaces": 50,
+    "Film": {
+      "_id": {
+        "$oid": "664005cb5f4e274cb216576a"
+      },
+      "Acteurs": null,
+      "Realisateur": null,
+      "Titre": "The Shawshank Redemption",
+      "Duree": 120,
+      "DateSortie": {
+        "$date": "2024-05-11T23:56:58.373Z"
+      },
+      "Categorie": 8,
+      "EstAffiche": true
+    },
+    "Reservations": []
   },
-  "Reservations": []
-},
-{
-  "_id": {
-    "$oid": "664369780f2a2e3397a32225"
-  },
-  "Date": {
-    "$date": "2024-05-15T13:38:00.000Z"
-  },
-  "NbPlaces": 50,
-  "Film": {
+  {
     "_id": {
-      "$oid": "664005cb5f4e274cb216576a"
+      "$oid": "664761967378f88e2282318c"
     },
-    "Acteurs": null,
-    "Realisateur": null,
-    "Titre": "The Shawshank Redemption",
-    "Duree": 120,
-    "DateSortie": {
-      "$date": "2024-05-11T23:56:58.373Z"
+    "Date": {
+      "$date": "2024-05-21T15:55:00.000Z"
     },
-    "Categorie": 8,
-    "EstAffiche": true
+    "NbPlaces": 50,
+    "Film": {
+      "_id": {
+        "$oid": "6640060f5f4e274cb2165779"
+      },
+      "Acteurs": null,
+      "Realisateur": null,
+      "Titre": "ClosedHeimer",
+      "Duree": 155,
+      "DateSortie": {
+        "$date": "2019-07-10T04:00:00.000Z"
+      },
+      "Categorie": 5,
+      "EstAffiche": true
+    },
+    "Reservations": []
   },
-  "Reservations": []
-}]
+  {
+    "_id": {
+      "$oid": "664761b67378f88e2282318d"
+    },
+    "Date": {
+      "$date": "2024-05-30T13:54:51.000Z"
+    },
+    "NbPlaces": 50,
+    "Film": {
+      "_id": {
+        "$oid": "664006065f4e274cb2165778"
+      },
+      "Acteurs": null,
+      "Realisateur": null,
+      "Titre": "543",
+      "Duree": 98,
+      "DateSortie": {
+        "$date": "2024-05-11T23:57:44.799Z"
+      },
+      "Categorie": 4,
+      "EstAffiche": true
+    },
+    "Reservations": []
+  }
+]

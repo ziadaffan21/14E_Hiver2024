@@ -16,7 +16,7 @@ namespace CineQuebec.Windows.ViewModel.ObservableClass
 
         public ObservableProjection(Projection projection)
         {
-            _projection = projection;
+            _projection = projection != null ? projection : new();
         }
 
 
