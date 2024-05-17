@@ -32,7 +32,7 @@ namespace CineQuebec.Windows.View
 
 
 
-            _viewModel = new(film, AbonneHomeControl.CurrentUser, AbonneHomeControl.ProjectionService);
+            _viewModel = new(film);
             DataContext = _viewModel;
             
             InitializeComponent();

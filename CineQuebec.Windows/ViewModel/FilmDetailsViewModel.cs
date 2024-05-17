@@ -1,16 +1,9 @@
-﻿using Amazon.Util.Internal;
-using CineQuebec.Windows.BLL.ServicesInterfaces;
+﻿using CineQuebec.Windows.BLL.ServicesInterfaces;
 using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
-using CineQuebec.Windows.DAL.Entities;
 using CineQuebec.Windows.View;
-using CineQuebec.Windows.ViewModel.ObservableClass;
-using MongoDB.Bson;
 using Prism.Commands;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Documents;
 using System.Windows.Input;
 using Unity;
 
@@ -18,12 +11,14 @@ namespace CineQuebec.Windows.ViewModel
 {
     public class FilmDetailsViewModel : PropertyNotifier
     {
-        private INoteService _noteService;
         private Film _film;
         private bool _projectionAVenir;
 
+        private INoteService _noteService;
         public ICommand EnregistrerNoteCommand { get; set; }
-
+        private IProjectionService _projectionService { get; set; }
+        public ICommand NoterCommand { get; init; }
+        public ICommand ReserverCommand { get; init; }
         public Film Film
         {
             get { return _film; }
@@ -49,30 +44,23 @@ namespace CineQuebec.Windows.ViewModel
         public float NoteMoy
         {
             get { return _noteMoy; }
-            set { 
+            set
+            {
                 _noteMoy = value;
                 OnPropertyChanged(nameof(NoteMoy));
             }
         }
-
-
-
         public Abonne User { get; set; }
 
-        IProjectionService ProjectionService { get; set; }
 
-       public ICommand NoterCommand { get; init; }
-       public ICommand ReserverCommand { get; init; }
 
-        public FilmDetailsViewModel(Film film, Abonne user, IProjectionService projectionService)
+        public FilmDetailsViewModel(Film film)
         {
             var container = (IUnityContainer)Application.Current.Resources["UnityContainer"];
             _noteService = container.Resolve<INoteService>();
-
-
+            _projectionService = container.Resolve<IProjectionService>();
             Film = film;
-            User = user;
-            ProjectionService = projectionService;
+            User = ((ConnecteWindowPrincipal)Application.Current.MainWindow).User;
             NoterCommand = new DelegateCommand(OuvrirFormNoter);
             ReserverCommand = new DelegateCommand(OuvrirFormReserver);
 
@@ -86,8 +74,8 @@ namespace CineQuebec.Windows.ViewModel
         }
 
         public async Task<bool> PeutNoter()
-            {
-            List<Projection> projections = await ProjectionService.GetProjectionsForUser(Film.Id, User.Id);
+        {
+            List<Projection> projections = await _projectionService.GetProjectionsForUser(Film.Id, User.Id);
             foreach (var projection in projections)
             {
                 if (projection.Date < DateTime.Now)
@@ -100,39 +88,39 @@ namespace CineQuebec.Windows.ViewModel
 
         public async Task<bool> PeutReserver()
         {
-            List<Projection> projections = await ProjectionService.GetProjectionsById(Film.Id);
+            List<Projection> projections = await _projectionService.GetProjectionsById(Film.Id);
 
             for (int i = 0; i < projections.Count; i++)
-        {
+            {
                 var projection = projections[i];
 
                 if (projection.Reservations.Contains(User.Id))
-        {
+                {
                     projections.Remove(projection);
                 }
-        }
+            }
 
             return projections.Count > 0;
         }
 
         private void OuvrirFormNoter()
         {
-            NoterView noterView = new NoterView(_noteService,Film);
+            NoterView noterView = new NoterView(_noteService, Film);
             noterView.Show();
         }
 
         private void OuvrirFormReserver()
-            {
-            ReservationView reservationView = new(ProjectionService, Film, User);
+        {
+            ReservationView reservationView = new(_projectionService, Film, User);
             if (reservationView.ShowDialog() == true)
-                {
+            {
                 //TODO Afficher la réservation.
-                }
             }
+        }
 
         internal async Task<bool> HasUpcomingProjections()
-                {
-            var projections = await ProjectionService.GetUpcomingProjections(Film.Id);
+        {
+            var projections = await _projectionService.GetUpcomingProjections(Film.Id);
 
             return projections.Count > 0;
         }
