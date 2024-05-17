@@ -60,7 +60,7 @@ namespace CineQuebec.Windows.ViewModel
             {
                 string password = Utils.ConvertToUnsecureString(ObservableUsersignInLogIn.SecurePassword);
                 ValiderFomulaire(ObservableUsersignInLogIn.Username, password);
-                User = await _abonneService.GetAbonneConnexion(ObservableUsersignInLogIn.Username, password);
+                User = await _abonneService.GetAbonneConnexion(ObservableUsersignInLogIn.Username.ToLower(), password);
                 ConnexionErreur.Invoke(User is not null);
 
             }
