@@ -83,10 +83,9 @@ namespace CineQuebec.Windows.DAL
             string dateString = Element.GetProperty("DateSortie").GetProperty("$date").GetString();
             var date = DateTime.Parse(dateString);
             int categorie = Element.GetProperty("Categorie").GetInt32();
-            bool estAffiche = Element.GetProperty("EstAffiche").GetBoolean();
 
 
-            var film = new Film(titre, date, duree, (Categories)categorie, id, estAffiche);
+            var film = new Film(titre, date, duree, (Categories)categorie, id);
             return film;
         }
 

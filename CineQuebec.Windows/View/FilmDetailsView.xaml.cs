@@ -1,21 +1,6 @@
-﻿using CineQuebec.Windows.BLL.ServicesInterfaces;
-using CineQuebec.Windows.DAL.Data;
-using CineQuebec.Windows.DAL.ServicesInterfaces;
-using CineQuebec.Windows.DAL.Utils;
+﻿using CineQuebec.Windows.DAL.Data;
 using CineQuebec.Windows.ViewModel;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace CineQuebec.Windows.View
 {
@@ -24,7 +9,7 @@ namespace CineQuebec.Windows.View
     /// </summary>
     public partial class FilmDetailsView : Window
     {
-        public FilmDetailsViewModel _viewModel { get; set; } 
+        public FilmDetailsViewModel _viewModel { get; set; }
 
         public FilmDetailsView(Film film)
         {
@@ -33,7 +18,7 @@ namespace CineQuebec.Windows.View
 
             _viewModel = new(film);
             DataContext = _viewModel;
-            
+
             InitializeComponent();
             InitialiserDetails();
         }
@@ -53,15 +38,14 @@ namespace CineQuebec.Windows.View
         {
             var film = _viewModel.Film;
 
-            if (film.EstAffiche)
-            {
-                bool hasUpcomingProjections = await _viewModel.HasUpcomingProjections();
 
-                if (hasUpcomingProjections)
-                {
-                    txtIndisponible.Visibility = Visibility.Collapsed;
-                }
+            bool hasUpcomingProjections = await _viewModel.HasUpcomingProjections();
+
+            if (hasUpcomingProjections)
+            {
+                txtIndisponible.Visibility = Visibility.Collapsed;
             }
+
 
             if (await _viewModel.PeutNoter())
             {
@@ -77,14 +61,14 @@ namespace CineQuebec.Windows.View
 
         private void btNoter_Click(object sender, RoutedEventArgs e)
         {
-            
+
         }
 
-       
+
 
         private void btReserver_Click(object sender, RoutedEventArgs e)
         {
-           
+
         }
 
         private void UpdateInterface()

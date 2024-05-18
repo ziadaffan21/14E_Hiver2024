@@ -1,7 +1,6 @@
 ﻿using CineQuebec.Windows.DAL.Enums;
 using CineQuebec.Windows.Exceptions.AbonneExceptions.DateAdhesion;
 using CineQuebec.Windows.Exceptions.FilmExceptions.CategorieExceptions;
-using CineQuebec.Windows.Exceptions.FilmExceptions.TitreExceptions;
 using MongoDB.Bson;
 
 namespace CineQuebec.Windows.DAL.Data
@@ -24,7 +23,6 @@ namespace CineQuebec.Windows.DAL.Data
         private Categories _categorie;
         private DateTime _dateSortie;
         private int _duree;
-        private bool _estAffiche;
         private Realisateur _realisateur;
 
 
@@ -78,15 +76,15 @@ namespace CineQuebec.Windows.DAL.Data
             }
         }
 
-        public string DureeToString 
-        { 
-            get 
+        public string DureeToString
+        {
+            get
             {
                 int heures = Duree / 60;
                 int minutesRestantes = Duree % 60;
 
                 return $"{heures:0}h {minutesRestantes:00} mins";
-            } 
+            }
         }
 
         public string Image { get { return $"https://picsum.photos/seed/{Id}/200/300"; } }
@@ -101,7 +99,7 @@ namespace CineQuebec.Windows.DAL.Data
             }
         }
         public string Year { get { return $"({DateSortie.Year})"; } }
-        public string DateSortieToString { get { return $"{DateSortie.ToShortDateString()}"; }  }
+        public string DateSortieToString { get { return $"{DateSortie.ToShortDateString()}"; } }
 
         public Categories Categorie
         {
@@ -113,36 +111,25 @@ namespace CineQuebec.Windows.DAL.Data
             }
         }
 
-
-        public bool EstAffiche
-        {
-            get { return _estAffiche; }
-            set { _estAffiche = value; }
-        }
-
-       
-
         #endregion PROPRIÉTÉS ET INDEXEURS
 
         #region CONSTRUCTEURS
 
-        public Film(string titre, DateTime dateSortie, int duree, Categories categorie, bool estAffiche = false)
+        public Film(string titre, DateTime dateSortie, int duree, Categories categorie)
         {
             Titre = titre;
             DateSortie = dateSortie;
             Duree = duree;
             Categorie = categorie;
-            EstAffiche = estAffiche;
         }
 
-        public Film(string titre, DateTime dateSortie, int duree, Categories categorie, ObjectId id, bool estAffiche = false)
+        public Film(string titre, DateTime dateSortie, int duree, Categories categorie, ObjectId id)
         {
             Id = id;
             Titre = titre;
             DateSortie = dateSortie;
             Duree = duree;
             Categorie = categorie;
-            EstAffiche = estAffiche;
         }
 
         public Film()
