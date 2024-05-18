@@ -14,14 +14,16 @@ namespace CineQuebec.Windows.View
     public partial class ConsultationAbonnesControl : UserControl
     {
         private readonly ConsultationAbonnesViewModel _viewModel;
+        private readonly IProjectionService _projectionService;
 
-        public ConsultationAbonnesControl(IAbonneService abonneService)
+        public ConsultationAbonnesControl(IAbonneService abonneService, IProjectionService projectionService)
         {
-            _viewModel=new ConsultationAbonnesViewModel(abonneService);
+            _viewModel = new ConsultationAbonnesViewModel(abonneService);
             DataContext = _viewModel;
 
             Loaded += _viewModel.Load;
             InitializeComponent();
+            _projectionService = projectionService;
         }
 
         private void lstUtilisisateurs_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -34,8 +36,12 @@ namespace CineQuebec.Windows.View
             if (lstUtilisisateurs.SelectedIndex != -1)
             {
                 Abonne abonne=lstUtilisisateurs.SelectedItem as Abonne;
-                DetailAbonnes detailAbonnes=new DetailAbonnes(abonne);
-                detailAbonnes.ShowDialog();
+                DetailAbonnes detailAbonnes=new DetailAbonnes(abonne, _projectionService);
+                if ((bool)detailAbonnes.ShowDialog())
+                {
+                    Recompense recompense = new Recompense();
+                    recompense.ShowDialog();
+                }
             }
         }
     }
