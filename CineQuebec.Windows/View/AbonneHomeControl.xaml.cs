@@ -2,7 +2,6 @@
 using CineQuebec.Windows.DAL.Interfaces;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
 using CineQuebec.Windows.ViewModel;
-using System.Collections.ObjectModel;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -14,6 +13,7 @@ namespace CineQuebec.Windows.View
     public partial class AbonneHomeControl : UserControl
     {
         public Abonne User { get; set; }
+
         private readonly IAbonneService _abonneService;
         private readonly IRealisateurRepository _realisateurRepository;
         private readonly IActeurRepository _acteurRepository;
@@ -21,6 +21,10 @@ namespace CineQuebec.Windows.View
         private readonly IProjectionService _projectionService;
 
         private AbonneHomeViewModel _viewModel;
+
+        //TODO : Changer ça
+        public static IProjectionService ProjectionService;
+        public static Abonne CurrentUser { get; internal set; }
 
         public AbonneHomeControl(IAbonneService abonneService, IRealisateurRepository realisateurRepository, IActeurRepository acteurRepository, IFilmService filmService, IProjectionService projectionService)
         {
@@ -30,19 +34,10 @@ namespace CineQuebec.Windows.View
             _acteurRepository = acteurRepository;
             _filmService = filmService;
             _projectionService = projectionService;
+            ProjectionService = projectionService;
 
-
-            _viewModel = new(filmService);
+            _viewModel = new(filmService, _projectionService, User);
             DataContext = _viewModel;
-        }
-
-      
-
-        private void btnReserverUnePlace_Click(object sender, RoutedEventArgs e)
-        {
-            var reservationView = new ReservationView(_filmService, _projectionService, User);
-            reservationView.ShowDialog();
-
         }
 
         private void btnVoirPreferance_Click(object sender, RoutedEventArgs e)
@@ -52,8 +47,11 @@ namespace CineQuebec.Windows.View
                 MessageBox.Show("Votre préférence ont été mis à jour avec succès", "Préférence", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
-        private void btnNoteUnFilm_Click(object sender, RoutedEventArgs e)
+        internal void setUser(Abonne abonne)
         {
+            User = abonne;
+            CurrentUser = User;
+            _viewModel.User = User;
         }
     }
 }

@@ -2,6 +2,7 @@
 using CineQuebec.Windows.DAL.Exceptions.ProjectionException;
 using CineQuebec.Windows.DAL.InterfacesRepositorie;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
+using Microsoft.VisualBasic;
 using MongoDB.Bson;
 
 namespace CineQuebec.Windows.DAL.Services
@@ -27,14 +28,19 @@ namespace CineQuebec.Windows.DAL.Services
 
         public List<Projection> GetAllProjections()
         {
-            List<Projection> projections= _projectionRepository.ReadProjections();
+            List<Projection> projections = _projectionRepository.ReadProjections();
             projections.Sort();
             return projections;
         }
 
         public async Task<List<Projection>> GetProjectionsById(ObjectId idFilm)
         {
-            return await _projectionRepository.ReadProjectionsById(idFilm);
+            return await _projectionRepository.GetProjectionsById(idFilm);
+        }
+
+        public async Task<List<Projection>> GetProjectionsForUser(ObjectId idFilm, ObjectId idUser)
+        {
+            return await _projectionRepository.GetProjectionsForUser(idFilm, idUser);
         }
 
         public async Task<List<Projection>> GetProjectionByName(string name)
@@ -44,9 +50,27 @@ namespace CineQuebec.Windows.DAL.Services
 
         public async Task AjouterReservation(ObjectId pojectionId, ObjectId userId)
         {
-             await _projectionRepository.AjouterReservation(pojectionId,userId);
+            await _projectionRepository.AjouterReservation(pojectionId, userId);
         }
 
-        
+        public async Task<List<Projection>> GetUpcomingProjections(ObjectId projectionId)
+        {
+            return await _projectionRepository.GetUpcomingProjection(projectionId);
+        }
+
+        public async Task SupprimerProjection(ObjectId id)
+        {
+                await _projectionRepository.SupprimerProjection(id);
+        }
+
+        public async Task ModifierProjection(Projection projection)
+        {
+            await _projectionRepository.ModifierProjecion(projection);
+        }
+
+        public async Task<int> NombreProjectionPourAbonne(ObjectId idUser)
+        {
+            return await _projectionRepository.NombreProjectionPourAbonne(idUser);
+        }
     }
 }

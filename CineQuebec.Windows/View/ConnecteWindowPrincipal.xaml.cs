@@ -14,7 +14,7 @@ namespace CineQuebec.Windows.View
         {
             InitializeComponent();
             User = abonne;
-            if ((bool)abonne.isAdmin)
+            if ((bool)abonne.IsAdmin)
             {
                 var container = (IUnityContainer)Application.Current.Resources["UnityContainer"];
                 var adminHomeControl = container.Resolve<AdminHomeControl>();
@@ -24,7 +24,7 @@ namespace CineQuebec.Windows.View
             {
                 var container = (IUnityContainer)Application.Current.Resources["UnityContainer"];
                 var abonneHomeControl = container.Resolve<AbonneHomeControl>();
-                abonneHomeControl.User = abonne;
+                abonneHomeControl.setUser(abonne);
                 mainContentControl.Content = abonneHomeControl;
             }
         }

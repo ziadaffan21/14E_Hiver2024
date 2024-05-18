@@ -16,6 +16,7 @@ using CineQuebec.Windows.DAL.Utils;
 using CineQuebec.Windows.Ressources.i18n;
 using CineQuebec.Windows.Exceptions.AbonneExceptions;
 using CineQuebec.Windows.Exceptions;
+using CineQuebec.Windows.Exceptions.AbonneExceptions.Username;
 
 namespace CineQuebec.Windows.ViewModel
 {
@@ -24,6 +25,9 @@ namespace CineQuebec.Windows.ViewModel
         private ObservableUsersignInLogIn _observableUsersSignInLogIn;
         private IAbonneService _abonneService;
         public ICommand SaveCommand { get; init; }
+        public event Action<string> ErrorOccurred;
+        public event Action<bool> ReussiteOuEchec;
+
 
 
         public ObservableUsersignInLogIn ObservableUsersignInLogIn
@@ -45,38 +49,35 @@ namespace CineQuebec.Windows.ViewModel
             return ObservableUsersignInLogIn.IsValidInscription();
         }
 
-        private async void SignUp()
+        public async void SignUp()
         {
             try
             {
-                Abonne _abonne = new Abonne(ObservableUsersignInLogIn.Username, DateTime.Now);
+                string password = Utils.ConvertToUnsecureString(ObservableUsersignInLogIn.SecurePassword);
+                ValidationFormulaire(ObservableUsersignInLogIn.Username, password);
+                Abonne _abonne = new Abonne(ObservableUsersignInLogIn.Username.ToLower(), DateTime.Now);
                 _abonne.Salt = PasswodHasher.CreateSalt();
-                _abonne.Password = PasswodHasher.HashPassword(Utils.ConvertToUnsecureString(ObservableUsersignInLogIn.SecurePassword), _abonne.Salt);
-                bool result = await _abonneService.Add(_abonne);
-                if (result)
-                {
-                    MessageBox.Show(Resource.ajoutUser, Resource.ajout, MessageBoxButton.OK, MessageBoxImage.Information);
-                    // DialogResultConverter d=new() = true;
-                }
-                else
-                {
-                    MessageBox.Show(Resource.errorAjoutUser, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
-                    //DialogResult = false;
-                }
+                _abonne.Password = PasswodHasher.HashPassword(password, _abonne.Salt);
+
+
+                ReussiteOuEchec?.Invoke(await _abonneService.Add(_abonne));
+
             }
-            catch (ExistingAbonneException ex)
+            catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, Resource.existingAbonneTitre, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            catch (MongoDataConnectionException ex)
-            {
-                MessageBox.Show(ex.Message, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
-            }
-            catch (Exception)
-            {
-                MessageBox.Show(Resource.erreurGenerique, Resource.erreur, MessageBoxButton.OK, MessageBoxImage.Error);
+                ErrorOccurred?.Invoke(ex.Message);
             }
 
+        }
+
+        private void ValidationFormulaire(string username, string password)
+        {
+            if (string.IsNullOrWhiteSpace(username) || username.Length < Abonne.NB_MIN_CARACTERES_USERNAME || username.Length > Abonne.NB_MAX_CARACTERES_USERNAME)
+                throw new UsernameLengthException($"Le username doit etre entre {Abonne.NB_MIN_CARACTERES_USERNAME} et {Abonne.NB_MAX_CARACTERES_USERNAME} caractères");
+
+
+            if (string.IsNullOrEmpty(password) || password.Length < Abonne.NB_MIN_CARACTERES_PASSWORD || password.Length > Abonne.NB_MAX_CARACTERES_PASSWORD)
+                throw new Exception($"Le mot de passe doit contenir entre {Abonne.NB_MIN_CARACTERES_PASSWORD} et {Abonne.NB_MAX_CARACTERES_PASSWORD} caractères.");
         }
 
         private void ReEvaluateButtonState(object sender, PropertyChangedEventArgs e)

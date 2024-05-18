@@ -7,9 +7,53 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Ressources\Seeds\TP2DB.Abonnes.json" />
+    <None Remove="Ressources\Seeds\TP2DB.Acteurs.json" />
+    <None Remove="Ressources\Seeds\TP2DB.Films.json" />
+    <None Remove="Ressources\Seeds\TP2DB.Projections.json" />
+    <None Remove="Ressources\Seeds\TP2DB.Realisateurs.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Konscious.Security.Cryptography.Argon2" Version="1.3.0" />
     <PackageReference Include="MongoDB.Driver" Version="2.24.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Ressources\Seeds\TP2DB.Abonnes.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Ressources\Seeds\TP2DB.Acteurs.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Ressources\Seeds\TP2DB.Films.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Ressources\Seeds\TP2DB.Projections.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Ressources\Seeds\TP2DB.Realisateurs.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Ressources\Seeds\AbonnesSeed.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Ressources\Seeds\ActeursSeed.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Ressources\Seeds\FilmsSeed.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Ressources\Seeds\ProjectionsSeed.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Ressources\Seeds\RealisateursSeed.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
