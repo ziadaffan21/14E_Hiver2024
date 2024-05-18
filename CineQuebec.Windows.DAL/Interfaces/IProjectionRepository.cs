@@ -14,6 +14,8 @@ namespace CineQuebec.Windows.DAL.InterfacesRepositorie
         Task<List<Projection>> GetProjectionsByName(string Name);
 
         Task<Projection> GetProjectionByDateAndFilmId(DateTime dateProjection, string titreFilm);
+
+        Task<int> NombreProjectionPourAbonne(ObjectId idUser);
         Task AjouterReservation(ObjectId pojectionId, ObjectId userId);
         Task<List<Projection>> GetProjectionsForUser(ObjectId idFilm, ObjectId idUser);
         Task<List<Projection>> GetUpcomingProjection(ObjectId projectionId);

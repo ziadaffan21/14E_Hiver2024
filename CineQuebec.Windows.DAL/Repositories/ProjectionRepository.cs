@@ -139,5 +139,14 @@ namespace CineQuebec.Windows.DAL.Repositories
         {
             await _mongoCollection.FindOneAndReplaceAsync(f => f.Id == projection.Id, projection);
         }
+
+        public async Task<int> NombreProjectionPourAbonne(ObjectId idUser)
+        {
+            var projectionCollection = _mongoDatabase.GetCollection<Projection>(PROJECTION);
+            int nbreFilm =(int) await projectionCollection.Find(f => f.Reservations.Contains(idUser)).CountDocumentsAsync();
+            return nbreFilm;
+
+
+        }
     }
 }

@@ -2,6 +2,7 @@
 using CineQuebec.Windows.DAL.Exceptions.ProjectionException;
 using CineQuebec.Windows.DAL.InterfacesRepositorie;
 using CineQuebec.Windows.DAL.ServicesInterfaces;
+using Microsoft.VisualBasic;
 using MongoDB.Bson;
 
 namespace CineQuebec.Windows.DAL.Services
@@ -65,6 +66,11 @@ namespace CineQuebec.Windows.DAL.Services
         public async Task ModifierProjection(Projection projection)
         {
             await _projectionRepository.ModifierProjecion(projection);
+        }
+
+        public async Task<int> NombreProjectionPourAbonne(ObjectId idUser)
+        {
+            return await _projectionRepository.NombreProjectionPourAbonne(idUser);
         }
     }
 }
