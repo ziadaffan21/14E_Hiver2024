@@ -1,4 +1,5 @@
-﻿using CineQuebec.Windows.DAL.ServicesInterfaces;
+﻿using CineQuebec.Windows.DAL.Data;
+using CineQuebec.Windows.DAL.ServicesInterfaces;
 using CineQuebec.Windows.Exceptions;
 using CineQuebec.Windows.Ressources.i18n;
 using CineQuebec.Windows.ViewModel;
@@ -25,7 +26,17 @@ namespace CineQuebec.Windows.View
 
         private void lstUtilisisateurs_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            lstUtilisisateurs.SelectedIndex = -1;
+            //lstUtilisisateurs.SelectedIndex = -1;
+        }
+
+        private void lstUtilisisateurs_MouseDoubleClick(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (lstUtilisisateurs.SelectedIndex != -1)
+            {
+                Abonne abonne=lstUtilisisateurs.SelectedItem as Abonne;
+                DetailAbonnes detailAbonnes=new DetailAbonnes(abonne);
+                detailAbonnes.ShowDialog();
+            }
         }
     }
 }
